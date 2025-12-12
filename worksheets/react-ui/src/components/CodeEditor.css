@@ -1,0 +1,29 @@
+.code-editor-container {
+  margin: 15px 0;
+}
+
+.code-editor {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  background: #2d2d2d;
+  color: #f8f8f2;
+  resize: vertical;
+  transition: all 0.3s ease;
+  line-height: 1.6;
+}
+
+.code-editor:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.3);
+}
+
+.code-editor::placeholder {
+  color: #888;
+  font-style: italic;
+}
+

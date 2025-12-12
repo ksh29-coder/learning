@@ -1,0 +1,93 @@
+.part4-container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.part-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #4A90E2;
+}
+
+.part-header h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.part-description {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+}
+
+.reflection-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.reflection-card:hover {
+  transform: translateY(-3px);
+}
+
+.reflection-title {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.reflection-item {
+  margin-bottom: 20px;
+}
+
+.reflection-label {
+  display: block;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.reflection-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.reflection-input:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
+}
+
+.notes-description {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .part4-container {
+    padding: 20px;
+  }
+  
+  .reflection-title {
+    font-size: 20px;
+  }
+}
+

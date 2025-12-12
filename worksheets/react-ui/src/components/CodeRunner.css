@@ -1,0 +1,101 @@
+.code-runner {
+  margin-top: 20px;
+}
+
+.runner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.runner-header h4 {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+}
+
+.run-button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}
+
+.run-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+}
+
+.run-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.output-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.output-container.error {
+  border: 2px solid #FF6B6B;
+}
+
+.output-header {
+  padding: 10px 15px;
+  background: #2d2d2d;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.output-container.error .output-header {
+  background: #FF6B6B;
+}
+
+.output-content {
+  padding: 15px;
+  background: #1e1e1e;
+  color: #f8f8f2;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+.loading-message {
+  padding: 15px;
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  color: #856404;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 15px;
+}
+

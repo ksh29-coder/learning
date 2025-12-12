@@ -1,0 +1,23 @@
+{
+  "name": "",
+  "date": "2025-12-12",
+  "q1": "It displays text on the screen",
+  "q2": "",
+  "q3": "",
+  "exercise1": "",
+  "exercise2": "",
+  "challenge1": "print(\"    *\")\nprint(\"   ***\")\nprint(\"  _____\")  # Fill this in!\nprint(\" _____\")    # Fill this in!\nprint(\"    |\")",
+  "challenge2": "",
+  "reflection1": "",
+  "reflection2": "",
+  "reflection3": "",
+  "reflection4": "",
+  "next_learning": "",
+  "bonus": "",
+  "notes": "",
+  "checked_questions": {
+    "q1": false,
+    "q2": false,
+    "q3": false
+  }
+}
