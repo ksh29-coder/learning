@@ -7,6 +7,9 @@ function CodeRunner({ code, title }) {
   const [isRunning, setIsRunning] = useState(false);
   const [pyodide, setPyodide] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [inputPrompts, setInputPrompts] = useState([]);
+  const [inputValues, setInputValues] = useState({});
+  const [showInputForm, setShowInputForm] = useState(false);
 
   // Initialize Pyodide on mount
   useEffect(() => {
@@ -47,7 +50,48 @@ function CodeRunner({ code, title }) {
     };
   }, []);
 
-  const runCode = async () => {
+  // Detect input() calls in the code
+  const detectInputCalls = (codeText) => {
+    const inputRegex = /input\s*\(\s*([^)]*)\s*\)/g;
+    const prompts = [];
+    let match;
+    let index = 0;
+
+    while ((match = inputRegex.exec(codeText)) !== null) {
+      const promptText = match[1]
+        .replace(/^["']|["']$/g, '') // Remove quotes
+        .trim() || `Input ${index + 1}`;
+      prompts.push({
+        id: index,
+        prompt: promptText,
+        originalMatch: match[0]
+      });
+      index++;
+    }
+
+    return prompts;
+  };
+
+  const handleRunClick = () => {
+    const prompts = detectInputCalls(code);
+    
+    if (prompts.length > 0) {
+      setInputPrompts(prompts);
+      // Initialize input values if not already set
+      const newInputValues = {};
+      prompts.forEach(p => {
+        if (!(p.id in inputValues)) {
+          newInputValues[p.id] = '';
+        }
+      });
+      setInputValues(prev => ({ ...prev, ...newInputValues }));
+      setShowInputForm(true);
+    } else {
+      runCode([]);
+    }
+  };
+
+  const runCode = async (providedInputs = []) => {
     if (!code.trim()) {
       setError('Please write some code first! 😊');
       setOutput('');
@@ -62,6 +106,7 @@ function CodeRunner({ code, title }) {
     setIsRunning(true);
     setError('');
     setOutput('');
+    setShowInputForm(false);
 
     try {
       // Capture stdout
@@ -70,6 +115,44 @@ import sys
 from io import StringIO
 sys.stdout = StringIO()
       `);
+
+      // Always override input() to prevent I/O errors in browser
+      if (providedInputs.length > 0) {
+        // Create a list of input values in Python
+        const inputList = JSON.stringify(providedInputs);
+        pyodide.runPython(`
+_input_index = 0
+_input_values = ${inputList}
+
+def _custom_input(prompt=''):
+    global _input_index
+    if _input_index < len(_input_values):
+        value = _input_values[_input_index]
+        _input_index += 1
+        if prompt:
+            print(prompt, end='')
+        return value
+    else:
+        if prompt:
+            print(prompt, end='')
+        return ''
+
+# Override builtin input
+import builtins
+builtins.input = _custom_input
+        `);
+      } else {
+        // If no inputs provided, return empty string (prevents I/O errors)
+        pyodide.runPython(`
+def _custom_input(prompt=''):
+    if prompt:
+        print(prompt, end='')
+    return ''
+
+import builtins
+builtins.input = _custom_input
+        `);
+      }
 
       // Run the user's code
       pyodide.runPython(code);
@@ -84,6 +167,11 @@ sys.stdout = StringIO()
     } finally {
       setIsRunning(false);
     }
+  };
+
+  const handleInputSubmit = () => {
+    const values = inputPrompts.map(p => inputValues[p.id] || '');
+    runCode(values);
   };
 
   if (isLoading) {
@@ -108,12 +196,58 @@ sys.stdout = StringIO()
         <h4>{title || 'Code Output'}</h4>
         <button
           className="run-button"
-          onClick={runCode}
+          onClick={handleRunClick}
           disabled={isRunning || !pyodide}
         >
           {isRunning ? '⏳ Running...' : '▶️ Run Code'}
         </button>
       </div>
+      
+      {showInputForm && inputPrompts.length > 0 && (
+        <div className="input-form-container">
+          <div className="input-form-header">
+            <span>📝 Enter Input Values</span>
+          </div>
+          <div className="input-form-body">
+            {inputPrompts.map(prompt => (
+              <div key={prompt.id} className="input-field">
+                <label>{prompt.prompt}:</label>
+                <input
+                  type="text"
+                  value={inputValues[prompt.id] || ''}
+                  onChange={(e) => setInputValues(prev => ({
+                    ...prev,
+                    [prompt.id]: e.target.value
+                  }))}
+                  placeholder={`Enter value for: ${prompt.prompt}`}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      handleInputSubmit();
+                    }
+                  }}
+                />
+              </div>
+            ))}
+            <div className="input-form-actions">
+              <button
+                className="submit-input-button"
+                onClick={handleInputSubmit}
+                disabled={isRunning}
+              >
+                ✓ Run with These Values
+              </button>
+              <button
+                className="cancel-input-button"
+                onClick={() => setShowInputForm(false)}
+                disabled={isRunning}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {(output || error) && (
         <div className={`output-container ${error ? 'error' : ''}`}>
           <div className="output-header">

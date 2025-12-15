@@ -1,35 +1,40 @@
 # Interactive Worksheet UI - React Version
 
-## Overview
+## How to Run
 
-This course uses **React-based interactive worksheets** for all days. The React UI provides a modern, web-based interface that works in your browser with features like code editing, live code execution, and answer checking.
+### Prerequisites
+- Node.js and npm installed on your computer
+- Basic terminal/command line knowledge
 
-## Quick Start
+### Setup and Run
 
-1. **Navigate to the React UI folder:**
+1. **Open Cursor IDE**
+2. **Navigate to the worksheets/react-ui folder:**
    ```bash
    cd worksheets/react-ui
    ```
 
-2. **Install dependencies (first time only):**
+3. **Install dependencies (first time only):**
    ```bash
    npm install
    ```
 
-3. **Start the React app:**
+4. **Start the React app:**
    ```bash
    npm start
    ```
 
-4. **The app opens in your browser automatically!**
+5. **The app will open in your browser automatically!**
    - Usually at `http://localhost:3000`
-   - Select **Day 1** or **Day 2** from the buttons at the top
+   - If it doesn't open, copy the URL from the terminal
+
+6. **Select Day 1 or Day 2** from the buttons at the top!
 
 ## Features
 
 ### 🎓 Day Selector
 - **Choose between Day 1 and Day 2** at the top of the page
-- Switch between days anytime - your progress is saved separately for each day!
+- Switch between days anytime - your progress is saved!
 
 ### 📝 Interactive Worksheets
 
@@ -51,7 +56,7 @@ This course uses **React-based interactive worksheets** for all days. The React 
 ### ✅ Answer Checking & Scoring
 - **Check your answers** - Click "✓ Check Answer" button after each question
 - **Instant feedback** - See if you're right or wrong immediately
-- **Score tracking** - Watch your score update (Day 1: X/3, Day 2: X/4 🌟)
+- **Score tracking** - Watch your score update (Score: X/4 🌟)
 - **Helpful hints** - Get hints if your answer needs improvement
 - **Visual feedback** - Green checkmark for correct, red X for incorrect
 
@@ -60,12 +65,10 @@ This course uses **React-based interactive worksheets** for all days. The React 
 - Saved to browser's localStorage
 - Your work is safe even if you close the browser!
 - Your checked answers and score are also saved!
-- **Separate storage** for Day 1 and Day 2
 
 ### 🧪 Test Your Code
 - Click the **"▶️ Run Code"** button below any code editor
 - See the output of your code instantly
-- Uses Pyodide to run Python in your browser
 - Great for testing exercises and challenges!
 - **Note:** Code with `input()` may not work perfectly in the browser - test those in your terminal!
 
@@ -152,15 +155,7 @@ For programs that use `input()`, the browser-based Python runner may not work pe
 - **Shift+Tab** - Unindent code
 - **Ctrl+S / Cmd+S** - Save (auto-saves, but good habit!)
 
-## For Future Days
-
-When creating worksheets for Day 3 and beyond:
-- **Use React UI components** (not Python/Tkinter)
-- Follow the same structure as Day 1 and Day 2
-- Add new day components to `worksheets/react-ui/src/components/`
-- Update `DaySelector.js` to include the new day
-- Follow the same patterns: answer checking, code editor, code runner, etc.
-
 ---
 
 **Have fun learning Python! 🎉**
+

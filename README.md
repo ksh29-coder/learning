@@ -51,20 +51,42 @@ learning/
 ├── README.md (this file)
 ├── 01_BASIC_PLAN.md
 ├── lesson_plans/
-│   └── day1_introduction.md
+│   ├── day1_introduction.md
+│   ├── day2_variables.md
+│   └── day3_if_else.md
 ├── code_examples/
-│   └── day1/
-│       ├── 01_hello_world.py
-│       ├── 02_personalized_greeting.py
-│       ├── 03_ascii_art.py
-│       └── 04_name_tag.py
+│   ├── day1/
+│   │   ├── 01_hello_world.py
+│   │   ├── 02_personalized_greeting.py
+│   │   ├── 03_ascii_art.py
+│   │   └── 04_name_tag.py
+│   ├── day2/
+│   │   ├── 01_basic_variables.py
+│   │   ├── 02_string_vs_numbers.py
+│   │   ├── 03_getting_input.py
+│   │   └── 04_interactive_info_card.py
+│   └── day3/
+│       ├── 01_basic_if.py
+│       ├── 02_if_else.py
+│       ├── 03_elif.py
+│       └── 04_interactive_quiz.py
 ├── projects/
 │   └── templates/
-│       └── day1_greeting_card_template.py
+│       ├── day1_greeting_card_template.py
+│       ├── day2_mad_libs_template.py
+│       └── day3_adventure_game_template.py
 └── worksheets/
     ├── day1_worksheet.md
-    ├── day1_worksheet_ui.py (Interactive UI version!)
-    └── README_WORKSHEET_UI.md
+    ├── day2_worksheet.md
+    ├── day3_worksheet.md
+    ├── react-ui/ (Interactive React UI for all days!)
+    │   ├── src/
+    │   │   ├── App.js (Day 1)
+    │   │   ├── Day2App.js (Day 2)
+    │   │   ├── Day3App.js (Day 3)
+    │   │   └── DaySelector.js (Switch between days)
+    │   └── package.json
+    └── README_REACT_UI.md
 ```
 
 ## How to Use This Course
@@ -72,7 +94,7 @@ learning/
 1. **Start with the Basic Plan** - Read `01_BASIC_PLAN.md` for course overview
 2. **Follow the Lesson Plan** - Use `lesson_plans/day1_introduction.md` for detailed teaching guide
 3. **Use Code Examples** - Open files in `code_examples/day1/` to see examples
-4. **Complete Worksheets** - Use the interactive UI (`worksheets/day1_worksheet_ui.py`) or the markdown version (`worksheets/day1_worksheet.md`) for practice
+4. **Complete Worksheets** - Use the interactive React UI (`worksheets/react-ui/`) or the markdown version (`worksheets/day1_worksheet.md`) for practice
 5. **Build Projects** - Start with `projects/templates/day1_greeting_card_template.py`
 
 ## Day 1 Quick Start
@@ -83,9 +105,38 @@ learning/
    - See the output in the terminal at the bottom
 3. Work through the examples in order (01, 02, 03, 04)
 4. Complete the worksheet:
-   - **Interactive version:** Run `worksheets/day1_worksheet_ui.py` for a fun GUI!
+   - **Interactive React UI:** Navigate to `worksheets/react-ui/` and run `npm start`, then select Day 1
    - **Or use:** `worksheets/day1_worksheet.md` for the traditional version
 5. Open `projects/templates/day1_greeting_card_template.py` and build your greeting card
+
+## Day 2 Quick Start
+
+1. Open `lesson_plans/day2_variables.md` in Cursor to read the lesson plan
+2. Open and run `code_examples/day2/01_basic_variables.py`:
+   - Right-click in the file → "Run Python File in Terminal"
+   - See the output in the terminal at the bottom
+3. Work through the examples in order (01, 02, 03, 04)
+   - **Important:** For examples 03 and 04, you'll need to type answers in the terminal when prompted!
+4. Complete the worksheet:
+   - **Interactive React UI:** Navigate to `worksheets/react-ui/` and run `npm start`, then select Day 2
+   - **Or use:** `worksheets/day2_worksheet.md` for the traditional version
+5. Open `projects/templates/day2_mad_libs_template.py` and build your Mad Libs game
+   - **Tip:** When you run programs with `input()`, type your answers in the terminal and press Enter!
+
+## Day 3 Quick Start
+
+1. Open `lesson_plans/day3_if_else.md` in Cursor to read the lesson plan
+2. Open and run `code_examples/day3/01_basic_if.py`:
+   - Right-click in the file → "Run Python File in Terminal"
+   - See the output in the terminal at the bottom
+3. Work through the examples in order (01, 02, 03, 04)
+   - **Important:** For examples 02, 03, and 04, you'll need to type answers in the terminal when prompted!
+4. Complete the worksheet:
+   - **Interactive React UI:** Navigate to `worksheets/react-ui/` and run `npm start`, then select Day 3
+   - **Or use:** `worksheets/day3_worksheet.md` for the traditional version
+5. Open `projects/templates/day3_adventure_game_template.py` and build your adventure game
+   - **Tip:** Remember to use `==` (two equals) for comparison, not `=` (one equals)!
+   - **Tip:** Pay attention to indentation - Python is very picky about it!
 
 ## Tips for Success
 
@@ -98,16 +149,18 @@ learning/
 
 ## Interactive Worksheet UI 🎨
 
-**Try the fun interactive worksheet!**
+**Try the fun interactive React worksheet!**
 
-Run `worksheets/day1_worksheet_ui.py` to get:
-- ✨ Colorful, kid-friendly interface
-- 💾 Auto-save your answers
-- 🧪 Test your code right in the UI
+Navigate to `worksheets/react-ui/` and run `npm start` to get:
+- ✨ Colorful, kid-friendly web interface
+- 📦 Switch between Day 1 and Day 2 with buttons at the top
+- 💾 Auto-save your answers (saved in browser)
+- 🧪 Test your code right in the UI with live Python execution
 - 📄 View all your answers
 - 🎯 Organized by tabs (Part 1, Part 2, etc.)
+- ✅ Answer checking with instant feedback and scoring
 
-See `worksheets/README_WORKSHEET_UI.md` for detailed instructions!
+See `worksheets/README_REACT_UI.md` for detailed instructions!
 
 ## Cursor Shortcuts (Helpful for Kids)
 
@@ -118,7 +171,9 @@ See `worksheets/README_WORKSHEET_UI.md` for detailed instructions!
 
 ## Next Steps
 
-After completing Day 1, you'll be ready for Day 2: Variables!
+- **After Day 1:** You'll be ready for Day 2: Variables!
+- **After Day 2:** You'll be ready for Day 3: Making Decisions with If/Else!
+- **After Day 3:** You'll be ready for Day 4: Loops - Doing Things Over and Over!
 
 ---
 

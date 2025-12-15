@@ -1,0 +1,7 @@
+a = input("What is A ? ")
+b = input("What is B ? ")
+c = input("What is C ? ")
+ab = sum = int(a) + int(b)
+product = int(ab) * int(c)
+#print(product)
+print("The answer is", product)
