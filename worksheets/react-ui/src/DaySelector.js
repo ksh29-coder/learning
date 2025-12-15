@@ -2,10 +2,26 @@ import React, { useState } from 'react';
 import App from './App';
 import Day2App from './Day2App';
 import Day3App from './Day3App';
+import Day4App from './Day4App';
 import './DaySelector.css';
 
 function DaySelector() {
   const [selectedDay, setSelectedDay] = useState(1);
+
+  const renderDay = () => {
+    switch (selectedDay) {
+      case 1:
+        return <App />;
+      case 2:
+        return <Day2App />;
+      case 3:
+        return <Day3App />;
+      case 4:
+        return <Day4App />;
+      default:
+        return <App />;
+    }
+  };
 
   return (
     <div className="day-selector-container">
@@ -30,14 +46,19 @@ function DaySelector() {
           >
             🤔 Day 3: Making Decisions - If/Else
           </button>
+          <button
+            className={`day-button ${selectedDay === 4 ? 'active' : ''}`}
+            onClick={() => setSelectedDay(4)}
+          >
+            🔁 Day 4: Loops - Doing Things Over and Over
+          </button>
         </div>
       </div>
       <div className="day-content">
-        {selectedDay === 1 ? <App /> : selectedDay === 2 ? <Day2App /> : <Day3App />}
+        {renderDay()}
       </div>
     </div>
   );
 }
 
 export default DaySelector;
-
