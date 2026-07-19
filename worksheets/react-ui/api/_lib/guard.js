@@ -38,6 +38,17 @@ function guard(req, res) {
   }
 
   const expected = process.env.AI_FAMILY_PASSPHRASE;
+
+  // Fail closed. An unprotected endpoint is only tolerable while it cannot
+  // spend anything; the moment a key is configured, a missing passphrase would
+  // mean anyone who finds this URL can run up the bill. This is a very easy
+  // mistake to make when adding env vars one at a time in a dashboard.
+  if (!expected && process.env.AI_API_KEY) {
+    console.error('refusing to serve: AI_API_KEY is set but AI_FAMILY_PASSPHRASE is not');
+    res.status(503).json({ error: 'not_configured' });
+    return true;
+  }
+
   if (expected) {
     const supplied = req.headers['x-family-key'] || '';
     if (!safeEqual(supplied, expected)) {
