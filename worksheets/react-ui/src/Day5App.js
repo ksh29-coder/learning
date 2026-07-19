@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Day5Header from './components/Day5Header';
 import Day5Part1 from './components/Day5Part1';
@@ -8,10 +8,11 @@ import Day5Part4 from './components/Day5Part4';
 import Day5Part5 from './components/Day5Part5';
 import Day5Part6 from './components/Day5Part6';
 import Day5Bonus from './components/Day5Bonus';
+import { useWorksheetStorage } from './hooks/useWorksheetStorage';
 
-function Day5App() {
+function Day5App({ profile }) {
   const [currentTab, setCurrentTab] = useState(0);
-  const [answers, setAnswers] = useState({
+  const initialAnswers = {
     name: '',
     date: new Date().toISOString().split('T')[0],
     // Part 1: Understanding questions
@@ -46,55 +47,23 @@ function Day5App() {
     bonus2_completed: false,
     bonus3_completed: false,
     bonus4_completed: false
-  });
+  };
 
-  const [checkedQuestions, setCheckedQuestions] = useState({
+  const initialCheckedQuestions = {
     q1: false,
     q2: false,
     q3: false,
     q4: false
-  });
-
-  // Load saved answers on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('day5_worksheet_answers');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setAnswers(prev => ({ ...prev, ...parsed.answers }));
-        if (parsed.checkedQuestions) {
-          setCheckedQuestions(parsed.checkedQuestions);
-        }
-      } catch (e) {
-        console.error('Error loading saved answers:', e);
-      }
-    }
-  }, []);
-
-  // Save answers whenever they change
-  useEffect(() => {
-    const saveData = {
-      answers,
-      checkedQuestions,
-      lastSaved: new Date().toISOString()
-    };
-    localStorage.setItem('day5_worksheet_answers', JSON.stringify(saveData));
-  }, [answers, checkedQuestions]);
-
-  const updateAnswer = (key, value) => {
-    setAnswers(prev => ({ ...prev, [key]: value }));
   };
 
-  const updateCheckedQuestion = (questionId, isCorrect) => {
-    setCheckedQuestions(prev => ({ ...prev, [questionId]: isCorrect }));
-  };
+  const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 5, initialAnswers, initialCheckedQuestions);
 
   const updateName = (value) => {
-    setAnswers(prev => ({ ...prev, name: value }));
+    updateAnswer('name', value);
   };
 
   const updateDate = (value) => {
-    setAnswers(prev => ({ ...prev, date: value }));
+    updateAnswer('date', value);
   };
 
   const tabs = [

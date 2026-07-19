@@ -1,223 +1,136 @@
-# Day 6 Worksheet: Review & Fun Challenges! 🎮
+# Day 6 Worksheet: Lists - Storing Lots of Things Together
 
-## Welcome to Challenge Day!
-
-Today we're going to mix everything we've learned and have some fun! Complete these challenges to show off your skills.
+## Name: _________________  Date: _________________
 
 ---
 
-## Challenge 1: The Greeting Machine 🤖
+## Part 1: Understanding Lists
 
-**Goal:** Create a function that greets people differently based on the time of day.
+### Question 1
+What is a list?
+- [ ] A single number stored in a variable
+- [ ] A way to store many values together in one variable
+- [ ] A type of if/else statement
+- [ ] A loop that never ends
 
-**Requirements:**
-- Create a function called `greet_person(name, time_of_day)`
-- Use if/elif/else to give different greetings:
-  - Morning: "Good morning, [name]! ☀️"
-  - Afternoon: "Good afternoon, [name]! 😎"
-  - Evening: "Good evening, [name]! 🌙"
-- Use a loop to greet 3 different people
-- Use input() to get the names
+### Question 2
+What symbol do we use to create a list?
+- [ ] `( )` parentheses
+- [ ] `{ }` curly braces
+- [ ] `[ ]` square brackets
+- [ ] `< >` angle brackets
 
-**Example:**
+### Question 3
+What will this code print?
 ```python
-# Your code here!
+pets = ["dog", "cat", "fish"]
+print(pets[1])
+```
+**Answer:** _________________________________
+
+### Question 4
+What does `len(my_list)` do?
+**Answer:** _________________________________
+
+### Question 5
+What does `pets[-1]` give you if `pets = ["dog", "cat", "fish"]`?
+**Answer:** _________________________________
+
+---
+
+## Part 2: List Practice
+
+### Exercise 1: Make a List
+Create a list called `favorites` with 4 of your favorite things (games, animals, foods - your choice!). Print the whole list, then print how many items it has using `len()`.
+
+**Your code:**
+```python
+# Write your code here
 ```
 
 ---
 
-## Challenge 2: The Score Tracker 📊
+### Exercise 2: Indexing Practice
+Using your `favorites` list from Exercise 1, print the FIRST item using positive indexing and the LAST item using negative indexing.
 
-**Goal:** Create a program that tracks scores for a quiz game.
-
-**Requirements:**
-- Ask 5 questions (you choose the questions!)
-- Use a for loop to ask each question
-- Use if/else to check if answers are correct
-- Track the score in a variable
-- At the end, use if/elif/else to give feedback:
-  - 5/5: "Perfect! You're a genius! 🌟"
-  - 3-4/5: "Great job! Keep practicing! 💪"
-  - 0-2/5: "Nice try! Study more! 📚"
-
-**Example:**
+**Your code:**
 ```python
-# Your code here!
+# Write your code here
 ```
 
 ---
 
-## Challenge 3: The Repeater Machine 🔁
+### Exercise 3: Loop Over a List
+Write a `for` loop that goes through your `favorites` list and prints each item with the message "I really like " in front of it.
 
-**Goal:** Create a function that repeats a message a certain number of times.
-
-**Requirements:**
-- Create a function `repeat_message(message, times)`
-- Use a for loop inside the function to repeat the message
-- Ask the user what message they want to repeat
-- Ask how many times to repeat it
-- Call the function with their input
-
-**Example:**
+**Your code:**
 ```python
-# Your code here!
+# Write your code here
 ```
 
 ---
 
-## Challenge 4: The Decision Maker 🎯
+### Exercise 4: Append and Remove
+Start with a list called `chores = ["dishes", "laundry"]`. Use `.append()` to add `"vacuuming"` to the list, then use `.remove()` to take `"laundry"` off the list. Print the list after each change.
 
-**Goal:** Create a program that helps make decisions.
-
-**Requirements:**
-- Ask the user a yes/no question
-- Use a while loop to keep asking until they answer "yes" or "no"
-- Use if/else to respond based on their answer
-- Use functions to organize your code
-
-**Example:**
+**Your code:**
 ```python
-# Your code here!
+# Write your code here
 ```
 
 ---
 
-## Challenge 5: The Number Game 🎲
+## Part 3: Challenge Problems
 
-**Goal:** Create a number guessing game with hints.
+### Challenge 1: Class Roster
+Build a program that starts with an empty list, uses a loop with `input()` to collect student names until the user types `"done"`, then prints the whole roster numbered 1, 2, 3, and so on.
 
-**Requirements:**
-- Pick a secret number (or ask the user to think of one)
-- Use a while loop to keep asking for guesses
-- Use if/elif/else to give hints (too high, too low, correct)
-- Track the number of attempts
-- When they guess correctly, tell them how many tries it took
-- Use functions to organize your code
-
-**Example:**
+**Your code:**
 ```python
-# Your code here!
+# Write your code here
 ```
 
 ---
 
-## Challenge 6: The Story Creator 📖
+### Challenge 2: Membership Checker
+Write a program with a list of at least 5 items. Ask the user to type something with `input()`, then use `in` to tell them whether that item is in the list or not.
 
-**Goal:** Create an interactive story generator.
-
-**Requirements:**
-- Use input() to ask for story parts (name, place, animal, action, etc.)
-- Store all answers in variables
-- Use a for loop to repeat an action in the story
-- Use if/else to add different story branches
-- Use functions to organize your code
-- Print a complete story at the end
-
-**Example:**
+**Your code:**
 ```python
-# Your code here!
+# Write your code here
 ```
 
 ---
 
-## Challenge 7: The Menu Master 🍽️
+## Part 4: Reflection
 
-**Goal:** Create a program with a menu that loops until the user quits.
+### What I Learned Today:
+1. A list is used when: _________________________________
+2. The first item in a list has index number: _________________________________
+3. `.append()` is different from `.remove()` because: _________________________________
+4. One thing I found easy: _________________________________
+5. One thing I found challenging: _________________________________
 
-**Requirements:**
-- Create a function to show the menu
-- Create at least 2 different functions for menu options
-- Use a while loop to keep showing the menu
-- Use if/elif/else to handle menu choices
-- Include a "quit" option that breaks the loop
+### What I Want to Learn Next:
+_________________________________
+_________________________________
 
-**Example:**
+---
+
+## Bonus Challenge!
+
+Build a "High Score Tracker" that collects a list of scores from the player, then reports the highest score, the lowest score, and how many scores were entered. Be creative with emojis and messages! 🏆
+
+**Your code:**
 ```python
-# Your code here!
+# Write your bonus program here
 ```
 
 ---
 
-## Challenge 8: The Calculator Helper 🧮
+## Notes Section
+Use this space to write down any questions or ideas:
 
-**Goal:** Create a simple calculator that can do different operations.
-
-**Requirements:**
-- Ask for two numbers
-- Ask what operation to do (add, subtract, multiply, divide)
-- Use if/elif/else to perform the correct operation
-- Use functions to organize your code
-- Use a loop to let the user do multiple calculations
-
-**Example:**
-```python
-# Your code here!
-```
-
----
-
-## Bonus Challenge: Create Your Own Game! 🎮
-
-**Goal:** Use ALL the concepts you've learned to create your own game!
-
-**Requirements:**
-- Must use at least 3 functions
-- Must use at least 1 loop (for or while)
-- Must use if/elif/else for decisions
-- Must use variables to track something (score, lives, etc.)
-- Must use input() to make it interactive
-- Must be fun and creative!
-
-**Ideas:**
-- Rock Paper Scissors
-- Number Guessing Game
-- Word Guessing Game
-- Quiz Game
-- Adventure Game
-- Your own creative idea!
-
----
-
-## Reflection Questions 🤔
-
-After completing the challenges, think about:
-
-1. Which challenge was the most fun? Why?
-2. Which challenge was the hardest? What made it difficult?
-3. How did you combine different concepts (functions, loops, if/else)?
-4. What would you like to add to make your programs even better?
-5. What new game or program would you like to create?
-
----
-
-## Tips for Success 💡
-
-- Start simple! Build one part at a time
-- Test your code often - run it after each small change
-- Use functions to organize your code
-- Don't be afraid to experiment!
-- Ask for help if you get stuck
-- Have fun! 🎉
-
----
-
-## Checklist ✅
-
-Before you're done, make sure you:
-- [ ] Used functions in at least 3 challenges
-- [ ] Used loops in at least 3 challenges
-- [ ] Used if/else in at least 3 challenges
-- [ ] Used variables to track information
-- [ ] Used input() to make programs interactive
-- [ ] Tested all your programs
-- [ ] Added comments to explain your code
-- [ ] Had fun! 🎉
-
----
-
-Good luck and have fun coding! 🚀
-
-
-
-
-
+_________________________________
+_________________________________
+_________________________________

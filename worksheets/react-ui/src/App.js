@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Part1 from './components/Part1';
 import Part2 from './components/Part2';
 import Part3 from './components/Part3';
 import Part4 from './components/Part4';
+import Exercise from './components/Exercise';
 import Bonus from './components/Bonus';
 import ScoreDisplay from './components/ScoreDisplay';
+import { useWorksheetStorage } from './hooks/useWorksheetStorage';
 
-function App() {
+function App({ profile }) {
   const [currentTab, setCurrentTab] = useState(0);
-  const [answers, setAnswers] = useState({
+  const initialAnswers = {
     name: '',
     date: new Date().toISOString().split('T')[0],
     q1: '',
@@ -26,54 +28,26 @@ function App() {
     reflection4: '',
     nextLearning: '',
     bonus: '',
-    notes: ''
-  });
-  const [checkedQuestions, setCheckedQuestions] = useState({
+    notes: '',
+    exerciseUpload1_completed: false,
+    exerciseUpload2_completed: false,
+    exerciseUpload3_completed: false
+  };
+  const initialCheckedQuestions = {
     q1: false,
     q2: false,
     q3: false
-  });
-
-  // Load saved answers on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('day1_worksheet_answers');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setAnswers(prev => ({ ...prev, ...parsed.answers }));
-        if (parsed.checkedQuestions) {
-          setCheckedQuestions(parsed.checkedQuestions);
-        }
-      } catch (e) {
-        console.error('Error loading saved answers:', e);
-      }
-    }
-  }, []);
-
-  // Save answers whenever they change
-  useEffect(() => {
-    const saveData = {
-      answers,
-      checkedQuestions,
-      lastSaved: new Date().toISOString()
-    };
-    localStorage.setItem('day1_worksheet_answers', JSON.stringify(saveData));
-  }, [answers, checkedQuestions]);
-
-  const updateAnswer = (key, value) => {
-    setAnswers(prev => ({ ...prev, [key]: value }));
   };
 
-  const updateCheckedQuestion = (questionId, isCorrect) => {
-    setCheckedQuestions(prev => ({ ...prev, [questionId]: isCorrect }));
-  };
+  const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 1, initialAnswers, initialCheckedQuestions);
 
   const tabs = [
     { id: 0, label: 'Part 1: Understanding Print', icon: '📚' },
     { id: 1, label: 'Part 2: Code Practice', icon: '💻' },
     { id: 2, label: 'Part 3: ASCII Art', icon: '🎨' },
     { id: 3, label: 'Part 4: Reflection', icon: '💭' },
-    { id: 4, label: '⭐ Bonus', icon: '⭐' }
+    { id: 4, label: 'Exercise', icon: '📤' },
+    { id: 5, label: '⭐ Bonus', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
@@ -94,6 +68,8 @@ function App() {
       case 3:
         return <Part4 answers={answers} updateAnswer={updateAnswer} />;
       case 4:
+        return <Exercise answers={answers} updateAnswer={updateAnswer} />;
+      case 5:
         return <Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return null;

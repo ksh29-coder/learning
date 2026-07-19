@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Day4Header from './components/Day4Header';
 import Day4Part1 from './components/Day4Part1';
@@ -6,12 +6,14 @@ import Day4Part2 from './components/Day4Part2';
 import Day4Part3 from './components/Day4Part3';
 import Day4Part4 from './components/Day4Part4';
 import Day4Part5 from './components/Day4Part5';
+import Day4Exercise from './components/Day4Exercise';
 import Day4Bonus from './components/Day4Bonus';
 import ScoreDisplay from './components/ScoreDisplay';
+import { useWorksheetStorage } from './hooks/useWorksheetStorage';
 
-function Day4App() {
+function Day4App({ profile }) {
   const [currentTab, setCurrentTab] = useState(0);
-  const [answers, setAnswers] = useState({
+  const initialAnswers = {
     name: '',
     date: new Date().toISOString().split('T')[0],
     q1: '',
@@ -33,48 +35,19 @@ function Day4App() {
     reflection5: '',
     nextLearning: '',
     bonus: '',
-    notes: ''
-  });
-  const [checkedQuestions, setCheckedQuestions] = useState({
+    notes: '',
+    exerciseUpload1_completed: false,
+    exerciseUpload2_completed: false,
+    exerciseUpload3_completed: false
+  };
+  const initialCheckedQuestions = {
     q1: false,
     q2: false,
     q3: false,
     q4: false
-  });
-
-  // Load saved answers on mount
-  useEffect(() => {
-    const saved = localStorage.getItem('day4_worksheet_answers');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setAnswers(prev => ({ ...prev, ...parsed.answers }));
-        if (parsed.checkedQuestions) {
-          setCheckedQuestions(parsed.checkedQuestions);
-        }
-      } catch (e) {
-        console.error('Error loading saved answers:', e);
-      }
-    }
-  }, []);
-
-  // Save answers whenever they change
-  useEffect(() => {
-    const saveData = {
-      answers,
-      checkedQuestions,
-      lastSaved: new Date().toISOString()
-    };
-    localStorage.setItem('day4_worksheet_answers', JSON.stringify(saveData));
-  }, [answers, checkedQuestions]);
-
-  const updateAnswer = (key, value) => {
-    setAnswers(prev => ({ ...prev, [key]: value }));
   };
 
-  const updateCheckedQuestion = (questionId, isCorrect) => {
-    setCheckedQuestions(prev => ({ ...prev, [questionId]: isCorrect }));
-  };
+  const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 4, initialAnswers, initialCheckedQuestions);
 
   const tabs = [
     { id: 0, label: 'Part 1: Understanding Loops', icon: '🔁' },
@@ -82,7 +55,8 @@ function Day4App() {
     { id: 2, label: 'Part 3: While Loops Practice', icon: '⌛' },
     { id: 3, label: 'Part 4: Challenges', icon: '🎯' },
     { id: 4, label: 'Part 5: Reflection', icon: '💭' },
-    { id: 5, label: '⭐ Bonus', icon: '⭐' }
+    { id: 5, label: 'Exercise', icon: '📤' },
+    { id: 6, label: '⭐ Bonus', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
@@ -105,6 +79,8 @@ function Day4App() {
       case 4:
         return <Day4Part5 answers={answers} updateAnswer={updateAnswer} />;
       case 5:
+        return <Day4Exercise answers={answers} updateAnswer={updateAnswer} />;
+      case 6:
         return <Day4Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return null;

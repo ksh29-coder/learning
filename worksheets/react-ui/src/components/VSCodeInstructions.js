@@ -1,7 +1,7 @@
 import React from 'react';
 import './VSCodeInstructions.css';
 
-function VSCodeInstructions() {
+function VSCodeInstructions({ exerciseFilename = 'my_exercise.py' }) {
   return (
     <div className="vscode-instructions">
       <h2>💻 How to Complete Exercises in VS Code</h2>
@@ -13,7 +13,7 @@ function VSCodeInstructions() {
             <ul>
               <li>Open VS Code</li>
               <li>Click: <strong>File → New File</strong></li>
-              <li>Save As: <code>day5_exercise1.py</code></li>
+              <li>Save As: <code>{exerciseFilename}</code></li>
             </ul>
           </div>
         </div>
@@ -35,7 +35,7 @@ function VSCodeInstructions() {
             <h3>Run Your Code</h3>
             <ul>
               <li>Open Terminal: <strong>View → Terminal</strong></li>
-              <li>Type: <code>python3 day5_exercise1.py</code></li>
+              <li>Type: <code>python3 {exerciseFilename}</code></li>
               <li>Press <kbd>Enter</kbd></li>
             </ul>
           </div>

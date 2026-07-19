@@ -1,6 +1,6 @@
 # Python Adventures for Kids
 
-A fun, engaging 7-day course to teach children the fundamentals of programming using Python.
+A fun, engaging 9-day course to teach children the fundamentals of programming using Python.
 
 ## Course Overview
 
@@ -19,6 +19,12 @@ This course introduces children to programming through hands-on projects and fun
 - Use the file explorer on the left side
 - Click on any `.py` file to open it
 - You can have multiple files open in tabs
+
+**Creating a New File (you'll do this a lot!):**
+- Click **File → New File** (or `Ctrl+N` / `Cmd+N`)
+- Save it with a `.py` name, e.g. `my_program.py` (`Ctrl+S` / `Cmd+S`)
+- Type your Python code, save again, then run it (see below)
+- From Day 5 onward, most exercises ask you to create your own `.py` file this way
 
 **Running Python Code:**
 - Right-click in the editor → "Run Python File in Terminal"
@@ -42,7 +48,9 @@ This course introduces children to programming through hands-on projects and fun
 - **Day 4:** Loops - Doing Things Over and Over
 - **Day 5:** Functions - Your Own Commands
 - **Day 6:** Lists - Collections of Things
-- **Day 7:** Putting It All Together - Final Project
+- **Day 7:** Classes & Objects - Your Own Blueprints
+- **Day 8:** Polymorphism & Inheritance - Same Command, Different Result
+- **Day 9:** Final Project - The Adventure RPG (+ Bonus Arcade)
 
 ## File Structure
 
@@ -53,38 +61,27 @@ learning/
 ├── lesson_plans/
 │   ├── day1_introduction.md
 │   ├── day2_variables.md
-│   └── day3_if_else.md
+│   ├── day3_if_else.md
+│   ├── day4_loops.md
+│   ├── day5_functions.md
+│   ├── day6_lists.md
+│   ├── day7_classes_and_objects.md
+│   ├── day8_polymorphism.md
+│   └── day9_final_project.md
 ├── code_examples/
-│   ├── day1/
-│   │   ├── 01_hello_world.py
-│   │   ├── 02_personalized_greeting.py
-│   │   ├── 03_ascii_art.py
-│   │   └── 04_name_tag.py
-│   ├── day2/
-│   │   ├── 01_basic_variables.py
-│   │   ├── 02_string_vs_numbers.py
-│   │   ├── 03_getting_input.py
-│   │   └── 04_interactive_info_card.py
-│   └── day3/
-│       ├── 01_basic_if.py
-│       ├── 02_if_else.py
-│       ├── 03_elif.py
-│       └── 04_interactive_quiz.py
+│   ├── day1/ ... day9/   (numbered 01_, 02_, ... example scripts per day)
+│   └── day9/             (also holds the bonus_*.py arcade games)
 ├── projects/
-│   └── templates/
-│       ├── day1_greeting_card_template.py
-│       ├── day2_mad_libs_template.py
-│       └── day3_adventure_game_template.py
+│   ├── templates/        (dayN_*_template.py starter code, incl. day9 bonus games)
+│   └── solutions/
 └── worksheets/
-    ├── day1_worksheet.md
-    ├── day2_worksheet.md
-    ├── day3_worksheet.md
-    ├── react-ui/ (Interactive React UI for all days!)
+    ├── day1_worksheet.md ... day9_worksheet.md   (markdown fallbacks)
+    ├── react-ui/ (Interactive React UI for all 9 days!)
     │   ├── src/
-    │   │   ├── App.js (Day 1)
-    │   │   ├── Day2App.js (Day 2)
-    │   │   ├── Day3App.js (Day 3)
-    │   │   └── DaySelector.js (Switch between days)
+    │   │   ├── App.js (Day 1), Day2App.js ... Day9App.js
+    │   │   ├── DaySelector.js (day tabs + Michael/Isabella profile switcher)
+    │   │   ├── hooks/useWorksheetStorage.js (per-kid progress saving)
+    │   │   └── components/ (shared: CodeRunner, ExerciseCard, ScoreDisplay, ...)
     │   └── package.json
     └── README_REACT_UI.md
 ```
@@ -153,14 +150,28 @@ learning/
 
 Navigate to `worksheets/react-ui/` and run `npm start` to get:
 - ✨ Colorful, kid-friendly web interface
-- 📦 Switch between Day 1 and Day 2 with buttons at the top
-- 💾 Auto-save your answers (saved in browser)
+- 👦👧 **Two profiles — Michael and Isabella** — pick who's learning at the top; each kid's progress saves separately and never overwrites the other's
+- 📅 Switch between all 9 days with buttons at the top (with ✅ / ✏️ progress badges per day)
+- 💾 Auto-save your answers (saved in the browser, per profile)
 - 🧪 Test your code right in the UI with live Python execution
-- 📄 View all your answers
-- 🎯 Organized by tabs (Part 1, Part 2, etc.)
-- ✅ Answer checking with instant feedback and scoring
+- 📤 **Upload your VS Code `.py` file** on Exercise tabs to run it and compare against the expected output
+- 🎯 Organized by tabs (Understanding, Practice, Quiz, Exercise, Bonus)
+- ✅ Quizzes with instant feedback and scoring
 
 See `worksheets/README_REACT_UI.md` for detailed instructions!
+
+> **Note on profiles:** Progress is stored in the browser's local storage, so each kid's saved answers live on **whichever device/browser they use**. They won't follow a kid from one computer to another. For two kids sharing one course, just have each pick their name at the top when they sit down.
+
+## Deploying the Worksheet App (Vercel)
+
+The interactive app can be hosted online (free) so the kids can open it from any browser:
+
+1. Push this repo to GitHub (already connected to `ksh29-coder/learning`).
+2. At [vercel.com](https://vercel.com), **Add New → Project** and import the repo.
+3. **Important:** set **Root Directory** to `worksheets/react-ui` (the app isn't at the repo root). Vercel auto-detects Create React App — build command `npm run build`, output directory `build`.
+4. Deploy. Every push to `main` re-deploys automatically; branches get preview URLs.
+
+No `vercel.json` is needed for this plain CRA app.
 
 ## Cursor Shortcuts (Helpful for Kids)
 
@@ -171,9 +182,10 @@ See `worksheets/README_REACT_UI.md` for detailed instructions!
 
 ## Next Steps
 
-- **After Day 1:** You'll be ready for Day 2: Variables!
-- **After Day 2:** You'll be ready for Day 3: Making Decisions with If/Else!
-- **After Day 3:** You'll be ready for Day 4: Loops - Doing Things Over and Over!
+- **Days 1–5:** Print, variables, if/else, loops, and functions — the building blocks.
+- **Day 6:** Lists — collections that hold many things at once.
+- **Days 7–8:** Classes & objects, then inheritance & polymorphism — real object-oriented programming!
+- **Day 9:** Put it ALL together in a text-based Adventure RPG, then relax with the Bonus Arcade. 🏆
 
 ---
 

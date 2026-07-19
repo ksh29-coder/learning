@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ExerciseCard.css';
+import CodeRunner from './CodeRunner';
 
 function ExerciseCard({
   number,
@@ -12,6 +13,21 @@ function ExerciseCard({
   completed,
   onToggleComplete
 }) {
+  const [uploadedCode, setUploadedCode] = useState('');
+  const [uploadedName, setUploadedName] = useState('');
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setUploadedCode(event.target.result);
+      setUploadedName(file.name);
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="exercise-card">
       <div className="exercise-header">
@@ -68,6 +84,21 @@ function ExerciseCard({
             </ul>
           </div>
         )}
+
+        <div className="upload-section">
+          <h4>✅ Check Your Work</h4>
+          <p className="upload-hint">
+            Wrote and ran <code>{filename}</code> in VS Code? Upload it here to see it run and compare it to the expected output above.
+          </p>
+          <label className="upload-button">
+            📤 Upload {filename}
+            <input type="file" accept=".py" onChange={handleFileChange} hidden />
+          </label>
+
+          {uploadedCode && (
+            <CodeRunner code={uploadedCode} title={`Your Uploaded Code (${uploadedName})`} />
+          )}
+        </div>
       </div>
     </div>
   );

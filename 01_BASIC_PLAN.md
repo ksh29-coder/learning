@@ -1,10 +1,10 @@
 # Python Adventures for Kids - Basic Course Plan
 
 ## Course Overview
-**Duration:** 7 days  
+**Duration:** 9 days  
 **Target Audience:** Children new to programming  
 **Language:** Python 3  
-**IDE:** Cursor  
+**IDE:** Cursor / VS Code  
 **Goal:** Teach core programming concepts through fun, hands-on projects
 
 ---
@@ -33,11 +33,19 @@
 
 ### Day 6: Lists - Collections of Things
 **Duration:** 2-3 hours  
-**Core Concepts:** Lists, indexing, list methods
+**Core Concepts:** Lists, indexing, slicing, `append`/`remove`, looping over lists
 
-### Day 7: Putting It All Together - Final Project
+### Day 7: Classes & Objects - Your Own Blueprints
+**Duration:** 2-3 hours  
+**Core Concepts:** Classes, objects, attributes, methods, `__init__`
+
+### Day 8: Polymorphism & Inheritance
+**Duration:** 2-3 hours  
+**Core Concepts:** Subclasses, `super()`, method overriding, polymorphism
+
+### Day 9: Putting It All Together - Final Project
 **Duration:** 3-4 hours  
-**Core Concepts:** Review and integration
+**Core Concepts:** Review and integration (Adventure RPG) + Bonus Arcade games
 
 ---
 
@@ -49,54 +57,44 @@ learning/
 ├── lesson_plans/
 │   ├── day1_introduction.md
 │   ├── day2_variables.md
-│   ├── day3_conditionals.md
+│   ├── day3_if_else.md
 │   ├── day4_loops.md
 │   ├── day5_functions.md
 │   ├── day6_lists.md
-│   └── day7_final_project.md
+│   ├── day7_classes_and_objects.md
+│   ├── day8_polymorphism.md
+│   └── day9_final_project.md
 ├── code_examples/
-│   ├── day1/
-│   │   ├── 01_hello_world.py
-│   │   ├── 02_personalized_greeting.py
-│   │   ├── 03_ascii_art.py
-│   │   └── 04_name_tag.py
-│   ├── day2/
-│   ├── day3/
-│   ├── day4/
-│   ├── day5/
-│   ├── day6/
-│   └── day7/
+│   ├── day1/ ... day8/          (numbered 01_, 02_, ... example scripts)
+│   └── day9/                    (01_-03_ examples + bonus_*.py arcade games)
 ├── projects/
 │   ├── templates/
 │   │   ├── day1_greeting_card_template.py
 │   │   ├── day2_mad_libs_template.py
-│   │   ├── day3_adventure_template.py
-│   │   ├── day4_multiplication_table_template.py
-│   │   ├── day5_function_toolbox_template.py
-│   │   ├── day6_todo_list_template.py
-│   │   └── day7_final_project_template.py
+│   │   ├── day3_adventure_game_template.py
+│   │   ├── day4_loop_art_template.py
+│   │   ├── day5_function_quiz_template.py
+│   │   ├── day6_list_project_template.py
+│   │   ├── day7_pet_class_template.py
+│   │   ├── day8_animal_kingdom_template.py
+│   │   ├── day9_final_project_template.py
+│   │   └── day9_bonus_*.py       (mini arcade, 007, tic-tac-toe)
 │   └── solutions/
 │       └── (solutions for reference)
 ├── worksheets/
-│   ├── day1_worksheet.md
-│   ├── day2_worksheet.md
-│   ├── day3_worksheet.md
-│   ├── day4_worksheet.md
-│   ├── day5_worksheet.md
-│   ├── day6_worksheet.md
-│   └── day7_worksheet.md
+│   ├── day1_worksheet.md ... day9_worksheet.md
+│   └── react-ui/                (interactive app, 9 days + per-kid profiles)
 └── README.md
 ```
 
 ---
 
-## Next Steps
+## Status
 
-1. ✅ Basic plan created
-2. ⏭️ Create detailed lesson plans for each day
-3. ⏭️ Create code examples and starter templates
-4. ⏭️ Create worksheets and exercises
-5. ⏭️ Create project templates with starter code
+- ✅ Days 1–9 lesson plans, code examples, project templates, and worksheets authored
+- ✅ Interactive React UI covers all 9 days with per-kid (Michael / Isabella) profiles
+- ✅ Each day has a Quiz tab and a VS-Code upload Exercise tab
+- ⏭️ Optional: add reference solutions under `projects/solutions/`
 
 ---
 

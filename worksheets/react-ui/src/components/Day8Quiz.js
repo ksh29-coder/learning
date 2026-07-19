@@ -1,0 +1,256 @@
+import React, { useState } from 'react';
+import './Part1.css';
+import ScoreDisplay from './ScoreDisplay';
+
+function Day8Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
+  const [feedback, setFeedback] = useState({
+    q1: '',
+    q2: '',
+    q3: '',
+    q4: '',
+    q5: '',
+    q6: ''
+  });
+
+  const correctAnswers = {
+    q1: 'A way for one class to reuse everything from another class',
+    q2: 'Pet',
+    q3: 'Buddy says: Woof!',
+    q4: ['parent', 'runs the parent', 'parent\'s __init__', 'parent setup', 'sets up', 'set up', 'runs pet', 'calls the parent'],
+    q5: 'Same command, different result',
+    q6: ['woof', 'meow', 'tweet', 'bark', 'different sound', 'same method', 'same call', 'different result', 'each animal', 'make_sound']
+  };
+
+  const checkAnswer = (questionId, userAnswer) => {
+    if (!userAnswer) {
+      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
+      return;
+    }
+
+    let isCorrect = false;
+    const correct = correctAnswers[questionId];
+
+    if (questionId === 'q1' || questionId === 'q2' || questionId === 'q5') {
+      isCorrect = userAnswer === correct;
+    } else if (questionId === 'q3') {
+      isCorrect = userAnswer.trim().toLowerCase() === correct.toLowerCase();
+    } else if (questionId === 'q4' || questionId === 'q6') {
+      const answerLower = userAnswer.toLowerCase();
+      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
+    }
+
+    if (isCorrect) {
+      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
+      updateCheckedQuestion(questionId, true);
+    } else {
+      let hint = '';
+      if (questionId === 'q1') {
+        hint = 'Hint: Think of a family - a subclass reuses everything from its parent class!';
+      } else if (questionId === 'q2') {
+        hint = 'Hint: In class Dog(Pet), the class inside the parentheses is the parent being reused.';
+      } else if (questionId === 'q3') {
+        hint = 'Hint: Dog overrides make_sound(), so ITS version runs, not Pet\'s plain one.';
+      } else if (questionId === 'q4') {
+        hint = 'Hint: super() means the parent class - it runs the parent\'s __init__ setup for you.';
+      } else if (questionId === 'q5') {
+        hint = 'Hint: Poly = many, morph = shapes. Same call, but different behavior for each object!';
+      } else if (questionId === 'q6') {
+        hint = 'Hint: Think of looping over dogs, cats, and birds calling make_sound() - each sounds different!';
+      }
+      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
+      updateCheckedQuestion(questionId, false);
+    }
+  };
+
+  return (
+    <div className="part1-container">
+      <div className="part-header">
+        <h2>🧠 Quiz: Inheritance &amp; Polymorphism</h2>
+        <p className="part-description">
+          Let's check your understanding of inheritance, super(), overriding, and polymorphism!
+        </p>
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 1: What is inheritance?</h3>
+        <div className="options">
+          {[
+            'A way to delete a class',
+            'A way for one class to reuse everything from another class',
+            'A type of loop',
+            'A built-in Python function'
+          ].map((option, index) => (
+            <label key={index} className="radio-option">
+              <input
+                type="radio"
+                name="q1"
+                value={option}
+                checked={answers.q1 === option}
+                onChange={(e) => updateAnswer('q1', e.target.value)}
+              />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+        <div className="check-section">
+          <button className="check-button" onClick={() => checkAnswer('q1', answers.q1)}>
+            ✓ Check Answer
+          </button>
+          {feedback.q1 && (
+            <span className={`feedback ${feedback.q1.includes('✓') ? 'correct' : 'incorrect'}`}>
+              {feedback.q1}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 2: In `class Dog(Pet):`, which class is the parent (the one being reused)?</h3>
+        <div className="options">
+          {['Dog', 'Pet', 'Both', 'Neither'].map((option, index) => (
+            <label key={index} className="radio-option">
+              <input
+                type="radio"
+                name="q2"
+                value={option}
+                checked={answers.q2 === option}
+                onChange={(e) => updateAnswer('q2', e.target.value)}
+              />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+        <div className="check-section">
+          <button className="check-button" onClick={() => checkAnswer('q2', answers.q2)}>
+            ✓ Check Answer
+          </button>
+          {feedback.q2 && (
+            <span className={`feedback ${feedback.q2.includes('✓') ? 'correct' : 'incorrect'}`}>
+              {feedback.q2}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 3: What will this code print?</h3>
+        <pre className="code-block">
+{`class Pet:
+    def __init__(self, name):
+        self.name = name
+    def make_sound(self):
+        print(self.name, "makes a sound!")
+
+class Dog(Pet):
+    def make_sound(self):
+        print(self.name, "says: Woof!")
+
+d = Dog("Buddy")
+d.make_sound()`}
+        </pre>
+        <div className="answer-input-group">
+          <input
+            type="text"
+            value={answers.q3}
+            onChange={(e) => updateAnswer('q3', e.target.value)}
+            placeholder="Enter your answer..."
+            className="answer-input"
+          />
+          <button className="check-button" onClick={() => checkAnswer('q3', answers.q3)}>
+            ✓ Check Answer
+          </button>
+        </div>
+        {feedback.q3 && (
+          <span className={`feedback ${feedback.q3.includes('✓') ? 'correct' : 'incorrect'}`}>
+            {feedback.q3}
+          </span>
+        )}
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 4: What does `super().__init__(...)` do?</h3>
+        <div className="answer-input-group">
+          <input
+            type="text"
+            value={answers.q4}
+            onChange={(e) => updateAnswer('q4', e.target.value)}
+            placeholder="Enter your answer..."
+            className="answer-input"
+          />
+          <button className="check-button" onClick={() => checkAnswer('q4', answers.q4)}>
+            ✓ Check Answer
+          </button>
+        </div>
+        {feedback.q4 && (
+          <span className={`feedback ${feedback.q4.includes('✓') ? 'correct' : 'incorrect'}`}>
+            {feedback.q4}
+          </span>
+        )}
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 5: What is polymorphism, in a few words?</h3>
+        <div className="options">
+          {[
+            'A way to delete objects',
+            'Same command, different result',
+            'A kind of loop',
+            'A math operator'
+          ].map((option, index) => (
+            <label key={index} className="radio-option">
+              <input
+                type="radio"
+                name="q5"
+                value={option}
+                checked={answers.q5 === option}
+                onChange={(e) => updateAnswer('q5', e.target.value)}
+              />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+        <div className="check-section">
+          <button className="check-button" onClick={() => checkAnswer('q5', answers.q5)}>
+            ✓ Check Answer
+          </button>
+          {feedback.q5 && (
+            <span className={`feedback ${feedback.q5.includes('✓') ? 'correct' : 'incorrect'}`}>
+              {feedback.q5}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 6: Give an example of polymorphism (same call, different result).</h3>
+        <div className="answer-input-group">
+          <input
+            type="text"
+            value={answers.q6}
+            onChange={(e) => updateAnswer('q6', e.target.value)}
+            placeholder="Enter your answer..."
+            className="answer-input"
+          />
+          <button className="check-button" onClick={() => checkAnswer('q6', answers.q6)}>
+            ✓ Check Answer
+          </button>
+        </div>
+        {feedback.q6 && (
+          <span className={`feedback ${feedback.q6.includes('✓') ? 'correct' : 'incorrect'}`}>
+            {feedback.q6}
+          </span>
+        )}
+      </div>
+
+      <ScoreDisplay checkedQuestions={checkedQuestions} />
+
+      <div className="part-footer">
+        <p className="tip">
+          💡 Tip: Scroll down to see all questions, or click the tabs above to move to other parts!
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default Day8Quiz;

@@ -176,6 +176,46 @@
   color: #5d4037;
 }
 
+.upload-section {
+  background: #f0f7f0;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  border-left: 4px solid #4CAF50;
+}
+
+.upload-section h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #2e7d32;
+  font-size: 16px;
+}
+
+.upload-hint {
+  margin: 0 0 15px;
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.upload-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #4CAF50 0%, #388e3c 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+}
+
+.upload-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(76, 175, 80, 0.4);
+}
+
 @media (max-width: 768px) {
   .exercise-header {
     flex-direction: column;

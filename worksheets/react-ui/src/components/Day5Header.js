@@ -54,7 +54,7 @@ function Day5Header({ name, date, updateName, updateDate }) {
         </div>
       </div>
 
-      <VSCodeInstructions />
+      <VSCodeInstructions exerciseFilename="day5_exercise1.py" />
 
       <div className="important-note">
         <h3>⚠️ Important: We're Using VS Code Today!</h3>

@@ -17,6 +17,52 @@
   font-weight: bold;
 }
 
+.profile-switcher {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.profile-switcher-label {
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.profile-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.profile-button.active {
+  background: white;
+  color: #764ba2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.profile-icon {
+  font-size: 18px;
+}
+
 .day-buttons {
   display: flex;
   gap: 15px;
@@ -25,6 +71,9 @@
 }
 
 .day-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 12px 24px;
   font-size: 16px;
   font-weight: 600;
@@ -34,6 +83,11 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.day-progress-badge {
+  font-size: 15px;
+  line-height: 1;
 }
 
 .day-button:hover {

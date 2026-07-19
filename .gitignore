@@ -50,3 +50,6 @@ coverage/
 *.tmp
 *.temp
 
+
+# Claude Code local settings (personal permission grants)
+.claude/settings.local.json
