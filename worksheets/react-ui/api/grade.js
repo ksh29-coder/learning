@@ -71,7 +71,8 @@ module.exports = async (req, res) => {
       ],
       maxTokens: Number(process.env.AI_MAX_TOKENS_GRADE || 160),
       temperature: 0,
-      json: true
+      json: true,
+      timeoutMs: Number(process.env.AI_TIMEOUT_GRADE_MS || 15000)
     });
 
     const parsed = validateGrade(extractJson(text));

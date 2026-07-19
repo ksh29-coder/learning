@@ -96,7 +96,11 @@ module.exports = async (req, res) => {
     const { text, usage, model } = await callLLM({
       messages: [{ role: 'system', content: buildSystemPrompt(ctx) }].concat(messages),
       maxTokens: Number(process.env.AI_MAX_TOKENS_CHAT || 300),
-      temperature: 0.6
+      temperature: 0.6,
+      // A conversational reply takes noticeably longer than a one-word grading
+      // verdict, and timing out here is what produces the "having a nap"
+      // message. Kept below the function's maxDuration so we fail on our terms.
+      timeoutMs: Number(process.env.AI_TIMEOUT_CHAT_MS || 25000)
     });
 
     const reply = String(text || '').trim();
