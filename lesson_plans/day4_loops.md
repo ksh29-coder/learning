@@ -516,3 +516,7 @@ print("Great job! Workout complete! 💪")
   - Stop a running program if needed (close terminal / stop button)
   - Save and run files repeatedly while experimenting
 - **End Goal:** Students should leave feeling that loops are a **superpower** for repeating actions in their programs without writing the same code again and again.
+
+
+
+

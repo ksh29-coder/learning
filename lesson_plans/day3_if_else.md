@@ -668,3 +668,7 @@ else:
   - Cursor helps with automatic indentation
 - **End Goal:** Kids should understand how to make programs that make decisions and respond to different situations!
 
+
+
+
+

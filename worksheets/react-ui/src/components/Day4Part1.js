@@ -212,3 +212,7 @@ function Day4Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuest
 }
 
 export default Day4Part1;
+
+
+
+

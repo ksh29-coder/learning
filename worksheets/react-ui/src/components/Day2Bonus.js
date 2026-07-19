@@ -55,3 +55,7 @@ function Day2Bonus({ answers, updateAnswer }) {
 
 export default Day2Bonus;
 
+
+
+
+

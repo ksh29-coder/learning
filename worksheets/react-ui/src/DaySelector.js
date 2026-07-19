@@ -3,6 +3,7 @@ import App from './App';
 import Day2App from './Day2App';
 import Day3App from './Day3App';
 import Day4App from './Day4App';
+import Day5App from './Day5App';
 import './DaySelector.css';
 
 function DaySelector() {
@@ -18,6 +19,8 @@ function DaySelector() {
         return <Day3App />;
       case 4:
         return <Day4App />;
+      case 5:
+        return <Day5App />;
       default:
         return <App />;
     }
@@ -51,6 +54,12 @@ function DaySelector() {
             onClick={() => setSelectedDay(4)}
           >
             🔁 Day 4: Loops - Doing Things Over and Over
+          </button>
+          <button
+            className={`day-button ${selectedDay === 5 ? 'active' : ''}`}
+            onClick={() => setSelectedDay(5)}
+          >
+            🎯 Day 5: Functions, Review & Games!
           </button>
         </div>
       </div>

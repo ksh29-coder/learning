@@ -69,9 +69,230 @@
   .tab-label {
     display: none;
   }
-  
+
   .tab {
     padding: 12px 16px;
+  }
+}
+
+/* Day 5 Specific Styles */
+.part-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section-intro {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.info-box {
+  background: #f0f9ff;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  border-left: 5px solid #3498db;
+}
+
+.info-box h3 {
+  margin-top: 0;
+  color: #2980b9;
+}
+
+.info-box pre.code-example {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.question-box {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.question-box h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.question-box textarea,
+.question-box input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.question-box textarea:focus,
+.question-box input[type="text"]:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.check-button {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.check-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.feedback {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.feedback.correct {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.feedback.incorrect {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.review-item {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+}
+
+.review-item strong {
+  color: #667eea;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.review-item p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.review-item code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.success-box,
+.tips-box,
+.mastery-box,
+.code-hint-box,
+.challenge-box {
+  padding: 20px;
+  border-radius: 10px;
+  margin: 25px 0;
+}
+
+.success-box {
+  background: #d4edda;
+  border-left: 5px solid #28a745;
+}
+
+.success-box h3 {
+  color: #155724;
+  margin-top: 0;
+}
+
+.tips-box {
+  background: #fff9e6;
+  border-left: 5px solid #ffc107;
+}
+
+.tips-box h3 {
+  color: #f57c00;
+  margin-top: 0;
+}
+
+.mastery-box {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #000;
+  border-left: 5px solid #FF8C00;
+}
+
+.mastery-box h3 {
+  margin-top: 0;
+}
+
+.code-hint-box {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  border-left: 5px solid #667eea;
+}
+
+.code-hint-box h3 {
+  color: #4CAF50;
+  margin-top: 0;
+}
+
+.code-hint-box pre {
+  margin: 0;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.challenge-box {
+  background: #fff0f5;
+  border-left: 5px solid #e91e63;
+}
+
+.challenge-box h3 {
+  color: #c2185b;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .part-container {
+    padding: 20px;
+  }
+
+  .review-grid {
+    grid-template-columns: 1fr;
   }
 }
 

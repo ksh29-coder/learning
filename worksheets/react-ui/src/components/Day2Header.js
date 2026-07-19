@@ -38,3 +38,7 @@ function Day2Header({ name, date, updateName, updateDate }) {
 
 export default Day2Header;
 
+
+
+
+

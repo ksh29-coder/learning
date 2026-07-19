@@ -14,3 +14,7 @@ print("My favorite color is", favorite_color)
 # Try changing the values above and run again!
 # What happens if you change my_name to your name?
 
+
+
+
+

@@ -34,3 +34,7 @@ function Day3Header({ name, date, updateName, updateDate }) {
 
 export default Day3Header;
 
+
+
+
+

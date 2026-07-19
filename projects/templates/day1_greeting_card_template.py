@@ -42,3 +42,7 @@ print("=" * 30)
 # 4. Try different border characters
 # 5. Create a second greeting card for someone else!
 
+
+
+
+
