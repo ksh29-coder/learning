@@ -1,66 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
 import ScoreDisplay from './ScoreDisplay';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day8Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: '',
-    q5: '',
-    q6: ''
+// Question content (the correct answers and the hints) stays here, per the
+// repo's duplicate-content-per-day convention. useCheckAnswer supplies only the
+// mechanism: local-first grading, with the AI as a second opinion when the
+// keyword match misses.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'A way for one class to reuse everything from another class',
+    prompt: 'What is inheritance?',
+    hint: 'Hint: Think of a family - a subclass reuses everything from its parent class!'
+  },
+  q2: {
+    mode: 'choice',
+    correct: 'Pet',
+    prompt: 'In `class Dog(Pet):`, which class is the parent (the one being reused)?',
+    hint: 'Hint: In class Dog(Pet), the class inside the parentheses is the parent being reused.'
+  },
+  q3: {
+    mode: 'text',
+    correct: 'Buddy says: Woof!',
+    prompt: 'What will this code print? class Dog(Pet) overrides make_sound() to print name + " says: Woof!", then d = Dog("Buddy"); d.make_sound()',
+    hint: 'Hint: Dog overrides make_sound(), so ITS version runs, not Pet\'s plain one.'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['parent', 'runs the parent', 'parent\'s __init__', 'parent setup', 'sets up', 'set up', 'runs pet', 'calls the parent'],
+    prompt: 'What does `super().__init__(...)` do?',
+    hint: 'Hint: super() means the parent class - it runs the parent\'s __init__ setup for you.'
+  },
+  q5: {
+    mode: 'choice',
+    correct: 'Same command, different result',
+    prompt: 'What is polymorphism, in a few words?',
+    hint: 'Hint: Poly = many, morph = shapes. Same call, but different behavior for each object!'
+  },
+  q6: {
+    mode: 'text',
+    correct: ['woof', 'meow', 'tweet', 'bark', 'different sound', 'same method', 'same call', 'different result', 'each animal', 'make_sound'],
+    prompt: 'Give an example of polymorphism (same call, different result).',
+    hint: 'Hint: Think of looping over dogs, cats, and birds calling make_sound() - each sounds different!'
+  }
+};
+
+function Day8Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 8,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'A way for one class to reuse everything from another class',
-    q2: 'Pet',
-    q3: 'Buddy says: Woof!',
-    q4: ['parent', 'runs the parent', 'parent\'s __init__', 'parent setup', 'sets up', 'set up', 'runs pet', 'calls the parent'],
-    q5: 'Same command, different result',
-    q6: ['woof', 'meow', 'tweet', 'bark', 'different sound', 'same method', 'same call', 'different result', 'each animal', 'make_sound']
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1' || questionId === 'q2' || questionId === 'q5') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      isCorrect = userAnswer.trim().toLowerCase() === correct.toLowerCase();
-    } else if (questionId === 'q4' || questionId === 'q6') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: Think of a family - a subclass reuses everything from its parent class!';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: In class Dog(Pet), the class inside the parentheses is the parent being reused.';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: Dog overrides make_sound(), so ITS version runs, not Pet\'s plain one.';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: super() means the parent class - it runs the parent\'s __init__ setup for you.';
-      } else if (questionId === 'q5') {
-        hint = 'Hint: Poly = many, morph = shapes. Same call, but different behavior for each object!';
-      } else if (questionId === 'q6') {
-        hint = 'Hint: Think of looping over dogs, cats, and birds calling make_sound() - each sounds different!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

@@ -63,6 +63,20 @@ export function useWorksheetStorage(profile, day, initialAnswers, initialChecked
   return { answers, checkedQuestions, updateAnswer, updateCheckedQuestion };
 }
 
+// Read-only access to a day's raw saved blob ({ answers, checkedQuestions,
+// lastSaved }), for features that need to inspect past work without mounting
+// that day's components - e.g. building context for the AI teacher.
+// Returns null when nothing is saved. Never writes.
+export function readDayState(profile, day) {
+  const saved = localStorage.getItem(getStorageKey(profile, day));
+  if (!saved) return null;
+  try {
+    return JSON.parse(saved);
+  } catch (e) {
+    return null;
+  }
+}
+
 // Cheap synchronous read for progress badges - does not subscribe to changes.
 export function getDayProgress(profile, day) {
   const saved = localStorage.getItem(getStorageKey(profile, day));

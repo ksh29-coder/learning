@@ -9,6 +9,7 @@ import Day7App from './Day7App';
 import Day8App from './Day8App';
 import Day9App from './Day9App';
 import { DEFAULT_PROFILE, getDayProgress } from './hooks/useWorksheetStorage';
+import AiTeacher from './components/AiTeacher';
 import './DaySelector.css';
 
 const PROFILES = [
@@ -111,9 +112,14 @@ function DaySelector() {
           })}
         </div>
       </div>
-      <div className="day-content">
-        {renderDay()}
-      </div>
+      {/* key={profile} matters: the panel sits outside the day content's own
+          remount, so without it one kid's conversation would carry over into
+          the other's session. */}
+      <AiTeacher key={profile} profile={profile} day={selectedDay}>
+        <div className="day-content">
+          {renderDay()}
+        </div>
+      </AiTeacher>
     </div>
   );
 }
