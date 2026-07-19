@@ -69,6 +69,7 @@ function Day3App({ profile }) {
             updateAnswer={updateAnswer}
             checkedQuestions={checkedQuestions}
             updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
           />
         );
       case 1:

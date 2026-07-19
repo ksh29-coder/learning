@@ -1,59 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day4Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: ''
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'It repeats code many times',
+    prompt: 'What is a loop in programming?',
+    hint: 'Hint: Loops are for doing the SAME thing again and again!'
+  },
+  q2: {
+    // MUST stay 'choice': the JSX calls checkAnswer('q2', 'for') and
+    // checkAnswer('q2', 'wrong') with hardcoded literals from choice buttons,
+    // so the literal 'wrong' must never reach a language model.
+    mode: 'choice',
+    correct: 'for',
+    prompt: 'Which keyword do we use for a counting loop with range()?',
+    hint: 'Hint: We use this keyword with range() to count.'
+  },
+  q3: {
+    // MUST stay 'choice' - same hardcoded-literal pattern as q2.
+    mode: 'choice',
+    correct: 'while',
+    prompt: 'Which keyword do we use for a loop that runs while a condition is True?',
+    hint: 'Hint: This loop runs WHILE a condition is True.'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['change the variable', 'update the variable', 'make the variable change'],
+    prompt: 'What must we do inside most while loops so they can eventually stop?',
+    hint: 'Hint: If nothing changes, the condition might stay True forever!'
+  }
+};
+
+function Day4Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 4,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'It repeats code many times',
-    q2: 'for',
-    q3: 'while',
-    q4: ['change the variable', 'update the variable', 'make the variable change']
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q2') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q4') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: Loops are for doing the SAME thing again and again!';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: We use this keyword with range() to count.';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: This loop runs WHILE a condition is True.';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: If nothing changes, the condition might stay True forever!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

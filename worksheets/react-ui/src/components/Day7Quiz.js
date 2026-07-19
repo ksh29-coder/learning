@@ -1,66 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
 import ScoreDisplay from './ScoreDisplay';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day7Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: '',
-    q5: '',
-    q6: ''
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'A blueprint/template used to create objects',
+    prompt: 'What is a class?',
+    hint: 'Hint: Think cookie cutter - it\'s the shape/template, not a cookie itself!'
+  },
+  q2: {
+    mode: 'choice',
+    correct: 'One actual "thing" created from a class',
+    prompt: 'What is an object (instance)?',
+    hint: 'Hint: Think of a single cookie made from the cutter - one actual thing!'
+  },
+  q3: {
+    mode: 'text',
+    correct: 'Buddy',
+    prompt: 'What will this code print? A Pet class stores self.name, then my_pet = Pet("Buddy", "dog") and print(my_pet.name)',
+    hint: 'Hint: What was passed as the first argument to Pet(...)? That becomes self.name.'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['this object', 'the object', 'the current object', 'this particular object', 'the specific object', 'that object'],
+    prompt: 'What does `self` refer to inside a method?',
+    hint: 'Hint: self always refers to whichever object the method was called on!'
+  },
+  q5: {
+    mode: 'choice',
+    correct: 'class',
+    prompt: 'What keyword do you use to define a class?',
+    hint: 'Hint: It\'s the same keyword used to start a class definition.'
+  },
+  q6: {
+    mode: 'text',
+    correct: ['sets up', 'set up', 'initial', 'starting attributes', 'runs automatically', 'when the object is created', 'when an object is created'],
+    prompt: 'What does `__init__` do?',
+    hint: 'Hint: __init__ runs automatically to set up an object\'s starting attributes!'
+  }
+};
+
+function Day7Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 7,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'A blueprint/template used to create objects',
-    q2: 'One actual "thing" created from a class',
-    q3: 'Buddy',
-    q4: ['this object', 'the object', 'the current object', 'this particular object', 'the specific object', 'that object'],
-    q5: 'class',
-    q6: ['sets up', 'set up', 'initial', 'starting attributes', 'runs automatically', 'when the object is created', 'when an object is created']
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1' || questionId === 'q2' || questionId === 'q5') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      isCorrect = userAnswer.trim().toLowerCase() === correct.toLowerCase();
-    } else if (questionId === 'q4' || questionId === 'q6') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: Think cookie cutter - it\'s the shape/template, not a cookie itself!';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: Think of a single cookie made from the cutter - one actual thing!';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: What was passed as the first argument to Pet(...)? That becomes self.name.';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: self always refers to whichever object the method was called on!';
-      } else if (questionId === 'q5') {
-        hint = 'Hint: It\'s the same keyword used to start a class definition.';
-      } else if (questionId === 'q6') {
-        hint = 'Hint: __init__ runs automatically to set up an object\'s starting attributes!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

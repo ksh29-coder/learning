@@ -1,74 +1,60 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
 import ScoreDisplay from './ScoreDisplay';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day6Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: '',
-    q5: '',
-    q6: ''
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'A way to store many values together in one variable',
+    prompt: 'What is a list?',
+    hint: 'Hint: Think about a backpack that can hold many items at once!'
+  },
+  q2: {
+    mode: 'choice',
+    correct: '0',
+    prompt: 'What is the index of the FIRST item in a list?',
+    hint: 'Hint: Python starts counting positions at a very small number!'
+  },
+  q3: {
+    mode: 'text',
+    correct: ['pretzels'],
+    // Exact match, not substring: a one-word answer must be that exact word.
+    arrayMatch: 'exact',
+    prompt: 'What will this code print? snacks = ["chips", "pretzels", "cookies"] then print(snacks[1])',
+    hint: 'Hint: Index 1 is the SECOND item in the list (counting starts at 0)!'
+  },
+  q4: {
+    mode: 'choice',
+    correct: '.append()',
+    prompt: 'Which method adds an item to the END of a list?',
+    hint: 'Hint: This method adds an item to the very end of the list.'
+  },
+  q5: {
+    mode: 'text',
+    correct: ['is in the list', 'checks if', 'membership', 'true or false', 'true/false'],
+    prompt: 'What does the `in` keyword do with a list?',
+    hint: 'Hint: "in" checks if something is inside the list and gives back True or False!'
+  },
+  q6: {
+    mode: 'text',
+    correct: ['cherry'],
+    arrayMatch: 'exact',
+    prompt: 'What does this print? fruits = ["apple", "banana", "cherry"] then print(fruits[-1])',
+    hint: 'Hint: Negative indexes count from the END of the list. -1 is the last item!'
+  }
+};
+
+function Day6Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 6,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'A way to store many values together in one variable',
-    q2: '0',
-    q3: ['pretzels'],
-    q4: '.append()',
-    q5: ['is in the list', 'checks if', 'membership', 'true or false', 'true/false'],
-    q6: ['cherry']
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q2') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      const answerLower = userAnswer.trim().toLowerCase();
-      isCorrect = correct.some(c => answerLower === c.toLowerCase());
-    } else if (questionId === 'q4') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q5') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
-    } else if (questionId === 'q6') {
-      const answerLower = userAnswer.trim().toLowerCase();
-      isCorrect = correct.some(c => answerLower === c.toLowerCase());
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: Think about a backpack that can hold many items at once!';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: Python starts counting positions at a very small number!';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: Index 1 is the SECOND item in the list (counting starts at 0)!';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: This method adds an item to the very end of the list.';
-      } else if (questionId === 'q5') {
-        hint = 'Hint: "in" checks if something is inside the list and gives back True or False!';
-      } else if (questionId === 'q6') {
-        hint = 'Hint: Negative indexes count from the END of the list. -1 is the last item!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

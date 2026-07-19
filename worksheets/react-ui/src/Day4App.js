@@ -68,6 +68,7 @@ function Day4App({ profile }) {
             updateAnswer={updateAnswer}
             checkedQuestions={checkedQuestions}
             updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
           />
         );
       case 1:

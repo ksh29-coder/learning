@@ -43,9 +43,27 @@ npm test         # react-scripts test runner (no tests authored yet)
 - stdout is captured by redirecting `sys.stdout` to a `StringIO` before running user code.
 - `input()` does not work natively in the browser. `CodeRunner` **regex-scans the code for `input(...)` calls**, prompts the user for each value in a form, then overrides `builtins.input` in Pyodide to feed those values in order. Code with `input()` still behaves best in a real terminal.
 
+### AI teacher (`api/` + `src/lib`, `src/hooks/useCheckAnswer.js`)
+
+An optional AI tutor. **The whole feature is gated on `REACT_APP_AI_ENABLED=1`; with it off, or with no API key, the app behaves exactly as it did before it existed.** That is a hard requirement, not a nicety — never let a change make a quiz depend on the network.
+
+- **`api/chat.js`, `api/grade.js`** — Vercel serverless functions, the only server-side code in the repo. They exist because CRA inlines `REACT_APP_*` into the public bundle at build time, so an API key cannot live in `src/`. **CommonJS** (`package.json` has no `"type":"module"`), plain Node, zero dependencies. CRA does not compile `api/`, so nothing lints it — `node --check` it by hand.
+- Provider-agnostic over any **OpenAI-compatible** `/chat/completions` endpoint. Model, base URL, and key are env vars (see `.env.example`); nothing hardcodes a model.
+- Both endpoints **return HTTP 200 with a fallback payload on upstream failure**, so the client has one success path.
+- **System prompts live on the backend**, never in `src/` — a client-side guardrail is editable in devtools. Clients cannot supply a `system` message; handlers filter roles and prepend their own.
+- **`src/hooks/useCheckAnswer.js`** — shared grading for all 9 days. Returns `{ feedback, pending, checkAnswer }` where `feedback` keeps the historic `'✓'`-prefixed string shape, so quiz **JSX is untouched by design**. Policy is *local-first*: `mode:'choice'` never hits the network, a local keyword match that says correct settles immediately, and only an apparent miss asks the AI (which can overturn it to correct, never the reverse). Question content and hints stay duplicated per day; the hook supplies only mechanism.
+- **`src/data/curriculumMap.js`** — the one piece of deliberately shared cross-day config. It renders nothing and exists so the AI never teaches ahead of the day the student has reached.
+- **`src/lib/mistakeLog.js`** — per-profile history under its own key, snapshotting question text (storage only keys questions as `q1`/`q2`, and past days' components aren't mounted later).
+
+> ⚠️ **Never write a non-question key into `checkedQuestions`.** `ScoreDisplay` computes `total` from `Object.keys(checkedQuestions).length` and `getDayProgress` counts the same object — a stray key silently corrupts both scores and the day progress badges. Chat history, mistakes, and the passphrase each use their own `localStorage` key.
+
+> ⚠️ Some Day 2/3/4 choice buttons call `checkAnswer` with **hardcoded literals** (e.g. `checkAnswer('q2','wrong')`) rather than the kid's input. Those questions must stay `mode:'choice'` so the literal never reaches a model. Grep call sites before changing a question's mode.
+
 ### Deployment
 
-The app deploys to **Vercel** from the GitHub repo (`ksh29-coder/learning`) with **Root Directory = `worksheets/react-ui`** (the CRA app is not at repo root). Framework auto-detects as Create React App; no `vercel.json` needed. Progress is browser-`localStorage` only (per-device, no backend/login).
+The app deploys to **Vercel** from the GitHub repo (`ksh29-coder/learning`) with **Root Directory = `worksheets/react-ui`** (the CRA app is not at repo root). Framework auto-detects as Create React App. `vercel.json` sets the API functions' timeout; the `api/` directory must sit **inside** the root directory or Vercel will never see it (a misplaced `api/` 404s into the SPA rewrite and returns HTML with a 200 — check `curl -i /api/grade` returns **405**, not HTML).
+
+Worksheet progress is browser-`localStorage` only (per-device, per-profile, no login).
 
 ## Conventions
 

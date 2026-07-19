@@ -1,10 +1,63 @@
 import React from 'react';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day5Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const checkAnswer = (questionId, userAnswer, correctAnswer) => {
-    const isCorrect = userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
-    updateCheckedQuestion(questionId, isCorrect);
-  };
+// Answers and hints stay here per the repo's per-day duplication convention.
+//
+// This day's questions are open-ended ("explain in your own words"), which is
+// exactly where keyword matching was weakest - q1 previously demanded the
+// answer equal one exact sentence, so almost no real child could pass it. The
+// local matchers below are deliberately generous, and anything they miss now
+// gets a second opinion from the AI grader.
+const QUESTIONS = {
+  q1: {
+    mode: 'text',
+    correct: ['reusable block of code', 'reusable', 'reuse', 'block of code'],
+    prompt: 'In your own words, explain what a function is in Python.',
+    hint: 'Hint: Functions are blocks of code that can be reused multiple times'
+  },
+  q2: {
+    mode: 'text',
+    correct: ['reuse code', 'organize code'],
+    match: (answer) =>
+      /reuse|repeat|dry/i.test(answer) || /organiz|clean|readable|structure/i.test(answer),
+    prompt: 'List at least TWO reasons why functions are helpful in programming.',
+    hint: 'Hint: Think about avoiding repetition and keeping code organized'
+  },
+  q3: {
+    mode: 'text',
+    correct: ['greet_user', 'name', 'prints a greeting'],
+    // Three separate inputs (q3a/q3b/q3c) roll up into one graded question.
+    compose: (a) =>
+      `name: ${a.q3a || ''}, parameter: ${a.q3b || ''}, what it does: ${a.q3c || ''}`,
+    match: (answer) => {
+      const parts = String(answer).toLowerCase();
+      const name = /name:[^,]*greet/.test(parts);
+      const param = /parameter:[^,]*name/.test(parts);
+      const does = /what it does:.*print/.test(parts);
+      return name && param && does;
+    },
+    prompt:
+      'For `def greet_user(name): print("Hello,", name, "!")` - what is the function name, the parameter, and what does it do?',
+    hint: 'Hint: The name is "greet_user", parameter is "name", and it prints a greeting'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['defining creates it, calling runs it'],
+    match: (answer) =>
+      /def|defin|creat|write/i.test(answer) && /call|run|use|execut/i.test(answer),
+    prompt: 'What is the difference between defining a function and calling a function?',
+    hint: 'Hint: Defining is creating the function with "def", calling is using it'
+  }
+};
+
+function Day5Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 5,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
+  });
 
   return (
     <div className="part-container">
@@ -36,16 +89,18 @@ greet("Alex")  # Calls the function`}</pre>
           rows="4"
         />
         <button
-          onClick={() => checkAnswer('q1', answers.q1, 'A function is a reusable block of code')}
+          onClick={() => checkAnswer('q1', answers.q1)}
           className="check-button"
         >
           ✓ Check Answer
         </button>
-        {checkedQuestions.q1 !== undefined && (
-          <div className={checkedQuestions.q1 ? 'feedback correct' : 'feedback incorrect'}>
-            {checkedQuestions.q1 ?
-              '✓ Great! Functions are reusable blocks of code!' :
-              '✗ Hint: Functions are blocks of code that can be reused multiple times'}
+        {/* Keep the warm custom message when right; when wrong, show the hook's
+            message so the AI's tailored hint reaches the student. */}
+        {feedback.q1 && (
+          <div className={feedback.q1.includes('✓') ? 'feedback correct' : 'feedback incorrect'}>
+            {feedback.q1.includes('✓')
+              ? '✓ Great! Functions are reusable blocks of code!'
+              : feedback.q1}
           </div>
         )}
       </div>
@@ -60,21 +115,16 @@ greet("Alex")  # Calls the function`}</pre>
           rows="4"
         />
         <button
-          onClick={() => {
-            const answer = answers.q2 || '';
-            const hasReuse = /reuse|repeat|dry/i.test(answer);
-            const hasOrganize = /organiz|clean|readable|structure/i.test(answer);
-            updateCheckedQuestion('q2', hasReuse || hasOrganize);
-          }}
+          onClick={() => checkAnswer('q2', answers.q2)}
           className="check-button"
         >
           ✓ Check Answer
         </button>
-        {checkedQuestions.q2 !== undefined && (
-          <div className={checkedQuestions.q2 ? 'feedback correct' : 'feedback incorrect'}>
-            {checkedQuestions.q2 ?
-              '✓ Excellent! Functions help us reuse code and organize our programs!' :
-              '✗ Hint: Think about avoiding repetition and keeping code organized'}
+        {feedback.q2 && (
+          <div className={feedback.q2.includes('✓') ? 'feedback correct' : 'feedback incorrect'}>
+            {feedback.q2.includes('✓')
+              ? '✓ Excellent! Functions help us reuse code and organize our programs!'
+              : feedback.q2}
           </div>
         )}
       </div>
@@ -110,22 +160,19 @@ greet("Alex")  # Calls the function`}</pre>
             placeholder="What it does..."
           />
         </div>
+        {/* q3 has no single input - compose() in the question config rolls
+            q3a/q3b/q3c into the one answer that gets graded. */}
         <button
-          onClick={() => {
-            const correct = (answers.q3a || '').toLowerCase().includes('greet') &&
-                          (answers.q3b || '').toLowerCase().includes('name') &&
-                          (answers.q3c || '').toLowerCase().includes('print');
-            updateCheckedQuestion('q3', correct);
-          }}
+          onClick={() => checkAnswer('q3', answers.q3a)}
           className="check-button"
         >
           ✓ Check Answer
         </button>
-        {checkedQuestions.q3 !== undefined && (
-          <div className={checkedQuestions.q3 ? 'feedback correct' : 'feedback incorrect'}>
-            {checkedQuestions.q3 ?
-              '✓ Perfect! You understand function parts!' :
-              '✗ Hint: The name is "greet_user", parameter is "name", and it prints a greeting'}
+        {feedback.q3 && (
+          <div className={feedback.q3.includes('✓') ? 'feedback correct' : 'feedback incorrect'}>
+            {feedback.q3.includes('✓')
+              ? '✓ Perfect! You understand function parts!'
+              : feedback.q3}
           </div>
         )}
       </div>
@@ -140,21 +187,16 @@ greet("Alex")  # Calls the function`}</pre>
           rows="3"
         />
         <button
-          onClick={() => {
-            const answer = answers.q4 || '';
-            const hasDefining = /def|defin|creat|write/i.test(answer);
-            const hasCalling = /call|run|use|execut/i.test(answer);
-            updateCheckedQuestion('q4', hasDefining && hasCalling);
-          }}
+          onClick={() => checkAnswer('q4', answers.q4)}
           className="check-button"
         >
           ✓ Check Answer
         </button>
-        {checkedQuestions.q4 !== undefined && (
-          <div className={checkedQuestions.q4 ? 'feedback correct' : 'feedback incorrect'}>
-            {checkedQuestions.q4 ?
-              '✓ Great! Defining creates the function, calling runs it!' :
-              '✗ Hint: Defining is creating the function with "def", calling is using it'}
+        {feedback.q4 && (
+          <div className={feedback.q4.includes('✓') ? 'feedback correct' : 'feedback incorrect'}>
+            {feedback.q4.includes('✓')
+              ? '✓ Great! Defining creates the function, calling runs it!'
+              : feedback.q4}
           </div>
         )}
       </div>

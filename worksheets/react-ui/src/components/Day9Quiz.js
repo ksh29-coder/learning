@@ -1,66 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
 import ScoreDisplay from './ScoreDisplay';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day9Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: '',
-    q5: '',
-    q6: ''
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'print()',
+    prompt: 'Which function shows text on the screen?',
+    hint: 'Hint: Day 1! The function that shows text on the screen.'
+  },
+  q2: {
+    mode: 'choice',
+    correct: 'A labeled box that stores information',
+    prompt: 'What is a variable?',
+    hint: 'Hint: Day 2! Think of a memory box with a label.'
+  },
+  q3: {
+    mode: 'text',
+    correct: '5',
+    prompt: 'How many times does range(5) loop?',
+    hint: 'Hint: Day 4! range(5) gives 0, 1, 2, 3, 4 — count them.'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['def', 'define', 'def keyword'],
+    prompt: 'What keyword starts a function definition?',
+    hint: 'Hint: Day 5! The keyword that starts a function definition.'
+  },
+  q5: {
+    mode: 'choice',
+    correct: 'A blueprint for making objects',
+    prompt: 'What is a class?',
+    hint: 'Hint: Day 7! A class is a template/blueprint for making objects.'
+  },
+  q6: {
+    mode: 'choice',
+    correct: 'Same command, different result',
+    prompt: 'What is polymorphism, in a few words?',
+    hint: 'Hint: Day 8! Poly = many, morph = shapes. Same call, different behavior.'
+  }
+};
+
+function Day9Quiz({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 9,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'print()',
-    q2: 'A labeled box that stores information',
-    q3: '5',
-    q4: ['def', 'define', 'def keyword'],
-    q5: 'A blueprint for making objects',
-    q6: 'Same command, different result'
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1' || questionId === 'q2' || questionId === 'q5' || questionId === 'q6') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      isCorrect = userAnswer.trim() === correct;
-    } else if (questionId === 'q4') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: Day 1! The function that shows text on the screen.';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: Day 2! Think of a memory box with a label.';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: Day 4! range(5) gives 0, 1, 2, 3, 4 — count them.';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: Day 5! The keyword that starts a function definition.';
-      } else if (questionId === 'q5') {
-        hint = 'Hint: Day 7! A class is a template/blueprint for making objects.';
-      } else if (questionId === 'q6') {
-        hint = 'Hint: Day 8! Poly = many, morph = shapes. Same call, different behavior.';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

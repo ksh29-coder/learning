@@ -82,6 +82,7 @@ function Day9App({ profile = DEFAULT_PROFILE }) {
             updateAnswer={updateAnswer}
             checkedQuestions={checkedQuestions}
             updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
           />
         );
       case 3:

@@ -1,62 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day2Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: ''
+// Collapses runs of whitespace before comparing, so "Hello,  Sam" and
+// "Hello, Sam" both pass - matching the original hand-written comparison.
+const normalize = (s) => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
+
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'A labeled box that stores information',
+    prompt: 'What is a variable?',
+    hint: 'Hint: Think about what variables are used for - storing information!'
+  },
+  q2: {
+    // MUST stay 'choice': the JSX calls checkAnswer('q2', 'my_name') and
+    // checkAnswer('q2', 'wrong') with hardcoded literals from choice buttons,
+    // so the kid's real words are never involved and the literal 'wrong' must
+    // never be sent to a language model.
+    mode: 'choice',
+    correct: 'my_name',
+    prompt: 'Which of these is a valid variable name?',
+    hint: 'Hint: Variable names cannot have spaces or start with numbers!'
+  },
+  q3: {
+    mode: 'text',
+    correct: ['Hello, Sam', 'Hello,Sam', 'Hello,  Sam'],
+    match: (answer, correct) => correct.some((c) => normalize(answer) === normalize(c)),
+    prompt: 'What will this code print? name = "Sam" then print("Hello,", name)',
+    hint: 'Hint: What will print() display? The text "Hello," and then the value of name!'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['one is a string', 'one is text', 'one is a number', 'string vs number', 'quotes'],
+    prompt: 'What\'s the difference between "25" (in quotes) and 25 (no quotes)?',
+    hint: 'Hint: One has quotes (text), one doesn\'t (number)!'
+  }
+};
+
+function Day2Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 2,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'A labeled box that stores information',
-    q2: 'my_name',
-    q3: ['Hello, Sam', 'Hello,Sam', 'Hello,  Sam'],
-    q4: ['one is a string', 'one is text', 'one is a number', 'string vs number', 'quotes']
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q2') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      const answerLower = userAnswer.trim();
-      isCorrect = correct.some(c => 
-        answerLower.toLowerCase().replace(/\s+/g, ' ') === c.toLowerCase().replace(/\s+/g, ' ')
-      );
-    } else if (questionId === 'q4') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => answerLower.includes(c.toLowerCase()));
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: Think about what variables are used for - storing information!';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: Variable names cannot have spaces or start with numbers!';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: What will print() display? The text "Hello," and then the value of name!';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: One has quotes (text), one doesn\'t (number)!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

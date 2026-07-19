@@ -1,56 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: ''
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'It displays text on the screen',
+    prompt: 'What does the print() function do?',
+    hint: 'Think about what print() actually does!'
+  },
+  q2: {
+    mode: 'text',
+    correct: ['quotes', 'quote', '"', "'"],
+    prompt: 'What is missing in this code? print(Hello, World!)',
+    hint: 'Hint: What do you need around text in Python?'
+  },
+  q3: {
+    mode: 'text',
+    correct: ['3', 'three'],
+    // Original used correct.includes(answer) - exact membership, not substring.
+    arrayMatch: 'exact',
+    prompt: 'How many lines will this code print? Three separate print() statements.',
+    hint: 'Hint: Count how many print() statements there are!'
+  }
+};
+
+function Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 1,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'It displays text on the screen',
-    q2: ['quotes', 'quote', '"', "'"],
-    q3: ['3', 'three']
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q2') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.some(c => 
-        answerLower.includes(c) || answerLower === c
-      );
-    } else if (questionId === 'q3') {
-      const answerLower = userAnswer.toLowerCase();
-      isCorrect = correct.includes(answerLower);
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q2') {
-        hint = 'Hint: What do you need around text in Python?';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: Count how many print() statements there are!';
-      } else {
-        hint = 'Think about what print() actually does!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

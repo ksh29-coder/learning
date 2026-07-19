@@ -1,61 +1,52 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Part1.css';
+import { useCheckAnswer } from '../hooks/useCheckAnswer';
 
-function Day3Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion }) {
-  const [feedback, setFeedback] = useState({
-    q1: '',
-    q2: '',
-    q3: '',
-    q4: ''
+// Collapses runs of whitespace before comparing, matching the original
+// hand-written comparison for the "what will this print" question.
+const normalize = (s) => String(s).trim().toLowerCase().replace(/\s+/g, ' ');
+
+// Answers and hints stay here per the repo's per-day duplication convention.
+// useCheckAnswer supplies only the mechanism.
+const QUESTIONS = {
+  q1: {
+    mode: 'choice',
+    correct: 'It checks a condition and runs code if the condition is True',
+    prompt: 'What does an `if` statement do?',
+    hint: 'Hint: If statements check conditions and run code when True!'
+  },
+  q2: {
+    // MUST stay 'choice': the JSX passes a hardcoded literal (or 'wrong') from
+    // choice buttons, not the kid's own words.
+    mode: 'choice',
+    correct: '= is for assigning, == is for comparing',
+    prompt: 'What is the difference between `=` and `==`?',
+    hint: 'Hint: One equals sign assigns, two equals signs compare!'
+  },
+  q3: {
+    mode: 'text',
+    correct: ["You're too young!", "You're too young", 'You are too young'],
+    match: (answer, correct) => correct.some((c) => normalize(answer) === normalize(c)),
+    prompt: 'What will this code print? age = 15, and an if/else checks whether age is at least 18.',
+    hint: 'Hint: The age is 15, which is less than 18, so the else block runs!'
+  },
+  q4: {
+    // MUST stay 'choice' - same hardcoded-literal pattern as q2.
+    mode: 'choice',
+    correct: 'else if - check another condition',
+    prompt: 'What does `elif` mean?',
+    hint: 'Hint: Elif stands for "else if" - it checks another condition!'
+  }
+};
+
+function Day3Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuestion, profile }) {
+  const { feedback, checkAnswer } = useCheckAnswer({
+    profile,
+    day: 3,
+    questions: QUESTIONS,
+    updateCheckedQuestion,
+    answers
   });
-
-  const correctAnswers = {
-    q1: 'It checks a condition and runs code if the condition is True',
-    q2: '= is for assigning, == is for comparing',
-    q3: ["You're too young!", "You're too young", "You are too young", "You're too young!"],
-    q4: 'else if - check another condition'
-  };
-
-  const checkAnswer = (questionId, userAnswer) => {
-    if (!userAnswer) {
-      setFeedback(prev => ({ ...prev, [questionId]: 'Please enter an answer first! 😊' }));
-      return;
-    }
-
-    let isCorrect = false;
-    const correct = correctAnswers[questionId];
-
-    if (questionId === 'q1') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q2') {
-      isCorrect = userAnswer === correct;
-    } else if (questionId === 'q3') {
-      const answerLower = userAnswer.trim();
-      isCorrect = correct.some(c => 
-        answerLower.toLowerCase().replace(/\s+/g, ' ') === c.toLowerCase().replace(/\s+/g, ' ')
-      );
-    } else if (questionId === 'q4') {
-      isCorrect = userAnswer === correct;
-    }
-
-    if (isCorrect) {
-      setFeedback(prev => ({ ...prev, [questionId]: '✓ Correct! Great job! 🎉' }));
-      updateCheckedQuestion(questionId, true);
-    } else {
-      let hint = '';
-      if (questionId === 'q1') {
-        hint = 'Hint: If statements check conditions and run code when True!';
-      } else if (questionId === 'q2') {
-        hint = 'Hint: One equals sign assigns, two equals signs compare!';
-      } else if (questionId === 'q3') {
-        hint = 'Hint: The age is 15, which is less than 18, so the else block runs!';
-      } else if (questionId === 'q4') {
-        hint = 'Hint: Elif stands for "else if" - it checks another condition!';
-      }
-      setFeedback(prev => ({ ...prev, [questionId]: `✗ Not quite right. ${hint} 💪` }));
-      updateCheckedQuestion(questionId, false);
-    }
-  };
 
   return (
     <div className="part1-container">

@@ -85,6 +85,7 @@ function Day5App({ profile }) {
             updateAnswer={updateAnswer}
             checkedQuestions={checkedQuestions}
             updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
           />
         );
       case 1:
@@ -100,7 +101,15 @@ function Day5App({ profile }) {
       case 6:
         return <Day5Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
-        return <Day5Part1 answers={answers} updateAnswer={updateAnswer} />;
+        return (
+          <Day5Part1
+            answers={answers}
+            updateAnswer={updateAnswer}
+            checkedQuestions={checkedQuestions}
+            updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
+          />
+        );
     }
   };
 
