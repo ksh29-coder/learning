@@ -9,6 +9,8 @@ import Day7App from './Day7App';
 import Day8App from './Day8App';
 import Day9App from './Day9App';
 import { DEFAULT_PROFILE, getDayProgress } from './hooks/useWorksheetStorage';
+import { usePageTimer } from './hooks/usePageTimer';
+import { track } from './lib/telemetry';
 import AiTeacher from './components/AiTeacher';
 import './DaySelector.css';
 
@@ -43,6 +45,15 @@ function DaySelector() {
 
   useEffect(() => {
     localStorage.setItem('active_profile', profile);
+  }, [profile]);
+
+  // Parent monitoring: bank active time per day, and mark each session start.
+  usePageTimer(profile, selectedDay);
+  useEffect(() => {
+    track('session_start', { profile, day: selectedDay });
+    // Deliberately keyed on profile only: one marker per kid per load/switch,
+    // not one per day tab click (usePageTimer already covers day movement).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
   const renderDay = () => {
