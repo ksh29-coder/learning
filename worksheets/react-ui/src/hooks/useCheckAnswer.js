@@ -2,6 +2,7 @@ import { useState, useCallback, useRef } from 'react';
 import { gradeAnswer, isAiEnabled } from '../lib/aiClient';
 import { buildGradingContext } from './useStudentContext';
 import { appendMistake, markResolved } from '../lib/mistakeLog';
+import { track } from '../lib/telemetry';
 
 // Shared "Check Answer" mechanism for every day.
 //
@@ -101,6 +102,20 @@ export function useCheckAnswer({ profile, day, questions, updateCheckedQuestion,
           gradedBy: extra.gradedBy || 'local'
         });
       }
+
+      // Parent monitoring: every attempt, in order (right or wrong). This is the
+      // one verdict chokepoint, so the remote log can never disagree with what
+      // the child actually saw. Fire-and-forget - track() never throws.
+      track('answer_attempt', {
+        profile,
+        day,
+        questionId,
+        isCorrect,
+        answer: extra.answer,
+        gradedBy: extra.gradedBy || 'local',
+        conceptTags: extra.conceptTags || [],
+        questionText: q.prompt || ''
+      });
     },
     [profile, day, questions, updateCheckedQuestion]
   );

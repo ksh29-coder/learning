@@ -3,6 +3,8 @@ import './AiTeacher.css';
 import { AiTeacherContext } from '../context/AiTeacherContext';
 import { buildStudentContext } from '../hooks/useStudentContext';
 import { sendChat, isAiEnabled, setPassphrase } from '../lib/aiClient';
+import { readChat, writeChat } from '../lib/chatHistory';
+import { track } from '../lib/telemetry';
 
 const MAX_MESSAGE_CHARS = 500;
 const MAX_HISTORY = 12;
@@ -37,7 +39,8 @@ function MessageBody({ text }) {
 // useAiTeacher() to pop the panel open on a specific question.
 function AiTeacher({ profile, day, children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  // Seed from the saved transcript so a reload keeps the conversation.
+  const [messages, setMessages] = useState(() => readChat(profile));
   const [draft, setDraft] = useState('');
   const [pending, setPending] = useState(false);
   const [needsPassphrase, setNeedsPassphrase] = useState(false);
@@ -52,11 +55,16 @@ function AiTeacher({ profile, day, children }) {
   // remount when the kid is switched. Without this, Michael's conversation
   // would carry straight over into Isabella's session.
   useEffect(() => {
-    setMessages([]);
+    setMessages(readChat(profile));
     setDraft('');
     setError('');
     setPending(false);
   }, [profile]);
+
+  // Persist the transcript so it survives a refresh (it used to be lost).
+  useEffect(() => {
+    writeChat(profile, messages);
+  }, [profile, messages]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -79,6 +87,9 @@ function AiTeacher({ profile, day, children }) {
       setDraft('');
       setPending(true);
 
+      // Parent monitoring: keep the chat history off-device too. Fire-and-forget.
+      track('chat_message', { profile, day, role: 'user', content: trimmed });
+
       try {
         const context = buildStudentContext(profile, day, { questionText });
         const data = await sendChat({
@@ -87,10 +98,18 @@ function AiTeacher({ profile, day, children }) {
           context
         });
 
+        const replyText = data.reply || data.fallback;
         setMessages((prev) => [
           ...prev,
-          { role: 'assistant', content: data.reply || data.fallback, degraded: !data.reply }
+          { role: 'assistant', content: replyText, degraded: !data.reply }
         ]);
+        track('chat_message', {
+          profile,
+          day,
+          role: 'assistant',
+          content: replyText,
+          degraded: !data.reply
+        });
       } catch (err) {
         if (err.code === 'bad_passphrase') {
           setNeedsPassphrase(true);

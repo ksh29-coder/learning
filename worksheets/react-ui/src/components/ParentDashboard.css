@@ -1,0 +1,269 @@
+.pd-root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1f2933;
+}
+
+.pd-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 2px solid #e4e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.pd-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.pd-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.pd-controls select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd2d9;
+}
+
+.pd-refresh {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd2d9;
+  background: #fff;
+  cursor: pointer;
+}
+
+.pd-refresh:hover {
+  background: #f5f7fa;
+}
+
+/* --- login gate --- */
+.pd-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+  padding: 16px;
+}
+
+.pd-gate-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 32px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.pd-gate-card h1 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+
+.pd-gate-card p {
+  color: #52606d;
+  font-size: 0.92rem;
+  margin: 0 0 18px;
+}
+
+.pd-gate-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.pd-gate-card button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pd-gate-card button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* --- tabs --- */
+.pd-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.pd-tab {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #cbd2d9;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.pd-tab.active {
+  background: #1f2933;
+  color: #fff;
+  border-color: #1f2933;
+}
+
+.pd-tab-count {
+  opacity: 0.6;
+  font-size: 0.8rem;
+  margin-left: 4px;
+}
+
+/* --- stat cards --- */
+.pd-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pd-stat {
+  background: #fff;
+  border: 1px solid #e4e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+.pd-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2933;
+}
+
+.pd-stat-label {
+  font-size: 0.8rem;
+  color: #7b8794;
+  margin-top: 4px;
+}
+
+/* --- tables --- */
+.pd-h3 {
+  margin: 28px 0 10px;
+  font-size: 1.1rem;
+}
+
+.pd-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e4e7eb;
+  border-radius: 10px;
+}
+
+.pd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.pd-table th,
+.pd-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef1f4;
+  vertical-align: top;
+}
+
+.pd-table th {
+  background: #f5f7fa;
+  font-weight: 600;
+  color: #52606d;
+  position: sticky;
+  top: 0;
+}
+
+.pd-row-untouched {
+  color: #9aa5b1;
+}
+
+.pd-correct td {
+  background: #f1fbf4;
+}
+
+.pd-wrong td {
+  background: #fdf3f3;
+}
+
+.pd-answer {
+  font-family: 'SF Mono', Consolas, monospace;
+  max-width: 260px;
+  word-break: break-word;
+}
+
+.pd-nowrap {
+  white-space: nowrap;
+}
+
+/* --- chat --- */
+.pd-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pd-msg {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.pd-msg-child {
+  align-self: flex-end;
+  background: #dbeafe;
+}
+
+.pd-msg-teacher {
+  align-self: flex-start;
+  background: #f0f2f5;
+}
+
+.pd-msg-meta {
+  font-size: 0.72rem;
+  color: #7b8794;
+  margin-bottom: 4px;
+}
+
+.pd-msg-body {
+  white-space: pre-wrap;
+  font-size: 0.92rem;
+}
+
+/* --- misc --- */
+.pd-empty {
+  color: #7b8794;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.pd-error {
+  color: #cf1124;
+  font-size: 0.88rem;
+  margin-top: 10px;
+}
+
+.pd-error-inline {
+  margin-bottom: 12px;
+}
