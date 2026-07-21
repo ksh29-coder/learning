@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
+import Day1Learn from './components/Day1Learn';
 import Part1 from './components/Part1';
 import Part2 from './components/Part2';
 import Part3 from './components/Part3';
@@ -43,16 +44,19 @@ function App({ profile }) {
 
   const tabs = [
     { id: 0, label: 'Part 1: Understanding Print', icon: '📚' },
-    { id: 1, label: 'Part 2: Code Practice', icon: '💻' },
-    { id: 2, label: 'Part 3: ASCII Art', icon: '🎨' },
-    { id: 3, label: 'Part 4: Reflection', icon: '💭' },
-    { id: 4, label: 'Exercise', icon: '📤' },
-    { id: 5, label: '⭐ Bonus', icon: '⭐' }
+    { id: 1, label: 'Quiz', icon: '🧠' },
+    { id: 2, label: 'Part 2: Code Practice', icon: '💻' },
+    { id: 3, label: 'Part 3: ASCII Art', icon: '🎨' },
+    { id: 4, label: 'Part 4: Reflection', icon: '💭' },
+    { id: 5, label: 'Exercise', icon: '📤' },
+    { id: 6, label: '⭐ Bonus', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
     switch (currentTab) {
       case 0:
+        return <Day1Learn />;
+      case 1:
         return (
           <Part1
             answers={answers}
@@ -62,15 +66,15 @@ function App({ profile }) {
             profile={profile}
           />
         );
-      case 1:
-        return <Part2 answers={answers} updateAnswer={updateAnswer} />;
       case 2:
-        return <Part3 answers={answers} updateAnswer={updateAnswer} />;
+        return <Part2 answers={answers} updateAnswer={updateAnswer} />;
       case 3:
-        return <Part4 answers={answers} updateAnswer={updateAnswer} />;
+        return <Part3 answers={answers} updateAnswer={updateAnswer} />;
       case 4:
-        return <Exercise answers={answers} updateAnswer={updateAnswer} />;
+        return <Part4 answers={answers} updateAnswer={updateAnswer} />;
       case 5:
+        return <Exercise answers={answers} updateAnswer={updateAnswer} />;
+      case 6:
         return <Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return null;
