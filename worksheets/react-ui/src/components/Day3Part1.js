@@ -53,8 +53,64 @@ function Day3Part1({ answers, updateAnswer, checkedQuestions, updateCheckedQuest
       <div className="part-header">
         <h2>🤔 Part 1: Understanding If/Else</h2>
         <p className="part-description">
-          Let's test your understanding of making decisions in code!
+          First, let's <strong>learn</strong> how programs make decisions. Read these cards, then the questions below
+          will be easy! 🎉
         </p>
+      </div>
+
+      <div className="info-box">
+        <h3>🤔 Making Decisions with if</h3>
+        <p>
+          An <code>if</code> statement lets your program <strong>make a choice</strong>. It checks whether something is
+          true, and only runs the indented code <strong>when it is</strong>.
+        </p>
+        <pre className="code-example">{`age = 15
+
+if age >= 13:
+    print("You are a teenager!")`}</pre>
+        <p>
+          Because 15 <em>is</em> at least 13, the message prints. Notice the <strong>colon</strong> <code>:</code> and
+          how the next line is <strong>indented</strong> (pushed in) - that's how Python knows what belongs to the{' '}
+          <code>if</code>. 👉
+        </p>
+      </div>
+
+      <div className="info-box">
+        <h3>⚖️ = vs == (super important!)</h3>
+        <p>
+          One equals sign and two equals signs mean totally different things:
+        </p>
+        <pre className="code-example">{`age = 15      # ONE  =  means "put 15 into the box age"
+age == 15     # TWO == means "is age equal to 15?" (True/False)`}</pre>
+        <p>
+          Use <code>=</code> to <strong>store</strong> a value, and <code>==</code> to <strong>compare</strong> two
+          values inside an <code>if</code>. Mixing them up is the most common beginner mistake! 🙃
+        </p>
+      </div>
+
+      <div className="info-box">
+        <h3>🪜 else and elif</h3>
+        <p>
+          <code>else</code> means "<strong>otherwise</strong>" - it runs when the <code>if</code> was False.{' '}
+          <code>elif</code> is short for "<strong>else if</strong>" and lets you check another question in between.
+        </p>
+        <pre className="code-example">{`age = 15
+
+if age >= 18:
+    print("You can vote!")
+elif age >= 13:
+    print("You are a teenager!")
+else:
+    print("You are a kid!")`}</pre>
+        <p>
+          Python checks each one top to bottom and runs the <strong>first</strong> that's True. Here it prints{' '}
+          <code>You are a teenager!</code> 🎯
+        </p>
+      </div>
+
+      <div className="part-header" style={{ marginTop: '30px' }}>
+        <h3>✏️ Now Try These Questions!</h3>
+        <p className="part-description">You just learned everything you need. Give them a go!</p>
       </div>
 
       <div className="question-card">
