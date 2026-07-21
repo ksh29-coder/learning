@@ -6,10 +6,37 @@
 
 const { callLLM } = require('./_lib/llm');
 const { guard, sanitizeMessages } = require('./_lib/guard');
+const { fetchServerHistory } = require('./_lib/serverHistory');
 
 const FALLBACK_REPLY =
   "I'm having a little nap right now and can't answer. Try again in a minute - " +
   'or ask a grown-up. Either way, keep going, you are doing great!';
+
+// How many turns of conversation to hand the model, once server-side history
+// (Supabase) has backfilled whatever the client's own local copy is missing -
+// e.g. a kid on a new/wiped device whose browser has no memory of yesterday.
+const HISTORY_CEILING = 20;
+
+// Combines the client's own recentMistakes (same-device, freshest) with the
+// server's reconstruction from Supabase telemetry (survives a wiped browser),
+// so a mistake made on one device is still visible from another.
+function mergeMistakes(clientList, serverList) {
+  const map = new Map();
+  // Server entries first so client entries (same request, most current state)
+  // win ties by overwriting them below.
+  [...serverList, ...(Array.isArray(clientList) ? clientList : [])].forEach((m) => {
+    if (!m || m.questionId == null) return;
+    const key = `${m.day}:${m.questionId}`;
+    const existing = map.get(key);
+    if (!existing || (!m.resolvedAt && existing.resolvedAt)) map.set(key, m);
+  });
+  return Array.from(map.values()).sort((a, b) => {
+    const aOpen = a.resolvedAt ? 0 : 1;
+    const bOpen = b.resolvedAt ? 0 : 1;
+    if (aOpen !== bOpen) return bOpen - aOpen;
+    return String(b.ts || b.resolvedAt || '').localeCompare(String(a.ts || a.resolvedAt || ''));
+  });
+}
 
 function clampList(value, max) {
   return (Array.isArray(value) ? value : [])
@@ -92,9 +119,28 @@ module.exports = async (req, res) => {
 
   const ctx = body.context && typeof body.context === 'object' ? body.context : {};
 
+  // Backfill from Supabase: fills in mistakes/conversation the client's own
+  // localStorage doesn't have (new device, cleared storage). Best-effort - a
+  // Supabase blip just means we proceed with only what the client sent.
+  const { priorMessages, mistakes: serverMistakes } = await fetchServerHistory(body.profile);
+
+  if (serverMistakes.length) {
+    ctx.recentMistakes = mergeMistakes(ctx.recentMistakes, serverMistakes);
+  }
+
+  let llmMessages = messages;
+  if (priorMessages.length) {
+    const seen = new Set(messages.map((m) => `${m.role}:${m.content}`));
+    const backfill = priorMessages.filter((m) => !seen.has(`${m.role}:${m.content}`));
+    const room = HISTORY_CEILING - messages.length;
+    if (backfill.length && room > 0) {
+      llmMessages = backfill.slice(-room).concat(messages);
+    }
+  }
+
   try {
     const { text, usage, model } = await callLLM({
-      messages: [{ role: 'system', content: buildSystemPrompt(ctx) }].concat(messages),
+      messages: [{ role: 'system', content: buildSystemPrompt(ctx) }].concat(llmMessages),
       maxTokens: Number(process.env.AI_MAX_TOKENS_CHAT || 300),
       temperature: 0.6,
       // A conversational reply takes noticeably longer than a one-word grading
