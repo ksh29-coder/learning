@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Day4Header from './components/Day4Header';
+import Day4Learn from './components/Day4Learn';
 import Day4Part1 from './components/Day4Part1';
 import Day4Part2 from './components/Day4Part2';
 import Day4Part3 from './components/Day4Part3';
@@ -51,17 +52,20 @@ function Day4App({ profile }) {
 
   const tabs = [
     { id: 0, label: 'Part 1: Understanding Loops', icon: '🔁' },
-    { id: 1, label: 'Part 2: For Loops Practice', icon: '💻' },
-    { id: 2, label: 'Part 3: While Loops Practice', icon: '⌛' },
-    { id: 3, label: 'Part 4: Challenges', icon: '🎯' },
-    { id: 4, label: 'Part 5: Reflection', icon: '💭' },
-    { id: 5, label: 'Exercise', icon: '📤' },
-    { id: 6, label: '⭐ Bonus', icon: '⭐' }
+    { id: 1, label: 'Quiz', icon: '🧠' },
+    { id: 2, label: 'Part 2: For Loops Practice', icon: '💻' },
+    { id: 3, label: 'Part 3: While Loops Practice', icon: '⌛' },
+    { id: 4, label: 'Part 4: Challenges', icon: '🎯' },
+    { id: 5, label: 'Part 5: Reflection', icon: '💭' },
+    { id: 6, label: 'Exercise', icon: '📤' },
+    { id: 7, label: '⭐ Bonus', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
     switch (currentTab) {
       case 0:
+        return <Day4Learn />;
+      case 1:
         return (
           <Day4Part1
             answers={answers}
@@ -71,17 +75,17 @@ function Day4App({ profile }) {
             profile={profile}
           />
         );
-      case 1:
-        return <Day4Part2 answers={answers} updateAnswer={updateAnswer} />;
       case 2:
-        return <Day4Part3 answers={answers} updateAnswer={updateAnswer} />;
+        return <Day4Part2 answers={answers} updateAnswer={updateAnswer} />;
       case 3:
-        return <Day4Part4 answers={answers} updateAnswer={updateAnswer} />;
+        return <Day4Part3 answers={answers} updateAnswer={updateAnswer} />;
       case 4:
-        return <Day4Part5 answers={answers} updateAnswer={updateAnswer} />;
+        return <Day4Part4 answers={answers} updateAnswer={updateAnswer} />;
       case 5:
-        return <Day4Exercise answers={answers} updateAnswer={updateAnswer} />;
+        return <Day4Part5 answers={answers} updateAnswer={updateAnswer} />;
       case 6:
+        return <Day4Exercise answers={answers} updateAnswer={updateAnswer} />;
+      case 7:
         return <Day4Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return null;
