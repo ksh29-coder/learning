@@ -77,21 +77,41 @@ export function readDayState(profile, day) {
   }
 }
 
+// Shared by getDayProgress and getMergedDayProgress so both badges agree on
+// what "completed" means from a { questionId: isCorrect } map.
+function classify(checked) {
+  const values = Object.values(checked);
+  if (values.length === 0) return 'not-started';
+  const correctCount = values.filter(Boolean).length;
+  if (correctCount === 0) return 'not-started';        // opened but nothing correct yet
+  if (correctCount === values.length) return 'completed';
+  return 'in-progress';
+}
+
+function readLocalChecked(profile, day) {
+  const saved = localStorage.getItem(getStorageKey(profile, day));
+  if (!saved) return {};
+  try {
+    return JSON.parse(saved).checkedQuestions || {};
+  } catch (e) {
+    return {};
+  }
+}
+
 // Cheap synchronous read for progress badges - does not subscribe to changes.
 export function getDayProgress(profile, day) {
-  const saved = localStorage.getItem(getStorageKey(profile, day));
-  if (!saved) return 'not-started';
+  const checked = readLocalChecked(profile, day);
+  return Object.keys(checked).length === 0 ? 'not-started' : classify(checked);
+}
 
-  try {
-    const parsed = JSON.parse(saved);
-    const checked = parsed.checkedQuestions || {};
-    const values = Object.values(checked);
-    if (values.length === 0) return 'not-started';
-    const correctCount = values.filter(Boolean).length;
-    if (correctCount === 0) return 'not-started';        // opened but nothing correct yet
-    if (correctCount === values.length) return 'completed';
-    return 'in-progress';
-  } catch (e) {
-    return 'not-started';
-  }
+// Same as getDayProgress, but ORs in a server-side { questionId: isCorrect }
+// map (from /api/progress) so a question answered correctly on ANY device
+// counts - lets the badge reflect cross-device history instead of only what
+// this browser's localStorage has seen.
+export function getMergedDayProgress(profile, day, serverQuestions) {
+  const merged = { ...readLocalChecked(profile, day) };
+  Object.keys(serverQuestions || {}).forEach((qid) => {
+    merged[qid] = Boolean(merged[qid]) || Boolean(serverQuestions[qid]);
+  });
+  return classify(merged);
 }

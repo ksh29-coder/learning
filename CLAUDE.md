@@ -63,7 +63,7 @@ An optional AI tutor. **The whole feature is gated on `REACT_APP_AI_ENABLED=1`; 
 
 The app deploys to **Vercel** from the GitHub repo (`ksh29-coder/learning`) with **Root Directory = `worksheets/react-ui`** (the CRA app is not at repo root). Framework auto-detects as Create React App. `vercel.json` sets the API functions' timeout; the `api/` directory must sit **inside** the root directory or Vercel will never see it (a misplaced `api/` 404s into the SPA rewrite and returns HTML with a 200 — check `curl -i /api/grade` returns **405**, not HTML).
 
-Worksheet progress is browser-`localStorage` only (per-device, per-profile, no login).
+Worksheet progress is written to browser-`localStorage` only (per-device, per-profile, no login) — that never changes. But the day-picker badges in `DaySelector.js` additionally **read** `/api/progress`, which reconstructs each profile's per-question verdicts from the same Supabase telemetry `/api/track` writes, and OR-merges it with local `checkedQuestions` (`getMergedDayProgress` in `useWorksheetStorage.js`). That's what lets a kid's badges reflect work already done on another browser/device. This is best-effort and read-only: with `REACT_APP_TELEMETRY_ENABLED` off, Supabase unconfigured, or the request failing, it silently degrades to the old local-only badge — never a hard dependency.
 
 ## Conventions
 

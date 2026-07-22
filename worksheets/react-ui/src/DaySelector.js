@@ -8,8 +8,9 @@ import Day6App from './Day6App';
 import Day7App from './Day7App';
 import Day8App from './Day8App';
 import Day9App from './Day9App';
-import { DEFAULT_PROFILE, getDayProgress } from './hooks/useWorksheetStorage';
+import { DEFAULT_PROFILE, getMergedDayProgress } from './hooks/useWorksheetStorage';
 import { usePageTimer } from './hooks/usePageTimer';
+import { useServerProgress } from './hooks/useServerProgress';
 import { track } from './lib/telemetry';
 import AiTeacher from './components/AiTeacher';
 import './DaySelector.css';
@@ -49,6 +50,9 @@ function DaySelector() {
 
   // Parent monitoring: bank active time per day, and mark each session start.
   usePageTimer(profile, selectedDay);
+  // Cross-device progress: merged into the day badges below so switching
+  // browsers doesn't make finished work look untouched.
+  const serverProgress = useServerProgress(profile);
   useEffect(() => {
     track('session_start', { profile, day: selectedDay });
     // Deliberately keyed on profile only: one marker per kid per load/switch,
@@ -104,7 +108,7 @@ function DaySelector() {
 
         <div className="day-buttons">
           {DAYS.map((d) => {
-            const progress = getDayProgress(profile, d.day);
+            const progress = getMergedDayProgress(profile, d.day, serverProgress[d.day]);
             return (
               <button
                 key={d.day}
