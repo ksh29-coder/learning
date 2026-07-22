@@ -9,7 +9,7 @@ print("Let's test your knowledge!")
 print("Answer the questions below:")
 
 
-score = 1
+score = 0
 
 # Question 1: Math
 print("Question 1: What is 5 + 3?")

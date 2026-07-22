@@ -104,6 +104,33 @@ function Day3Part4({ answers, updateAnswer }) {
         </div>
       </div>
 
+      <div className="exercise-card">
+        <h3 className="exercise-title">Challenge 5: Password STRENGTH Checker ⭐</h3>
+        <p className="exercise-description">
+          Level up Challenge 1! Real websites do this. Create a program that:
+        </p>
+        <ul className="exercise-list">
+          <li>Asks the user to type a password</li>
+          <li>Uses <code>len()</code> to check it's at least 8 characters long</li>
+          <li>Uses <code>.lower()</code> to catch common passwords (like "password") no matter how they're typed</li>
+          <li>Uses <code>and</code> / <code>not</code> to print "🏆 STRONG password!" only if it passes BOTH checks</li>
+          <li>Otherwise gives friendly tips to make it stronger</li>
+        </ul>
+        <p className="exercise-description">
+          💡 Starter code lives in <code>projects/templates/day3_password_checker_template.py</code>
+        </p>
+        <div className="exercise-section">
+          <h4 className="section-title">Your code:</h4>
+          <CodeEditor
+            value={answers.challenge5}
+            onChange={(value) => updateAnswer('challenge5', value)}
+            placeholder="# Write your password strength checker here..."
+            height={220}
+          />
+          <CodeRunner code={answers.challenge5} title="Test Challenge 5" />
+        </div>
+      </div>
+
       <div className="part-footer">
         <p className="tip">
           💡 Tip: These are challenging! Take your time and think through each step. You can do it! 💪

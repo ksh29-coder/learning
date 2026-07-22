@@ -1,4 +1,4 @@
-# Day 6 Project: Mini Game Arcade
+# Day 9 Bonus Project: Mini Game Arcade 🕹️
 # Create your own arcade with multiple fun games!
 # Fill in the blanks and make it your own!
 

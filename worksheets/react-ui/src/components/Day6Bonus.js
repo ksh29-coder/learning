@@ -67,11 +67,42 @@ The winner is Jordan with 92 points!`}
         onToggleComplete={() => updateAnswer('bonus2_completed', !answers.bonus2_completed)}
       />
 
+      <ExerciseCard
+        number={3}
+        title="Name → Score Dictionary"
+        description="Level up the score tracker with a DICTIONARY! Collect player names and scores until the user types 'done', storing them as scoreboard[name] = score - with a try/except safety net on the score."
+        requirements={[
+          'Start with an empty dictionary: scoreboard = {}',
+          "Ask for a player name (stop when it's 'done'), then ask for that player's score",
+          'Convert the score with int() inside try:, and catch except ValueError: so bad input just prints a message',
+          'Store each pair with scoreboard[name] = score',
+          'At the end, print every player and score using for name, score in scoreboard.items():'
+        ]}
+        exampleOutput={`Player name (or 'done'): Alex
+Score for Alex: 85
+Player name (or 'done'): Jordan
+Score for Jordan: banana
+That's not a number - try again!
+Player name (or 'done'): done
+
+=== FINAL SCOREBOARD ===
+Alex scored 85`}
+        filename="bonus3_score_dictionary.py"
+        tips={[
+          'scoreboard[name] = score adds OR updates that player in one line',
+          'Use an f-string in the loop: print(f"{name} scored {score}")',
+          'This is the same idea as the parallel lists in Bonus 2 - but the dictionary keeps each name GLUED to its score!'
+        ]}
+        completed={answers.bonus3_completed}
+        onToggleComplete={() => updateAnswer('bonus3_completed', !answers.bonus3_completed)}
+      />
+
       <div className="mastery-box">
-        <h3>🏆 List Master!</h3>
+        <h3>🏆 Collections Master!</h3>
         <p>
           If you completed these bonus challenges, you've truly mastered Day 6! You can create lists, access items
-          with indexing, loop through them, grow and shrink them, and even combine lists together. Keep coding!
+          with indexing, loop through them, grow and shrink them, number them with enumerate(), match names to scores
+          with a dictionary, and catch bad input with the try/except safety net. Keep coding!
         </p>
       </div>
 
@@ -88,6 +119,8 @@ The winner is Jordan with 92 points!`}
           <li>✅ Repeat actions with loops</li>
           <li>✅ Organize code with functions</li>
           <li>✅ Store collections of data with lists</li>
+          <li>✅ Label your data with dictionaries</li>
+          <li>✅ Catch bad input with try/except</li>
         </ul>
         <p>
           <strong>Keep building, keep learning, and most importantly - have fun!</strong>

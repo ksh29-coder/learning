@@ -105,18 +105,18 @@ Students extend `day9_final_project_template.py` (it runs as-is) with challenges
 
 ### Part 4: Bonus Arcade — Fun Games (flex time, 30–45 minutes)
 
-A collection of just-for-fun games that mix the Days 1–6 toolkit (functions, loops, if/else, input, variables). Great for fast finishers or a relaxed cool-down. All five already exist in `code_examples/day9/` as runnable scripts, and three have starter templates in `projects/templates/`.
+A collection of just-for-fun games that mix the Days 1–6 toolkit (functions, loops, if/else, input, variables, `random` from Day 5, and dictionaries from Day 6). Great for fast finishers or a relaxed cool-down. All five already exist in `code_examples/day9/` as runnable scripts, and three have starter templates in `projects/templates/`.
 
 **The games (run them, then tinker):**
 
-1. **Rock Paper Scissors** (`bonus_rock_paper_scissors.py`) — variables, input, if/elif/else, loops. Best-of-three against the computer. *Let them customize:* more rounds, new messages, best-of-five.
-2. **Number Guessing** (`bonus_number_guessing.py`) — while loops, if/else, a secret number, and hints (too high / too low). *Extend:* difficulty levels, count the attempts.
-3. **Interactive Story Builder** (`bonus_story_builder.py`) — a Mad-Libs style tale built from the player's words, with a loop that repeats an action a chosen number of times. *Extend:* more blanks, multiple endings.
+1. **Rock Paper Scissors** (`bonus_rock_paper_scissors.py`) — variables, input, if/elif/else, loops, and a `random.choice` computer opponent (Day 5). Best-of-three against the computer. *Let them customize:* more rounds, new messages, best-of-five.
+2. **Number Guessing** (`bonus_number_guessing.py`) — while loops, if/else, a `random.randint` secret number (Day 5), and hints (too high / too low). *Extend:* difficulty levels, count the attempts.
+3. **Interactive Story Builder** (`bonus_story_builder.py`) — a Mad-Libs style tale that stores the player's words in a **dictionary** (Day 6), with a loop that repeats an action a chosen number of times. *Extend:* more blanks, multiple endings.
 4. **Mini Game Arcade** (`bonus_mini_arcade.py`, template: `day9_bonus_mini_arcade_template.py`) — a menu that launches several games in one program. This is a mini version of today's "menu loop" idea. *Extend:* add your own game as a new menu option.
 5. **Personal Assistant Bot** (`bonus_personal_assistant.py`, template: `day9_bonus_007.py` and `day9_bonus_tic_tac_toe.py` for extra challenge) — a chatbot that responds to commands (greet, joke, calculate, quit). *Extend:* teach it new commands.
 
 **Teaching Points (the arcade is review in disguise):**
-- Functions organize each game; a while loop runs the menu; if/elif/else handles choices; variables track scores. Same skills, dressed up as fun.
+- Functions organize each game; a while loop runs the menu; if/elif/else handles choices; variables track scores; `random` keeps the computer surprising; dictionaries hold the story words and quiz questions. Same skills, dressed up as fun.
 - Point out: these games are exactly the "combine everything" idea from the RPG, just smaller. If they can build the arcade, they can build anything.
 
 **Fun challenge ideas** (if they want to invent their own):

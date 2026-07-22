@@ -1,4 +1,4 @@
-# Day 6 - Example 5: Personal Assistant Bot
+# Day 9 Bonus Arcade: Personal Assistant Bot 🤖
 # Combining: functions, while loops, if/elif/else, variables, input
 
 from time import sleep
@@ -7,7 +7,7 @@ from time import sleep
 def show_help():
     """Display available commands"""
     print("\nI can help you with:")
-    print("  - make money: do stuff")
+    print("  - make money: Earn 10 shiny coins")
     print("  - greet: Say hello")
     print("  - joke: Tell a joke")
     print("  - calculate: Do simple math")
@@ -69,11 +69,14 @@ def give_compliment():
     # Simple version: pick first one
     print(compliments[0])
 def make_money():
+    """Earn 10 coins, one at a time (with a little pause for suspense!)"""
+    print("\n💰 Cha-ching! Let's earn some coins!")
     money = 0
-    while True:
+    while money < 10:          # the loop STOPS at 10 coins - no forever loops!
         money = money + 1
-        sleep(1)
+        sleep(0.5)             # sleep() pauses the program (from Day 5!)
         print("$" + str(money))
+    print(f"You earned {money} coins! What a hard worker! 🤑")
 def greet_user():
     """Greet the user"""
     name = input("What's your name? ")

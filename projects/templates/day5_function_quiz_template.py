@@ -14,42 +14,44 @@ print()
 # TODO: Create your functions below
 # ============================================
 
-score = 0  # This variable will keep track of the score
+# Each question function RETURNS the points you earned (1 or 0).
+# That way the main program can add them up — just like you
+# learned with return values today!
 
 
 def question1():
-    global score
     print("Question 1: What is 2 + 2?")
     answer = int(input("Your answer: "))
 
     if answer == 4:
         print("Correct! ✅")
-        score = score + 1
+        print()
+        return 1
     else:
         print("Oops! The answer is 4. ❌")
-
-    print()
+        print()
+        return 0
 
 
 def question2():
-    global score
     print("Question 2: What is the capital of France?")
     answer = input("Your answer: ")
 
     if answer.lower() == "paris":
         print("Correct! ✅")
-        score = score + 1
+        print()
+        return 1
     else:
         print("Oops! The answer is Paris. ❌")
+        print()
+        return 0
 
-    print()
 
-
-def show_final_score():
+def show_final_score(score):
     print("=" * 40)
     print("   YOUR FINAL SCORE")
     print("=" * 40)
-    print("You got", score, "points!")
+    print(f"You got {score} points!")
 
     if score == 2:
         print("Perfect score! 🌟")
@@ -74,13 +76,14 @@ def show_final_score():
 print("Let's start the quiz! 🎉")
 print()
 
-# Call your question functions here
-question1()
-question2()
-# TODO: Call question3(), question4(), etc. after you create them
+# Call your question functions and add up the points they return
+score = 0
+score = score + question1()
+score = score + question2()
+# TODO: Add the points from question3(), question4(), etc. after you create them
 
 # Show the final result at the end
-show_final_score()
+show_final_score(score)
 
 print()
 print("Thanks for playing the Function Quiz! 🧠🎉")
@@ -99,7 +102,7 @@ print("Thanks for playing the Function Quiz! 🧠🎉")
 # TIPS:
 # ============================================
 # - Use functions to keep each question separate.
-# - Remember to use global score if you want to change the score variable.
+# - Each question function returns 1 (correct) or 0 (wrong) — add them up!
 # - Test your quiz often - play through it!
 # - Save your work frequently (Ctrl+S / Cmd+S).
 # - Remember: indentation is important in if/else blocks and functions!

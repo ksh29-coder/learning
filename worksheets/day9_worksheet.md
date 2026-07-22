@@ -45,14 +45,17 @@ Draw a line (or write the day number) connecting each piece of code to the day t
 | Code you'll write | Which day taught it? |
 |---|---|
 | `print("You win!")` | Day ___ |
+| `print(f"You have {gold} gold!")` | Day ___ |
 | `if health > 0:` | Day ___ |
 | `while running:` | Day ___ |
 | `def battle():` | Day ___ |
+| `import random` | Day ___ |
 | `party = []` | Day ___ |
+| `stats = {"gold": 20}` | Day ___ |
 | `class Character:` | Day ___ |
 | `class Wizard(Character):` | Day ___ |
 
-**Word bank:** Days 1-2 (print/variables), Day 3 (if/else), Day 4 (loops), Day 5 (functions), Day 6 (lists), Day 7 (classes), Day 8 (inheritance)
+**Word bank:** Day 1 (print), Day 2 (variables & f-strings), Day 3 (if/else), Day 4 (loops), Day 5 (functions & `import`/`random`), Day 6 (lists & dictionaries), Day 7 (classes), Day 8 (inheritance)
 
 ---
 

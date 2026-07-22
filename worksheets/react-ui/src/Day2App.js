@@ -7,6 +7,7 @@ import Day2Part2 from './components/Day2Part2';
 import Day2Part3 from './components/Day2Part3';
 import Day2Part4 from './components/Day2Part4';
 import Day2Part5 from './components/Day2Part5';
+import Day2Part6 from './components/Day2Part6';
 import Day2Exercise from './components/Day2Exercise';
 import Day2Bonus from './components/Day2Bonus';
 import ScoreDisplay from './components/ScoreDisplay';
@@ -21,6 +22,12 @@ function Day2App({ profile }) {
     q2: '',
     q3: '',
     q4: '',
+    q5: '',
+    q6: '',
+    q7: '',
+    q8: '',
+    stringExercise1: '',
+    stringExercise2: '',
     exercise1: '',
     exercise2: '',
     exercise3: '',
@@ -46,7 +53,11 @@ function Day2App({ profile }) {
     q1: false,
     q2: false,
     q3: false,
-    q4: false
+    q4: false,
+    q5: false,
+    q6: false,
+    q7: false,
+    q8: false
   };
 
   const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 2, initialAnswers, initialCheckedQuestions);
@@ -56,10 +67,11 @@ function Day2App({ profile }) {
     { id: 1, label: 'Quiz', icon: '🧠' },
     { id: 2, label: 'Part 2: Code Practice', icon: '💻' },
     { id: 3, label: 'Part 3: Input Practice', icon: '⌨️' },
-    { id: 4, label: 'Part 4: Challenges', icon: '🎯' },
-    { id: 5, label: 'Part 5: Reflection', icon: '💭' },
-    { id: 6, label: 'Exercise', icon: '📤' },
-    { id: 7, label: '⭐ Bonus', icon: '⭐' }
+    { id: 4, label: 'Part 4: String Powers', icon: '✨' },
+    { id: 5, label: 'Part 5: Challenges', icon: '🎯' },
+    { id: 6, label: 'Part 6: Reflection', icon: '💭' },
+    { id: 7, label: 'Exercise', icon: '📤' },
+    { id: 8, label: '⭐ Bonus', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
@@ -81,12 +93,22 @@ function Day2App({ profile }) {
       case 3:
         return <Day2Part3 answers={answers} updateAnswer={updateAnswer} />;
       case 4:
-        return <Day2Part4 answers={answers} updateAnswer={updateAnswer} />;
+        return (
+          <Day2Part6
+            answers={answers}
+            updateAnswer={updateAnswer}
+            checkedQuestions={checkedQuestions}
+            updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
+          />
+        );
       case 5:
-        return <Day2Part5 answers={answers} updateAnswer={updateAnswer} />;
+        return <Day2Part4 answers={answers} updateAnswer={updateAnswer} />;
       case 6:
-        return <Day2Exercise answers={answers} updateAnswer={updateAnswer} />;
+        return <Day2Part5 answers={answers} updateAnswer={updateAnswer} />;
       case 7:
+        return <Day2Exercise answers={answers} updateAnswer={updateAnswer} />;
+      case 8:
         return <Day2Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return null;

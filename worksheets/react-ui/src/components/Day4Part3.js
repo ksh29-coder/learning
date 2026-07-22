@@ -58,6 +58,27 @@ function Day4Part3({ answers, updateAnswer }) {
         </div>
       </div>
 
+      <div className="exercise-card">
+        <h3 className="exercise-title">Exercise 3: Break and Continue 🚪⏭️</h3>
+        <p className="exercise-description">
+          Write a program that:
+        </p>
+        <ul className="exercise-list">
+          <li>Uses <code>while True:</code> to keep asking for a word, and <code>break</code> to exit when the user types "quit"</li>
+          <li>Then uses a for loop with <code>continue</code> to print 1 to 10 but SKIP the number 5</li>
+        </ul>
+        <div className="exercise-section">
+          <h4 className="section-title">Your code:</h4>
+          <CodeEditor
+            value={answers.whileExercise3}
+            onChange={(value) => updateAnswer('whileExercise3', value)}
+            placeholder="# Write your break/continue program here..."
+            height={240}
+          />
+          <CodeRunner code={answers.whileExercise3} title="Test Exercise 3" />
+        </div>
+      </div>
+
       <div className="part-footer">
         <p className="tip">
           💡 Tip: Make sure something inside the while loop changes, or it might never stop!

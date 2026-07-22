@@ -29,6 +29,20 @@ print("Line 3")
 ```
 **Answer:** _________________________________
 
+### Question 4
+Python is also a calculator! What will this code print?
+```python
+print(2 + 3)
+```
+**Answer:** _________________________________
+
+### Question 5
+Which symbol tells Python to multiply?
+- [ ] `+`
+- [ ] `-`
+- [ ] `*`
+- [ ] `/`
+
 ---
 
 ## Part 2: Code Practice
@@ -58,6 +72,19 @@ Write a program that prints:
 **Your code:**
 ```python
 # Write your code here
+```
+
+---
+
+### Exercise 3: Machine Math 🧮
+Write a program that uses Python as a calculator to print:
+1. `10 + 5` (with a label, like `print("10 + 5 =", 10 + 5)`)
+2. How many seconds are in one hour (`60 * 60`)
+3. How many days old you are (about your age `* 365`)
+
+**Your code:**
+```python
+# Write your calculator code here
 ```
 
 ---

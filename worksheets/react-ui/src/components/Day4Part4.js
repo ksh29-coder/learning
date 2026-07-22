@@ -83,6 +83,33 @@ function Day4Part4({ answers, updateAnswer }) {
         </div>
       </div>
 
+      <div className="exercise-card">
+        <h3 className="exercise-title">Challenge 4: FizzBuzz! 🎉</h3>
+        <p className="exercise-description">
+          The world's most famous coding challenge — grown-up programmers get asked this in job interviews!
+          Count from 1 to 30, and for each number:
+        </p>
+        <ul className="exercise-list">
+          <li>Divides evenly by 3 AND 5 → print "FizzBuzz!"</li>
+          <li>Divides evenly by 3 only → print "Fizz"</li>
+          <li>Divides evenly by 5 only → print "Buzz"</li>
+          <li>Otherwise → just print the number</li>
+        </ul>
+        <p className="exercise-description">
+          💡 Remember: <code>number % 3 == 0</code> means "divides evenly by 3" — and think about which check goes
+          FIRST! Starter code lives in <code>projects/templates/day4_fizzbuzz_template.py</code>
+        </p>
+        <div className="exercise-section">
+          <CodeEditor
+            value={answers.challenge4}
+            onChange={(value) => updateAnswer('challenge4', value)}
+            placeholder="# Write your FizzBuzz here..."
+            height={260}
+          />
+          <CodeRunner code={answers.challenge4} title="Test Challenge 4" />
+        </div>
+      </div>
+
       <div className="part-footer">
         <p className="tip">
           💡 Tip: Test your programs with different inputs to make sure your loops work in all cases!

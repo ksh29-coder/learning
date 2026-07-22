@@ -145,7 +145,50 @@ print("    |")
 
 ---
 
-### Part 3: Guided Practice - Name Tag Creator (30 minutes)
+### Part 3: Python as a Calculator (15-20 minutes)
+
+#### Math Without Quotes (10 minutes)
+**Goal:** Discover that Python can do math instantly
+
+**Code to write together:**
+```python
+print(2 + 3)      # 5
+print(10 - 4)     # 6
+print(6 * 7)      # 42  (the * means multiply!)
+print(20 / 5)     # 4.0 (the / means divide!)
+```
+
+**Teaching Points:**
+- With **no quotes**, Python calculates the answer
+- `*` is multiplication (there's no × key!)
+- `/` is division (answers can have a decimal point)
+- Compare: `print("2 + 3")` shows the text `2 + 3`, but `print(2 + 3)` shows `5` — quotes make all the difference!
+
+**Experiment Together:**
+- What's 123 * 456? Python knows instantly!
+- What happens with `print(7 / 2)`? (Decimal answers!)
+
+#### Mixing Labels with Math (5-10 minutes)
+**Goal:** Combine text and numbers in one print
+
+**Code example:**
+```python
+print("2 + 3 =", 2 + 3)
+print("Seconds in a day:", 24 * 60 * 60)
+print("My age in dog years:", 14 * 7)
+```
+
+**Teaching Points:**
+- A comma lets you put a text label next to a math answer
+- The text part needs quotes, the math part doesn't
+
+**Fun Challenges:**
+- How many days old are you? (about your age * 365)
+- How many minutes in a week?
+
+---
+
+### Part 4: Guided Practice - Name Tag Creator (30 minutes)
 
 #### Step-by-Step Project
 **Goal:** Create a program that makes a name tag
@@ -175,7 +218,7 @@ print("=" * 20)
 
 ---
 
-### Part 4: Independent Practice (30 minutes)
+### Part 5: Independent Practice (30 minutes)
 
 #### Practice Exercises
 1. **Create a greeting card**
@@ -216,7 +259,7 @@ print("=" * 20)
 
 ---
 
-### Part 5: Main Project - Personalized Greeting Card (40 minutes)
+### Part 6: Main Project - Personalized Greeting Card (40 minutes)
 
 #### Project Introduction
 **Goal:** Create a beautiful greeting card program
@@ -253,7 +296,7 @@ print("=" * 20)
 
 ---
 
-### Part 6: Show and Tell (15 minutes)
+### Part 7: Show and Tell (15 minutes)
 
 #### Sharing Time
 - Each student shares their greeting card
@@ -284,6 +327,12 @@ print("=" * 20)
 - Each `print()` creates a new line
 - Output appears in the terminal in Cursor
 
+### Python as a Calculator
+- Without quotes, Python does math: `print(2 + 3)` shows `5`
+- `+` add, `-` subtract, `*` multiply, `/` divide
+- Mix labels with math: `print("2 + 3 =", 2 + 3)`
+- Quotes = text, no quotes = math!
+
 ### Program Structure
 - Code runs from top to bottom
 - Each line is an instruction
@@ -305,6 +354,7 @@ print("=" * 20)
 - [ ] Create and save a Python file in Cursor?
 - [ ] Run a Python program in Cursor?
 - [ ] Create a simple program with multiple print statements?
+- [ ] Use Python to do simple math with `+`, `-`, `*`, and `/`?
 - [ ] Debug a simple error (like missing quotes)?
 - [ ] Find the output in the terminal?
 

@@ -101,11 +101,19 @@ def show_inventory(inventory):
         print(f"  {i}. {item}")
 
 
+def party_alive(party):
+    """Return True if at least one hero can still fight - a simple for loop!"""
+    for hero in party:
+        if hero.is_alive():
+            return True
+    return False
+
+
 def battle(party, monster):
     """Fight a monster. Uses loops, if/else, lists, and polymorphism."""
     print(f"\n--- A wild {monster.name} appears! ({monster.health} HP) ---")
 
-    while monster.is_alive() and any(hero.is_alive() for hero in party):
+    while monster.is_alive() and party_alive(party):
         # Each living hero attacks - SAME call, different result (Day 8)!
         for hero in party:
             if hero.is_alive() and monster.is_alive():

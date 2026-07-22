@@ -8,6 +8,7 @@ import Day5Part3 from './components/Day5Part3';
 import Day5Part4 from './components/Day5Part4';
 import Day5Part5 from './components/Day5Part5';
 import Day5Part6 from './components/Day5Part6';
+import Day5Part7 from './components/Day5Part7';
 import Day5Bonus from './components/Day5Bonus';
 import { useWorksheetStorage } from './hooks/useWorksheetStorage';
 
@@ -23,6 +24,11 @@ function Day5App({ profile }) {
     q3b: '',
     q3c: '',
     q4: '',
+    // Part 7: Libraries quiz answers
+    q5: '',
+    q6: '',
+    q7: '',
+    q8: '',
     // Part 2: Functions Practice completions
     exercise1_completed: false,
     exercise2_completed: false,
@@ -43,6 +49,9 @@ function Day5App({ profile }) {
     game3b_completed: false,
     game3c_completed: false,
     game3d_completed: false,
+    // Part 7: Libraries exercise completions
+    lib1_completed: false,
+    lib2_completed: false,
     // Bonus
     bonus1_completed: false,
     bonus2_completed: false,
@@ -54,7 +63,11 @@ function Day5App({ profile }) {
     q1: false,
     q2: false,
     q3: false,
-    q4: false
+    q4: false,
+    q5: false,
+    q6: false,
+    q7: false,
+    q8: false
   };
 
   const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 5, initialAnswers, initialCheckedQuestions);
@@ -75,7 +88,8 @@ function Day5App({ profile }) {
     { id: 4, label: 'Part 4: Game 1 - Rock Paper Scissors', icon: '🎮' },
     { id: 5, label: 'Part 5: Game 2 - Number Guessing', icon: '🔢' },
     { id: 6, label: 'Part 6: Build Your Game', icon: '🚀' },
-    { id: 7, label: '⭐ Bonus Challenges', icon: '⭐' }
+    { id: 7, label: 'Part 7: Libraries', icon: '📦' },
+    { id: 8, label: '⭐ Bonus Challenges', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
@@ -103,6 +117,15 @@ function Day5App({ profile }) {
       case 6:
         return <Day5Part6 answers={answers} updateAnswer={updateAnswer} />;
       case 7:
+        return (
+          <Day5Part7
+            answers={answers}
+            updateAnswer={updateAnswer}
+            updateCheckedQuestion={updateCheckedQuestion}
+            profile={profile}
+          />
+        );
+      case 8:
         return <Day5Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return <Day5Learn />;

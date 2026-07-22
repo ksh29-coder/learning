@@ -15,6 +15,8 @@ By the end of this lesson, students will be able to:
 - Use loops with user input (repeat questions)
 - Understand and write simple `while` loops
 - Avoid common loop mistakes (like infinite loops)
+- Control loops with `break` (stop now!) and `continue` (skip this turn!)
+- Use `%` (remainder) and `//` (whole-number division) — including the famous FizzBuzz challenge
 
 ---
 
@@ -226,6 +228,94 @@ print("Loop ended. Goodbye!")
 
 ---
 
+### Part 3.5: Loop Superpowers – `break` and `continue` (20 minutes)
+
+#### Activity 1: `break` – The Emergency Exit (10 minutes)
+**Goal:** Stop a loop from the inside
+
+**Code to write together:**
+```python
+# break jumps OUT of the loop immediately
+print("Type words and I'll repeat them. Type 'stop' to finish.")
+
+while True:  # this would run forever...
+    word = input("Say something (or 'stop'): ")
+
+    if word.lower() == "stop":
+        print("Okay, stopping! 👋")
+        break  # ...but break jumps us out!
+
+    print("You said:", word)
+```
+
+**Teaching Points:**
+- `break` means "STOP the loop right now and jump past it"
+- `while True:` + `break` is a very common pattern in real programs (game loops, menus!)
+- The `break` usually lives inside an `if` — *something* decides when to stop
+- See `code_examples/day4/05_break_and_continue.py`
+
+**Experiment Together:**
+- Ask: "What happens if we delete the `break`?" (infinite loop — connect to yesterday's warning)
+- Change the exit word to something silly ("bananas")
+
+#### Activity 2: `continue` – The Skip Button (10 minutes)
+**Goal:** Skip one turn of the loop without stopping it
+
+**Code example:**
+```python
+# continue skips the REST of this turn and goes to the next number
+print("Counting to 10, but skipping 7:")
+
+for number in range(1, 11):
+    if number == 7:
+        continue  # jump straight to the next number
+    print(number)
+```
+
+**Teaching Points:**
+- `continue` means "skip the rest of THIS turn, but keep looping"
+- `break` = leave the ride; `continue` = skip this one go and stay on the ride 🎢
+- Ask them to predict the output *before* running it
+
+**Quick challenge (verbal):**
+- "How would we skip ALL even numbers?" (hint: this connects to the next segment...)
+
+---
+
+### Part 3.75: Remainder Magic – `%` and `//` (10 minutes)
+
+**Goal:** Meet two new math superpowers and set up FizzBuzz
+
+**Code to write together:**
+```python
+# Sharing 17 cookies between 5 friends
+print("Each friend gets:", 17 // 5, "cookies")   # 3  (whole-number division)
+print("Cookies left over:", 17 % 5)              # 2  (the remainder)
+
+# The famous even/odd trick
+number = int(input("Give me a number: "))
+
+if number % 2 == 0:
+    print("EVEN! ✌️")
+else:
+    print("ODD! ☝️")
+```
+
+**Teaching Points:**
+- `//` divides and **throws away the leftovers** (17 // 5 is 3)
+- `%` gives you **only the leftovers** (17 % 5 is 2)
+- The magic phrase: `x % n == 0` means "x divides evenly by n"
+- `% 2 == 0` is the classic even/odd check — programmers use it constantly
+- See `code_examples/day4/06_remainder_magic.py`
+
+**🎉 FizzBuzz Challenge (the world-famous one!):**
+- Count 1–30: multiples of 3 print "Fizz", multiples of 5 print "Buzz", multiples of both print "FizzBuzz!", everything else prints the number
+- Starter template: `projects/templates/day4_fizzbuzz_template.py`
+- Tell the kids: **adult programmers get asked this in job interviews** — huge confidence boost!
+- Key teaching moment: the "3 AND 5" check must come FIRST (ask them why!)
+
+---
+
 ### Part 4: Guided Practice – Repeating Patterns and Timers (30 minutes)
 
 #### Step-by-Step Project: "Countdown and Cheer" Program
@@ -404,6 +494,19 @@ print("Great job! Workout complete! 💪")
 - You **must** change something inside the loop so the condition can become False
 - Be careful to avoid infinite loops
 
+### `break` and `continue`
+- `break` — STOP the loop immediately and jump past it
+- `continue` — skip the rest of THIS turn, then keep looping
+- `while True:` + `break` is a common pattern for menus and games
+- Both almost always live inside an `if`
+
+### Remainder Magic: `%` and `//`
+- `//` whole-number division: `17 // 5` is `3` (throw away the leftovers)
+- `%` remainder: `17 % 5` is `2` (ONLY the leftovers)
+- `x % n == 0` means "x divides evenly by n"
+- `number % 2 == 0` — the classic even/odd check
+- FizzBuzz combines `%` with if/elif/else inside a loop
+
 ### Combining Loops with Input
 - You can use loops to:
   - Ask questions many times
@@ -428,6 +531,9 @@ print("Great job! Workout complete! 💪")
 - [ ] Use a loop variable inside `print()`?
 - [ ] Write a simple `while` loop that stops correctly?
 - [ ] Combine loops with `input()` to make interactive programs?
+- [ ] Use `break` to exit a loop and `continue` to skip a turn?
+- [ ] Explain what `10 % 3` and `10 // 3` give you?
+- [ ] Solve FizzBuzz (with the template's help)?
 - [ ] Avoid or fix a simple infinite loop mistake?
 - [ ] Debug an `IndentationError` in loop code?
 
@@ -456,7 +562,10 @@ print("Great job! Workout complete! 💪")
    - Use `range(start, stop, step)` to count by 2s, 5s, or 10s
 
 5. **Simple Menu Loop**  
-   - Show a menu and use a `while` loop to keep asking until they choose "quit"
+   - Show a menu and use a `while True:` loop with `break` when they choose "quit"
+
+6. **FizzBuzz Remix**  
+   - Finished `projects/templates/day4_fizzbuzz_template.py`? Add a third rule (`% 7` prints "Boom!"), or let the user pick how high to count
 
 ---
 

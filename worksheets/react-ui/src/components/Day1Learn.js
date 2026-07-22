@@ -55,6 +55,25 @@ print("Line 3")`}</pre>
         </p>
       </div>
 
+      <div className="info-box">
+        <h3>🧮 Python is a Calculator!</h3>
+        <p>
+          With <strong>no quotes</strong>, Python does the math for you! Use <code>+</code> to add,{' '}
+          <code>-</code> to subtract, <code>*</code> to multiply, and <code>/</code> to divide.
+        </p>
+        <pre className="code-example">{`print(2 + 3)    # 5
+print(10 - 4)   # 6
+print(6 * 7)    # 42
+print(20 / 5)   # 4.0
+
+print("2 + 3")           # the TEXT 2 + 3 (quotes = no math!)
+print("2 + 3 =", 2 + 3)  # 2 + 3 = 5  (label + answer!)`}</pre>
+        <p>
+          The comma trick lets you mix a <strong>text label</strong> with a <strong>math answer</strong> in one
+          line. Try it: how many seconds are in a day? <code>print(24 * 60 * 60)</code> ⚡
+        </p>
+      </div>
+
       <div className="part-footer">
         <p className="tip">
           💡 Ready? Click the <strong>Quiz</strong> tab above to check what you just learned!

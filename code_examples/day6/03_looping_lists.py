@@ -23,6 +23,13 @@ for index in range(len(fruits)):
 
 print()
 
+# The numbered-list trick: enumerate() hands us the NUMBER and the ITEM
+# together - no math needed! The 1 means "start counting at 1".
+for number, fruit in enumerate(fruits, 1):
+    print(f"{number}. {fruit}")
+
+print()
+
 # Looping is also great for adding up numbers in a list
 total = 0
 for score in scores:
@@ -35,3 +42,5 @@ print("The total of all scores is:", total)
 # 2. Loop over the scores list and print only the scores greater than 10.
 # 3. Use a loop to find the biggest score without using max() - compare as you go!
 # 4. Combine range(len(...)) with a list of your own favorite things.
+# 5. Print your favorite things as a numbered "Top 5" list using
+#    enumerate(my_list, 1) - the Day 9 final project uses this exact trick!

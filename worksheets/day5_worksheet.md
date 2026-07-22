@@ -102,7 +102,64 @@ Write a function `square_number(n)` that returns `n * n`. Ask the user for a num
 
 ---
 
-## Part 5: Challenge Problems
+## Part 5: Libraries - Functions Other People Wrote! 📦
+
+You've been WRITING functions all day. A **library** is a box of functions
+other people already wrote for you - `import` opens the box!
+
+### Question 1
+What does `import random` do?
+- [ ] It creates a random number right away
+- [ ] It opens the `random` library so we can use the functions inside it
+- [ ] It makes our own functions random
+- [ ] It deletes the random library
+
+### Question 2
+Which of these could `random.randint(1, 6)` give you?
+- [ ] Only 2, 3, 4, or 5
+- [ ] Any whole number from 1 to 6, including 1 and 6
+- [ ] Any number from 0 to 6
+- [ ] Always 6
+
+### Question 3
+What could this code print?
+```python
+import random
+pet = random.choice(["cat", "dog", "hamster"])
+print(pet)
+```
+**Answer:** _________________________________
+
+### Question 4
+After `from time import sleep`, what does `sleep(2)` do?
+**Answer:** _________________________________
+
+---
+
+### Exercise 1: Dice Roller 🎲
+Write a program that uses `import random` and `random.randint(1, 6)` to roll
+a dice 3 times (use a `for` loop!) and print each roll with an f-string.
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
+### Exercise 2: Magic 8-Ball 🎱
+Write a program that asks the user a yes/no question with `input()`, waits 1
+second using `from time import sleep`, then prints a random answer using
+`random.choice([...])` with at least 4 possible answers.
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
+## Part 6: Challenge Problems
 
 ### Challenge 1: Function Toolbox
 Build a small `function_toolbox.py` with at least 3 functions (for example `print_border()`, `greet_user(name)`, `cheer(times)`) and a main program that uses all of them together.
@@ -124,14 +181,15 @@ Write a function `celsius_to_fahrenheit(celsius)` that returns the Fahrenheit te
 
 ---
 
-## Part 6: Reflection
+## Part 7: Reflection
 
 ### What I Learned Today:
 1. A function is used when: _________________________________
 2. A parameter is: _________________________________
 3. `return` is different from `print` because: _________________________________
-4. One thing I found easy: _________________________________
-5. One thing I found challenging: _________________________________
+4. A library is: _________________________________
+5. One thing I found easy: _________________________________
+6. One thing I found challenging: _________________________________
 
 ### What I Want to Learn Next:
 _________________________________
@@ -141,7 +199,7 @@ _________________________________
 
 ## Bonus Challenge!
 
-Build your own game (Rock-Paper-Scissors or Number Guessing) where every major step is its own function. Be creative! 🎮
+Build your own game (Rock-Paper-Scissors or Number Guessing) where every major step is its own function. Make the computer unpredictable with `random.choice([...])` or `random.randint(...)` - there's a starter file in `projects/templates/day5_rock_paper_scissors_template.py`! Be creative! 🎮
 
 **Your code:**
 ```python

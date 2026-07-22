@@ -32,6 +32,20 @@ for i in range(1, 4):
 What's the difference between a `for` loop and a `while` loop?
 **Answer:** _________________________________
 
+### Question 5
+What does `break` do inside a loop?
+- [ ] It pauses the loop for one second
+- [ ] It stops the loop immediately and jumps past it
+- [ ] It skips one turn and keeps looping
+- [ ] It restarts the loop from the beginning
+
+### Question 6
+What does `10 % 3` give you? (Hint: `%` is the remainder!)
+- [ ] 3
+- [ ] 3.33
+- [ ] 1
+- [ ] 0
+
 ---
 
 ## Part 2: For Loop Practice
@@ -88,6 +102,18 @@ Write a `while` loop that keeps asking the user to type "stop" until they actual
 
 ---
 
+### Exercise 3: Break and Continue 🚪⏭️
+Write a program that:
+1. Uses `while True:` and `break` — keep asking for a word, and break out when the user types "quit"
+2. Then uses a `for` loop with `continue` to print the numbers 1 to 10 but SKIP the number 5
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
 ## Part 4: Challenge Problems
 
 ### Challenge 1: Multiplication Table
@@ -124,6 +150,24 @@ _________________________________
 **Fixed code:**
 ```python
 # Write your fixed code here
+```
+
+---
+
+### Challenge 4: FizzBuzz! 🎉
+The world's most famous coding challenge — grown-up programmers get asked this in job interviews! Write a program that counts from 1 to 30, and for each number:
+1. If it divides evenly by 3 AND 5 → print "FizzBuzz!"
+2. If it divides evenly by 3 only → print "Fizz"
+3. If it divides evenly by 5 only → print "Buzz"
+4. Otherwise → just print the number
+
+💡 Remember: `number % 3 == 0` means "divides evenly by 3". And think carefully about which check goes FIRST!
+
+💡 Starter code: `projects/templates/day4_fizzbuzz_template.py`
+
+**Your code:**
+```python
+# Write your FizzBuzz here
 ```
 
 ---

@@ -16,6 +16,10 @@ Author: You!
 Day: 5 - Functions, Review & Games
 """
 
+# We import the random library at the top of the file - this opens the
+# "random" toolbox so the Dragon can make surprise moves! (Day 5: Libraries)
+import random
+
 # ============================================
 # FUNCTIONS - The game is organized into functions!
 # ============================================
@@ -29,10 +33,9 @@ def show_welcome():
     print("You must defeat it to save the village!")
     print("\nAvailable Actions:")
     print("  [1] Attack  - Deal 20 damage")
-    print("  [2] Defend  - Take 100% less damage next turn")
+    print("  [2] Defend  - Take 50% less damage next turn")
     print("  [3] Special - Deal 35 damage (Limited: 2 uses)")
     print("  [4] Potion  - Restore 30 HP (Limited: 3 uses)")
-    print("  [5] Reflect - Reflect all damage back (Limited 2 uses)")
     print("\n" + "=" * 50)
         # ENHANCEMENT: Step 2 adds ASCII art here!
 
@@ -50,36 +53,35 @@ def show_status(player_hp, monster_hp, potions, special_moves):
 def player_turn(potions, special_moves):
     """Get player's action choice"""
     print("\nYour turn!")
-    print("[1] Attack  [2] Defend  [3] Special Move  [4] Use Potion [5] Reflect")
+    print("[1] Attack  [2] Defend  [3] Special Move  [4] Use Potion")
 
     while True:
-        choice = input("Choose your action (1-5): ")
+        choice = input("Choose your action (1-4): ")
 
         if choice == "1":
+            # This return sends back THREE values at once, separated by
+            # commas: the action, plus the updated potion/special counts.
             return "attack", potions, special_moves
         elif choice == "2":
             return "defend", potions, special_moves
         elif choice == "3":
             if special_moves > 0:
                 return "special", potions, special_moves - 1
-        elif choice == "5":
-            if special_moves > 0:
-                return "reflect", potions, special_moves - 1
             else:
-                print("No reflects left!")
+                print("No special moves left! Choose something else.")
         elif choice == "4":
             if potions > 0:
                 return "potion", potions - 1, special_moves
             else:
                 print("No potions left! Choose something else.")
         else:
-            print("Invalid choice! Please choose 1-5.")
+            print("Invalid choice! Please choose 1-4.")
     # ENHANCEMENT: Step 4 adds dramatic action messages here!
 
 
 def monster_turn():
     """Dragon chooses a random action"""
-    import random
+    # random.choice picks one random item from the list (see Day 5: Libraries!)
     # Dragon can only attack or defend (for now)
     action = random.choice(["attack", "defend"])
 
@@ -109,10 +111,6 @@ def calculate_damage(action, is_defending):
     # ENHANCEMENT: Step 3 adds random damage here!
     # ENHANCEMENT: Step 5 adds critical hits here!
 
-    
-
-
-
 
 def battle_round(player_hp, monster_hp, player_action, monster_action):
     """Process one round of combat"""
@@ -133,7 +131,8 @@ def battle_round(player_hp, monster_hp, player_action, monster_action):
         monster_hp -= player_damage
     elif player_action == "potion":
         heal = 30
-        player_hp = min(player_hp + heal, 100)  # Can't exceed max HP
+        # min() returns the SMALLER of two numbers - so HP can't go over 100
+        player_hp = min(player_hp + heal, 100)
         print(f"You drink a potion and restore {heal} HP!")
     elif player_action == "defend":
         print("You raise your shield in defense!")
@@ -146,6 +145,8 @@ def battle_round(player_hp, monster_hp, player_action, monster_action):
 
     print("🗡️ " * 20)
 
+    # Return TWO values at once (separated by a comma) - both HP numbers
+    # travel back to whoever called this function.
     return player_hp, monster_hp
 
 
@@ -173,13 +174,16 @@ def play_game():
         show_status(player_hp, monster_hp, potions, special_moves)
 
         # Get actions
+        # player_turn returns 3 values, so we catch them in 3 variables
+        # (one variable for each value, in the same order)
         player_action, potions, special_moves = player_turn(potions, special_moves)
         monster_action = monster_turn()
 
         # Process combat round
+        # battle_round returns 2 values - the two new HP numbers
         player_hp, monster_hp = battle_round(player_hp, monster_hp, player_action, monster_action)
 
-        # Make sure HP doesn't go below 0
+        # max() returns the BIGGER of two numbers - so HP can't go below 0
         player_hp = max(player_hp, 0)
         monster_hp = max(monster_hp, 0)
 
@@ -201,8 +205,7 @@ def play_game():
 # ============================================
 # START THE GAME!
 # ============================================
-if __name__ == "__main__":
-    play_game()
+play_game()
 
 
 # ============================================
@@ -257,8 +260,8 @@ if __name__ == "__main__":
 #
 # FIND: The calculate_damage() function (around line 75)
 #
-# AT THE TOP OF THE FILE, add:
-#   import random
+# GOOD NEWS: "import random" is already at the top of the file,
+# so the random toolbox is ready to use!
 #
 # CURRENT CODE in calculate_damage():
 #   if action == "attack":
@@ -330,25 +333,24 @@ if __name__ == "__main__":
 # OBJECTIVE: Let players play multiple times without re-running
 #
 # FIND: The bottom of the file where it says:
-#   if __name__ == "__main__":
-#       play_game()
+#   play_game()
 #
 # REPLACE WITH:
 #
-#   if __name__ == "__main__":
-#       while True:
-#           play_game()
-#           again = input("\nPlay again? (yes/no): ")
-#           if again.lower() != "yes":
-#               print("\nThanks for playing! Goodbye!")
-#               break
+#   while True:
+#       play_game()
+#       again = input("\nPlay again? (yes/no): ")
+#       if again.lower() != "yes":
+#           print("\nThanks for playing! Goodbye!")
+#           break
 #
 #
 # 🎉 BONUS CHALLENGES (For the brave!)
 # ============================================
 # - Add multiple monsters with different HP
 # - Create a "hard mode" with stronger monsters
-# - Add more special moves with different effects
+# - Add more special moves with different effects (like a Reflect move
+#   that bounces the Dragon's damage back at it!)
 # - Create a leveling system (player gets stronger)
 # - Add ASCII art for the dragon
 # - Track high scores or fastest victories

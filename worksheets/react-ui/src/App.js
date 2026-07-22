@@ -19,8 +19,11 @@ function App({ profile }) {
     q1: '',
     q2: '',
     q3: '',
+    q4: '',
+    q5: '',
     exercise1: '',
     exercise2: '',
+    exercise3: '',
     challenge1: 'print("    *")\nprint("   ***")\nprint("  _____")  # Fill this in!\nprint(" _____")    # Fill this in!\nprint("    |")',
     challenge2: '',
     reflection1: '',
@@ -37,7 +40,9 @@ function App({ profile }) {
   const initialCheckedQuestions = {
     q1: false,
     q2: false,
-    q3: false
+    q3: false,
+    q4: false,
+    q5: false
   };
 
   const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 1, initialAnswers, initialCheckedQuestions);

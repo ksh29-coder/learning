@@ -7,7 +7,7 @@ function Day2Part4({ answers, updateAnswer }) {
   return (
     <div className="part3-container">
       <div className="part-header">
-        <h2>🎯 Part 4: Challenge Problems</h2>
+        <h2>🎯 Part 5: Challenge Problems</h2>
         <p className="part-description">
           Ready for some fun challenges? Let's put your skills to the test!
         </p>

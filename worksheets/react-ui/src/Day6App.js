@@ -4,6 +4,7 @@ import { useWorksheetStorage, DEFAULT_PROFILE } from './hooks/useWorksheetStorag
 import Day6Header from './components/Day6Header';
 import Day6Part1 from './components/Day6Part1';
 import Day6Part2 from './components/Day6Part2';
+import Day6Part3 from './components/Day6Part3';
 import Day6Quiz from './components/Day6Quiz';
 import Day6Exercise from './components/Day6Exercise';
 import Day6Bonus from './components/Day6Bonus';
@@ -21,6 +22,11 @@ function Day6App({ profile = DEFAULT_PROFILE }) {
     q4: '',
     q5: '',
     q6: '',
+    q7: '',
+    q8: '',
+    q9: '',
+    q10: '',
+    q11: '',
     // Part 2: List Practice completions
     exercise1_completed: false,
     exercise2_completed: false,
@@ -30,9 +36,14 @@ function Day6App({ profile = DEFAULT_PROFILE }) {
     exercise5_completed: false,
     exercise6_completed: false,
     exercise7_completed: false,
+    // Part 3: Dictionaries & Safety Net completions
+    exercise8_completed: false,
+    exercise9_completed: false,
+    exercise10_completed: false,
     // Bonus completions
     bonus1_completed: false,
-    bonus2_completed: false
+    bonus2_completed: false,
+    bonus3_completed: false
   };
 
   const initialCheckedQuestions = {
@@ -41,7 +52,12 @@ function Day6App({ profile = DEFAULT_PROFILE }) {
     q3: false,
     q4: false,
     q5: false,
-    q6: false
+    q6: false,
+    q7: false,
+    q8: false,
+    q9: false,
+    q10: false,
+    q11: false
   };
 
   const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(
@@ -62,9 +78,10 @@ function Day6App({ profile = DEFAULT_PROFILE }) {
   const tabs = [
     { id: 0, label: 'Part 1: Understanding Lists', icon: '📚' },
     { id: 1, label: 'Part 2: List Practice', icon: '💻' },
-    { id: 2, label: 'Quiz', icon: '🧠' },
-    { id: 3, label: 'Exercise', icon: '🚀' },
-    { id: 4, label: '⭐ Bonus Challenges', icon: '⭐' }
+    { id: 2, label: 'Part 3: Dictionaries', icon: '🗂️' },
+    { id: 3, label: 'Quiz', icon: '🧠' },
+    { id: 4, label: 'Exercise', icon: '🚀' },
+    { id: 5, label: '⭐ Bonus Challenges', icon: '⭐' }
   ];
 
   const renderTabContent = () => {
@@ -74,6 +91,8 @@ function Day6App({ profile = DEFAULT_PROFILE }) {
       case 1:
         return <Day6Part2 answers={answers} updateAnswer={updateAnswer} />;
       case 2:
+        return <Day6Part3 answers={answers} updateAnswer={updateAnswer} />;
+      case 3:
         return (
           <Day6Quiz
             answers={answers}
@@ -83,9 +102,9 @@ function Day6App({ profile = DEFAULT_PROFILE }) {
             profile={profile}
           />
         );
-      case 3:
-        return <Day6Exercise answers={answers} updateAnswer={updateAnswer} />;
       case 4:
+        return <Day6Exercise answers={answers} updateAnswer={updateAnswer} />;
+      case 5:
         return <Day6Bonus answers={answers} updateAnswer={updateAnswer} />;
       default:
         return <Day6Part1 answers={answers} updateAnswer={updateAnswer} />;

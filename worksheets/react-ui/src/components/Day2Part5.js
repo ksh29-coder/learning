@@ -14,7 +14,7 @@ function Day2Part5({ answers, updateAnswer }) {
   return (
     <div className="part4-container">
       <div className="part-header">
-        <h2>💭 Part 5: Reflection</h2>
+        <h2>💭 Part 6: Reflection</h2>
         <p className="part-description">
           Think about what you've learned today about variables!
         </p>

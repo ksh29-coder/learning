@@ -68,6 +68,51 @@ while count <= 3:
         </p>
       </div>
 
+      <div className="info-box">
+        <h3>🚪 break and continue — Loop Superpowers</h3>
+        <p>
+          <code>break</code> is the <strong>emergency exit</strong>: it stops the loop immediately and jumps past it.{' '}
+          <code>continue</code> is the <strong>skip button</strong>: it skips the rest of this turn but keeps looping.
+        </p>
+        <pre className="code-example">{`# break: stop when the user says so
+while True:
+    word = input("Say something (or 'stop'): ")
+    if word.lower() == "stop":
+        break          # 🚪 jump out of the loop!
+    print("You said:", word)
+
+# continue: count to 10 but skip 7
+for number in range(1, 11):
+    if number == 7:
+        continue       # ⏭️ skip straight to the next number
+    print(number)`}</pre>
+        <p>
+          Think of a merry-go-round: <code>break</code> = get off the ride, <code>continue</code> = stay on but skip
+          this one go! 🎠
+        </p>
+      </div>
+
+      <div className="info-box">
+        <h3>✨ Remainder Magic: % and //</h3>
+        <p>
+          <code>{'//'}</code> divides and <strong>throws away the leftovers</strong>. <code>%</code> gives you{' '}
+          <strong>only the leftovers</strong> (the remainder). Sharing 17 cookies between 5 friends:
+        </p>
+        <pre className="code-example">{`print(17 // 5)   # 3  - each friend gets 3 cookies
+print(17 % 5)    # 2  - and 2 are left over!
+
+# The famous even/odd trick:
+number = 6
+if number % 2 == 0:
+    print("EVEN! ✌️")   # nothing left over when dividing by 2
+else:
+    print("ODD! ☝️")`}</pre>
+        <p>
+          The magic phrase: <code>x % n == 0</code> means "x divides evenly by n". You'll use it in the famous{' '}
+          <strong>FizzBuzz</strong> challenge! 🎉
+        </p>
+      </div>
+
       <div className="part-footer">
         <p className="tip">
           💡 Ready? Click the <strong>Quiz</strong> tab above to check what you just learned!

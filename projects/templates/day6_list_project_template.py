@@ -19,6 +19,7 @@ scores = []
 
 # ============================================
 # STEP 2: Collect scores from the player using a loop
+# (with the try/except SAFETY NET so "banana" can't crash us!)
 # ============================================
 while True:
     entry = input("Enter a score (or 'done'): ")
@@ -26,9 +27,12 @@ while True:
     if entry.lower() == "done":
         break
 
-    score = int(entry)
-    scores.append(score)
-    print("Added score:", score)
+    try:
+        score = int(entry)
+        scores.append(score)
+        print("Added score:", score)
+    except ValueError:
+        print("That's not a number! Try again.")
 
 print()
 
@@ -68,6 +72,35 @@ print()
 print("=" * 40)
 print("Thanks for using the High Score Tracker!")
 print("=" * 40)
+
+# ============================================
+# OPTIONAL BONUS STEP: A DICTIONARY SCOREBOARD
+# ============================================
+# A list is numbered cubbies, but a DICTIONARY is labeled cubbies - perfect
+# for matching each player's NAME to their score! Uncomment the lines below
+# (remove the # at the start of each line) and try it out.
+
+# scoreboard = {}
+#
+# while True:
+#     player_name = input("Player name (or 'done'): ")
+#
+#     if player_name.lower() == "done":
+#         break
+#
+#     entry = input("Score for " + player_name + ": ")
+#
+#     try:
+#         scoreboard[player_name] = int(entry)
+#     except ValueError:
+#         print("That's not a number - skipping that one!")
+#
+# print()
+# print("=" * 40)
+# print("   📋 FINAL SCOREBOARD 📋")
+# print("=" * 40)
+# for player_name, score in scoreboard.items():
+#     print(player_name, "scored", score)
 
 # ============================================
 # CHALLENGES:
