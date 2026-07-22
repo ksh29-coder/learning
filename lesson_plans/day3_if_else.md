@@ -15,6 +15,7 @@ By the end of this lesson, students will be able to:
 - Compare values using comparison operators (==, !=, <, >, <=, >=)
 - Create interactive programs that respond to user input
 - Combine conditions with `and` and `or`
+- Flip conditions with `not`
 
 ---
 
@@ -261,7 +262,7 @@ else:
 
 ---
 
-### Part 4: Combining Conditions (30 minutes)
+### Part 4: Combining Conditions (40 minutes)
 
 #### Activity 1: Using `and` (10 minutes)
 **Goal:** Check multiple conditions at once
@@ -302,8 +303,40 @@ else:
 - If either is True, the whole thing is True
 - Useful for checking multiple options
 
-#### Activity 3: Complex Conditions (10 minutes)
-**Goal:** Combine and/or
+#### Activity 3: Using `not` (10 minutes)
+**Goal:** Flip a condition upside down
+
+**Code to write together:**
+```python
+# Using 'not' - flips True to False (and False to True!)
+is_raining = False
+
+if not is_raining:
+    print("No umbrella needed! 😎")
+else:
+    print("Grab your umbrella! ☔")
+
+# 'not' works with comparisons too
+homework_done = input("Is your homework done? (yes/no): ")
+
+if not homework_done == "yes":
+    print("Better finish that homework first! 📚")
+else:
+    print("Awesome — free time! 🎮")
+```
+
+**Teaching Points:**
+- `not` turns True into False and False into True
+- Read it out loud like English: "if NOT raining..."
+- `not x == 5` is the same as `x != 5` — two ways to say the same thing!
+- Great for checking that something is *missing* or *switched off*
+
+**Quick game:**
+- Say a condition ("It's Saturday") and have the kids shout the `not` version ("It's NOT Saturday!")
+- Ask: "What is `not True`? What is `not not True`?" (mind-bending fun!)
+
+#### Activity 4: Complex Conditions (10 minutes)
+**Goal:** Combine and/or/not
 
 **Code example:**
 ```python
@@ -407,6 +440,14 @@ else:
    - Check if it matches a secret password
    - Give success or failure message
    - Save as `password_checker.py`
+
+   **⭐ Level-up challenge: Password STRENGTH Checker** (a classic first coding-club project!)
+   - Starter template: `projects/templates/day3_password_checker_template.py`
+   - Uses everything from today plus two friends from Day 2:
+     - `len(password) >= 8` — is it long enough?
+     - `password.lower() == "password"` — catch common passwords no matter how they're typed
+     - `is_long and not is_common` — combine checks with `and` / `not`
+   - Great practice for `not`, and it's a real thing websites do!
 
 3. **Create a grade calculator**
    - Ask for a score (0-100)
@@ -542,6 +583,7 @@ else:
 ### Logical Operators
 - `and` - both conditions must be True
 - `or` - at least one condition must be True
+- `not` - flips True to False (and False to True)
 - Can combine with parentheses
 
 ### Indentation
@@ -567,6 +609,7 @@ else:
 - [ ] Use else to handle alternative cases?
 - [ ] Use elif for multiple conditions?
 - [ ] Use comparison operators (==, !=, <, >, etc.)?
+- [ ] Combine conditions with `and`, `or`, and `not`?
 - [ ] Understand the difference between `=` and `==`?
 - [ ] Use proper indentation in if/else blocks?
 - [ ] Create an interactive program with decisions?
@@ -585,7 +628,7 @@ else:
 
 1. **Create a calculator with operations** (ask for two numbers and operation, use if/elif to calculate)
 2. **Build a "Would You Rather" game** (multiple choices, different outcomes)
-3. **Create a password strength checker** (check length, has numbers, etc.)
+3. **Extend the password strength checker** (start from `projects/templates/day3_password_checker_template.py` — add a score, more common passwords, etc.)
 4. **Build a rock-paper-scissors game** (compare user choice vs computer choice)
 5. **Create a temperature converter** (ask for unit, convert accordingly)
 6. **Build a simple chatbot** (respond differently based on keywords)

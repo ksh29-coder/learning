@@ -62,6 +62,26 @@ else:
         </p>
       </div>
 
+      <div className="info-box">
+        <h3>🧲 and, or, not</h3>
+        <p>
+          You can combine conditions! <code>and</code> needs <strong>both</strong> to be True, <code>or</code> needs{' '}
+          <strong>at least one</strong>, and <code>not</code> <strong>flips</strong> True to False (and False to True).
+        </p>
+        <pre className="code-example">{`age = 12
+is_raining = False
+
+if age >= 10 and age <= 15:
+    print("You're between 10 and 15!")
+
+if not is_raining:
+    print("No umbrella needed! 😎")`}</pre>
+        <p>
+          Read <code>not</code> out loud like English: "if <strong>NOT</strong> raining, go outside!" It's perfect for
+          checking that something is switched off or missing. 🔦
+        </p>
+      </div>
+
       <div className="part-footer">
         <p className="tip">
           💡 Ready? Click the <strong>Quiz</strong> tab above to check what you just learned!

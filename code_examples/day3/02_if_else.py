@@ -41,8 +41,26 @@ if weather == "sunny":
 else:
     print("Maybe stay indoors today.")
 
+# The 'not' keyword — it flips True to False (and False to True)!
+print()
+is_raining = False
+
+if not is_raining:
+    print("No rain — no umbrella needed! 😎")
+else:
+    print("Grab your umbrella! ☔")
+
+# 'not' also works with comparisons:
+homework_done = input("Is your homework done? (yes/no): ")
+
+if not homework_done == "yes":
+    print("Better finish that homework first! 📚")
+else:
+    print("Awesome — free time! 🎮")
+
 # Challenge: Create your own if/else!
 # Ask the user a question and give different responses
+# Extra challenge: use 'not' in one of your conditions!
 
 
 

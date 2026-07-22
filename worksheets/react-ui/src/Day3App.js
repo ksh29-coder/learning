@@ -21,6 +21,8 @@ function Day3App({ profile }) {
     q2: '',
     q3: '',
     q4: '',
+    q5: '',
+    q6: '',
     exercise1: '',
     exercise2: '',
     exercise3: '',
@@ -30,6 +32,7 @@ function Day3App({ profile }) {
     challenge2: '',
     challenge3: '',
     challenge4: '',
+    challenge5: '',
     reflection1: '',
     reflection2: '',
     reflection3: '',
@@ -46,7 +49,9 @@ function Day3App({ profile }) {
     q1: false,
     q2: false,
     q3: false,
-    q4: false
+    q4: false,
+    q5: false,
+    q6: false
   };
 
   const { answers, checkedQuestions, updateAnswer, updateCheckedQuestion } = useWorksheetStorage(profile, 3, initialAnswers, initialCheckedQuestions);

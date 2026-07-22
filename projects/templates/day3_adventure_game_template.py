@@ -35,7 +35,26 @@ if choice1.lower() == "left":
     if choice2.lower() == "yes":
         print()
         print("You open the chest and find gold coins! 🪙")
-        print("You're rich! The end. 🎉")
+        print("Suddenly, a friendly genie pops out of the chest! 🧞")
+        print("The genie offers to grant you ONE wish.")
+
+        # ============================================
+        # DECISION POINT 3 (after opening the chest)
+        # ============================================
+        choice3 = input("Do you wish for TREASURE or FRIENDSHIP? ")
+
+        if choice3.lower() == "treasure":
+            print()
+            print("Mountains of gold appear around you! 💰💰💰")
+            print("You're the richest explorer ever! The end. 🎉")
+        elif choice3.lower() == "friendship":
+            print()
+            print("The genie becomes your best friend forever! 🧞💛")
+            print("You go on adventures together every day. The end. 🥳")
+        else:
+            print()
+            print("The genie is confused by your wish...")
+            print("It gives you a nice sandwich instead. 🥪 The end.")
     elif choice2.lower() == "no":
         print()
         print("You leave the chest and continue walking.")
@@ -64,8 +83,26 @@ elif choice1.lower() == "right":
         print("You enter the cave...")
         print("It's dark inside!")
         print("You find a glowing crystal! 💎")
-        print("The crystal gives you magical powers! ✨")
-        print("You become a wizard! The end. 🧙‍♂️")
+        print("The crystal starts to hum with magical power...")
+
+        # ============================================
+        # DECISION POINT 3 (inside the cave)
+        # ============================================
+        choice3 = input("Do you TOUCH the crystal or LEAVE it alone? ")
+
+        if choice3.lower() == "touch":
+            print()
+            print("The crystal gives you magical powers! ✨")
+            print("You become a wizard! The end. 🧙‍♂️")
+        elif choice3.lower() == "leave":
+            print()
+            print("Wise choice! The crystal was guarded by a sleepy troll. 🧌")
+            print("You tiptoe out and find a bag of gems by the exit! 💎")
+            print("You're rich AND safe! The end. 🎉")
+        else:
+            print()
+            print("While you think about it, the cave starts to rumble...")
+            print("You run outside just in time! What an adventure! The end. 🏃")
     elif choice2.lower() == "no":
         print()
         print("You decide not to enter the cave.")
@@ -93,7 +130,7 @@ print("=" * 40)
 # ============================================
 # CHALLENGES:
 # ============================================
-# 1. Add more decision points (at least 3 total)
+# 1. Add MORE decision points (this template has 3 — can you get to 5?)
 # 2. Create longer story branches
 # 3. Add more choices at each decision point
 # 4. Create different endings based on choices

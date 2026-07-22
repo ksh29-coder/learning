@@ -38,6 +38,24 @@ What does `elif` mean?
 - [ ] "end if"
 - [ ] "equal if"
 
+### Question 5
+What does the `not` keyword do?
+- [ ] It deletes a variable
+- [ ] It flips True to False (and False to True)
+- [ ] It ends the program
+- [ ] It compares two numbers
+
+### Question 6
+What will this code print?
+```python
+is_raining = False
+if not is_raining:
+    print("Let's go outside! 😎")
+else:
+    print("Movie day inside! 🍿")
+```
+**Answer:** _________________________________
+
 ---
 
 ## Part 2: Code Practice
@@ -172,6 +190,23 @@ Create a program that:
 **Your code:**
 ```python
 # Write your calculator here
+```
+
+---
+
+### Challenge 5: Password STRENGTH Checker ⭐
+Level up Challenge 1! This is a classic first coding-club project — real websites do this. Create a program that:
+1. Asks the user to type a password
+2. Uses `len()` to check the password is at least 8 characters long
+3. Uses `.lower()` to catch super-common passwords (like "password" or "12345678") no matter how they're typed
+4. Uses `and` / `not` to print "🏆 STRONG password!" only if it's long enough AND not a common one
+5. Otherwise gives friendly tips to make it stronger
+
+💡 Starter code: `projects/templates/day3_password_checker_template.py`
+
+**Your code:**
+```python
+# Write your password strength checker here
 ```
 
 ---
