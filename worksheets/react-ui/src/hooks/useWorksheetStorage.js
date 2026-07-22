@@ -140,9 +140,17 @@ export function getDayProgress(profile, day) {
 // ANY device counts - lets the badge reflect the child's real history instead
 // of only what this browser's localStorage has seen.
 export function getMergedDayProgress(profile, day, remoteDay) {
-  const merged = mergeDayState(
-    { checkedQuestions: readLocalChecked(profile, day) },
-    remoteDay
-  ).checkedQuestions;
-  return classify(merged);
+  const local = readLocalChecked(profile, day);
+  const merged = mergeDayState({ checkedQuestions: local }, remoteDay).checkedQuestions;
+  const status = classify(merged);
+
+  // The server only knows the questions a child has ANSWERED, not how many the
+  // day contains - that count only exists in the DayNApp's initialCheckedQuestions,
+  // which is written to localStorage the first time the day is opened here. So
+  // without a local record, "everything I can see is correct" is a lower bound,
+  // not proof the day is finished: cap it at in-progress rather than show a ✅
+  // for a half-done day on a device that has never opened it.
+  if (status === 'completed' && Object.keys(local).length === 0) return 'in-progress';
+
+  return status;
 }
