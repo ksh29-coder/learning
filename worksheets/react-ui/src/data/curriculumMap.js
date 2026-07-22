@@ -12,7 +12,7 @@
 export const CURRICULUM = {
   1: {
     topic: 'Your First Python Program',
-    concepts: ['print()', 'text (strings)', 'quotes', 'comments with #', 'running a .py file'],
+    concepts: ['print()', 'text (strings)', 'quotes', 'comments with #', 'running a .py file', 'math with + - * /', 'printing numbers'],
     misconceptions: [
       'forgetting the quotes around text',
       'forgetting the closing parenthesis',
@@ -21,16 +21,17 @@ export const CURRICULUM = {
   },
   2: {
     topic: 'Variables - The Memory Boxes',
-    concepts: ['variables', 'naming a variable', 'strings vs numbers', 'input()', 'int() and str()'],
+    concepts: ['variables', 'naming a variable', 'strings vs numbers', 'input()', 'int() and str()', 'f-strings like f"Hi {name}"', 'string tricks: .upper() .lower() .title() .strip()', 'len() of a string', 'picking letters with word[0] and slices like word[0:3]'],
     misconceptions: [
       'thinking input() gives a number (it always gives text)',
       'using a variable before creating it',
-      'spaces or dashes in a variable name'
+      'spaces or dashes in a variable name',
+      'forgetting the f in front of an f-string'
     ]
   },
   3: {
     topic: 'Making Decisions - If/Else',
-    concepts: ['if', 'elif', 'else', 'comparing with == != < >', 'True and False'],
+    concepts: ['if', 'elif', 'else', 'comparing with == != < >', 'True and False', 'and, or and not'],
     misconceptions: [
       'using = (assign) instead of == (compare)',
       'forgetting the colon at the end of the if line',
@@ -39,7 +40,7 @@ export const CURRICULUM = {
   },
   4: {
     topic: 'Loops - Doing Things Over and Over',
-    concepts: ['for loops', 'range()', 'while loops', 'counting', 'breaking out of a loop'],
+    concepts: ['for loops', 'range()', 'while loops', 'counting', 'break to stop a loop', 'continue to skip a turn', 'remainder with % and whole-number division with //'],
     misconceptions: [
       'thinking range(5) counts 1 to 5 (it is 0 to 4)',
       'a while loop that never ends because nothing changes',
@@ -47,21 +48,23 @@ export const CURRICULUM = {
     ]
   },
   5: {
-    topic: 'Functions - Your Own Commands',
-    concepts: ['def', 'calling a function', 'parameters', 'arguments', 'return'],
+    topic: 'Functions - Your Own Commands (and Libraries)',
+    concepts: ['def', 'calling a function', 'parameters', 'arguments', 'return', 'import - borrowing a library', 'random.randint() and random.choice()', 'sleep() from the time library'],
     misconceptions: [
       'defining a function but never calling it',
       'confusing print() with return',
-      'forgetting the parentheses when calling'
+      'forgetting the parentheses when calling',
+      'forgetting the import line before using random'
     ]
   },
   6: {
-    topic: 'Lists - Collections of Things',
-    concepts: ['lists', 'square brackets', 'indexing from 0', 'append()', 'remove()', 'len()', 'looping over a list', 'in'],
+    topic: 'Lists & Dictionaries - Collections of Things',
+    concepts: ['lists', 'square brackets', 'indexing from 0', 'append()', 'remove()', 'len()', 'looping over a list', 'in', 'enumerate() for numbered lists', 'dictionaries with {key: value}', 'looping a dictionary with .items()', 'try/except to catch bad input'],
     misconceptions: [
       'thinking the first item is number 1 (it is 0)',
       'going past the end of the list',
-      'forgetting that append changes the list itself'
+      'forgetting that append changes the list itself',
+      'using [0] on a dictionary instead of its key name'
     ]
   },
   7: {

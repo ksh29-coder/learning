@@ -91,24 +91,34 @@ now contain bugs presented as reference code):
 generator expression (`any(...)`) that no lesson teaches — students are asked to extend code
 written in a style they've never seen.
 
-## 5. Recommended plan
+## 5. Intensity review & redistribution (implemented)
 
-Given one week before the ML course, add **two short lessons** and fix the defects:
+Every day is budgeted at 2–3 hours (Day 9: 3–4). Measured against a 12- and 14-year-old,
+the load was front-light and back-heavy: Days 1–2 were pitched at ~8–11-year-olds and would
+be finished fast, while Days 7–8 (OOP) were the genuinely full days. The redistribution
+therefore blends all new content into Days 1–6 and leaves Days 7–9 untouched:
 
-- **New Day 6.5 — "Words & Strings"**: string indexing/slicing (substring operations — named
-  explicitly in the ML recap), `.upper()/.lower()/.strip()/.split()/.replace()`, `in` on
-  strings, and **f-strings**. Exercises: password checker, name formatter (both FunTech L1
-  signature projects).
-- **New Day 7.5 (or fold into Day 6) — "Dictionaries & Libraries"**: `{key: value}`, get/set,
-  looping `.items()`; then `import random` (+ `random.randint`, `random.choice`) and a peek at
-  `math`/`time`. Exercises: Rock Paper Scissors vs computer, number-guessing game — which
-  makes the existing Day 9 bonus arcade fully understandable instead of "read-only magic."
-- **Small patches to existing days**: `not` (Day 3), `break`/`continue` + `%` for
-  FizzBuzz (Day 4 — FizzBuzz is a FunTech staple), a 10-minute `try/except` +
-  input-validation segment (Day 6, where `int(input())` first appears in loops).
-- **Fix all files in the §4 table**, restore clean canonical examples (keep Michael's
-  experiments in a separate `sandbox/` folder rather than inside the reference examples), and
-  retrofit f-strings into Days 2+ examples once taught.
+| Day | Load before | Blended in | Load after |
+|---|---|---|---|
+| 1 — First Program | 🟢 Light (print only) | Python-as-calculator: `+ - * /` with numbers | 🟢→🟡 comfortable |
+| 2 — Variables | 🟢 Light-medium | **f-strings**, string methods (`.upper/.lower/.title/.strip`), `len()`, **string indexing & slicing** | 🟡 Medium |
+| 3 — If/Else | 🟡 Medium | `not`; **password-checker** challenge | 🟡 Medium |
+| 4 — Loops | 🟡 Medium | `break`/`continue`, `%` & `//`, **FizzBuzz** challenge | 🟡 Medium |
+| 5 — Functions | 🟡 Medium (plan was truncated) | Lesson plan completed + **Libraries** (`import random`, `time.sleep`) + **Rock-Paper-Scissors** project | 🟠 Medium-full |
+| 6 — Lists | 🟡 Medium | **Dictionaries**, `enumerate()`, `try/except` input guard | 🟠 Medium-full |
+| 7 — Classes | 🔴 Full | — (already at L2 depth) | 🔴 Full |
+| 8 — Inheritance | 🔴 Full | — | 🔴 Full |
+| 9 — Capstone | 🔴 Full | No new concepts; bonus-arcade bugs fixed, untaught syntax removed | 🔴 Full |
 
-With those two additions, the course covers all eight Rapid Recap topics plus L2's OOP core —
+Rationale for placement: strings ride with variables (Day 2's natural theme); `not` joins
+`and`/`or` (Day 3); `%` enables FizzBuzz on loops day; libraries land on functions day
+("libraries are boxes of functions other people wrote"); dictionaries extend lists into a
+"collections" day, right where `int(input())` in loops makes `try/except` immediately useful.
+Days 7–8 stay dedicated to OOP — the hardest material gets no added load.
+
+All §4 defects were fixed in the same pass; Michael's in-file experiments were preserved in
+`sandbox/michael/` instead of living inside the reference examples. The AI teacher's
+`curriculumMap.js` was updated so it may discuss the newly placed topics on the right days.
+
+With this, the course covers all eight FunTech Rapid Recap topics plus L2's OOP core —
 comfortably enough to skip FunTech Python 1 and 2.
