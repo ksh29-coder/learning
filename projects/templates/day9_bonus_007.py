@@ -1,3 +1,6 @@
+# Day 9 Bonus Project: 007 (Shoot, Shield, Reload!) 🕵️
+# Combining: functions, while loops, if/elif/else, variables, input, random
+
 import random
 def print_header():
     print("=" * 40)
@@ -5,13 +8,12 @@ def print_header():
     print("=" * 40)
 
 def get_computer_choice(bullets_computer):
-    # Simple version: cycles through choices
-    # (In a real game, you'd use random, but this is simpler for kids)
+    # random.choice picks the computer's move at random (Day 5!)
     choices = ["Reload", "Shoot", "Shield"]
     if bullets_computer == 0:
-        choices = ["Reload", "Shield"]
+        choices = ["Reload", "Shield"]  # no bullets = no shooting!
 
-    return random.choices(choices)[0]  # You can make this smarter later!
+    return random.choice(choices)  # You can make this smarter later!
 
 
 

@@ -1,5 +1,7 @@
-# Day 6 - Example 4: Mini Game Arcade
-# Combining: functions, while loops, if/elif/else, variables, input
+# Day 9 Bonus Arcade: Mini Game Arcade 🕹️
+# Combining: functions, while loops, if/elif/else, variables, input, random
+
+import random
 
 def show_menu():
     print("=" * 40)
@@ -15,7 +17,7 @@ def game_rock_paper_scissors():
     print("\n🎮 Rock Paper Scissors")
     print("-" * 40)
     player = input("Rock, Paper, or Scissors? ").lower()
-    computer = "rock"  # Simple version
+    computer = random.choice(["rock", "paper", "scissors"])  # random pick (Day 5!)
     
     print(f"You: {player}, Computer: {computer}")
     
@@ -33,24 +35,27 @@ def game_rock_paper_scissors():
 def game_number_guessing():
     print("\n🔢 Number Guessing")
     print("-" * 40)
-    secret = 42  # Fixed number for simplicity
+    secret = random.randint(1, 100)  # a new surprise number every game (Day 5!)
     attempts = 0
     max_attempts = 5
-    
+    guessed_it = False  # a "flag" variable - flips to True if they win
+
     while attempts < max_attempts:
         guess = int(input(f"Guess #{attempts + 1} (1-100): "))
         attempts = attempts + 1
-        
+
         if guess == secret:
             print(f"🎉 Correct! You got it in {attempts} tries!")
+            guessed_it = True
             break
         elif guess < secret:
             print("Too low! ⬆️")
         else:
             print("Too high! ⬇️")
-    else:
+
+    if not guessed_it:
         print(f"Game over! The number was {secret}")
-    
+
     input("\nPress Enter to continue...")
 
 def game_math_quiz():

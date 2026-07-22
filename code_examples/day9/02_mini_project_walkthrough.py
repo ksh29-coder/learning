@@ -54,26 +54,38 @@ def print_party(party):
 # ============================================================
 # LAYER 4: A battle function that mixes everything (Days 3-8)
 # ============================================================
+def party_alive(party):
+    # a helper function (Day 5) with a simple for loop (Day 4):
+    # is at least ONE hero still standing?
+    for hero in party:
+        if hero.health > 0:
+            return True
+    return False
+
+
 def battle(party, monster):
     print("\n--- A wild", monster.name, "appears! ---")
     round_number = 1
 
-    # while loop (Day 4) keeps fighting until someone falls
-    while monster.health > 0 and party[0].health > 0:
+    # while loop (Day 4) keeps fighting until one side falls
+    while monster.health > 0 and party_alive(party):
         print(f"\nRound {round_number}:")
         for hero in party:                 # loop over the party list
-            if monster.health > 0:
+            if hero.health > 0 and monster.health > 0:
                 hero.attack(monster)       # SAME call, different result (Day 8)
         if monster.health > 0:
-            # the monster fights back against the front hero
-            monster.attack(party[0])
+            # the monster fights back against the first hero still standing
+            for hero in party:
+                if hero.health > 0:
+                    monster.attack(hero)
+                    break
         round_number = round_number + 1
 
     # if/else (Day 3) to decide the outcome
     if monster.health <= 0:
         print(f"\n🏆 Victory! {monster.name} is defeated!")
     else:
-        print(f"\n💀 {party[0].name} has fallen. Try again!")
+        print("\n💀 Your party has fallen. Try again!")
 
 
 # ============================================================

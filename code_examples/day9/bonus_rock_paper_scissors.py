@@ -1,5 +1,5 @@
-# Day 6 - Example 1: Rock Paper Scissors Game
-# Combining: functions, variables, input, if/elif/else, loops
+# Day 9 Bonus Arcade: Rock Paper Scissors 🪨📄✂️
+# Combining: functions, variables, input, if/elif/else, loops, random
 
 import random
 def print_header():
@@ -8,13 +8,10 @@ def print_header():
     print("=" * 40)
 
 def get_computer_choice():
-    # Simple version: cycles through choices
-    # (In a real game, you'd use random, but this is simpler for kids)
+    # random.choice picks one option at random - just like Day 5!
     choices = ["rock", "paper", "scissors"]
+    return random.choice(choices)  # You can make this smarter later!
 
-    
-    return random.choices(choices)[0]  # You can make this smarter later!
-    
 def play_round(round_number):
     print(f"\n--- Round {round_number} ---")
     player = input("Rock, Paper, or Scissors? ").lower()
@@ -42,24 +39,26 @@ def show_result(result):
 
 # Main game
 print_header()
-score = 0
+wins = 0
+ties = 0
 total_rounds = 3
 
 for round_num in range(1, total_rounds + 1):
     result = play_round(round_num)
     show_result(result)
-    
+
     if result == "win":
-        score = score + 1
+        wins = wins + 1     # only WINS count toward your score
     if result == "tie":
-        score = score + 0.5
+        ties = ties + 1     # ties don't score, but we count them to show off
+
 print("\n" + "=" * 40)
-print(f"Final Score: {score} points out of 3!")
-if score >= 3:
-    print("Wow you're lucky!")
-elif score >= 2:
+print(f"Final Score: {wins} win(s) out of {total_rounds} rounds! (Ties: {ties})")
+if wins == 3:
+    print("PERFECT GAME! You're a legend! 🏆🌟")
+elif wins == 2:
     print("You're a champion! 🏆")
-elif score == 1:
+elif wins == 1:
     print("Good try! Play again! 💪")
 else:
     print("Better luck next time! 🍀")

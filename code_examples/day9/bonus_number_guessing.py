@@ -1,5 +1,5 @@
-# Day 6 - Example 2: Number Guessing Game
-# Combining: functions, while loops, if/else, variables, input
+# Day 9 Bonus Arcade: Number Guessing Game 🔢
+# Combining: functions, while loops, if/else, variables, input, random
 
 import random
 
@@ -18,8 +18,7 @@ def get_hint(guess, secret):
     elif guess > secret:
         return "Too high! Try a lower number. ⬇️"
 def play_game():
-    # For simplicity, let's use a fixed number
-    # (You could use random.randint(1, 100) if you want)
+    # random.randint(1, 1000) picks a surprise number every game (Day 5!)
     secret_number = random.randint(1, 1000)
     attempts = 0
     max_attempts = 9

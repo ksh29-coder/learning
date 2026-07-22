@@ -1,5 +1,5 @@
-# Day 6 - Example 3: Interactive Story Builder
-# Combining: functions, loops, input, variables, print
+# Day 9 Bonus Arcade: Interactive Story Builder 📖
+# Combining: functions, loops, input, variables, dictionaries, print
 
 def get_story_parts():
     print("Let's build a story together!")
@@ -49,8 +49,6 @@ while True:
     print(f"\n--- Story #{story_count} ---")
     story_parts = get_story_parts()
     tell_story(story_parts)
-    
-    print(story_parts)
 
     if not ask_to_continue():
         break
