@@ -11,9 +11,10 @@
 // is a no-op, no timer is armed, and nothing is written - the app behaves exactly
 // as it did before this existed.
 
+import { invalidateServerProgress } from './serverProgress';
+
 const QUEUE_KEY = 'telemetry_queue';
 const SESSION_KEY = 'telemetry_session';
-const PASSPHRASE_KEY = 'ai_family_key'; // same shared secret the AI teacher uses
 const ENDPOINT = '/api/track';
 
 const MAX_QUEUE = 500; // hard cap so a long offline stretch can't grow unbounded
@@ -77,14 +78,6 @@ function saveQueue() {
   }
 }
 
-function getPassphrase() {
-  try {
-    return localStorage.getItem(PASSPHRASE_KEY) || '';
-  } catch (e) {
-    return '';
-  }
-}
-
 // --- public API --------------------------------------------------------------
 
 /**
@@ -121,13 +114,12 @@ function groupByProfile(events) {
 }
 
 async function postBatch(profile, events, { keepalive = false } = {}) {
+  // No passphrase: /api/track is origin+rate-limit gated, deliberately, so a
+  // browser that never opened the AI teacher still records the child's work.
   const res = await fetch(ENDPOINT, {
     method: 'POST',
     keepalive, // lets the request survive a page unload
-    headers: {
-      'content-type': 'application/json',
-      'x-family-key': getPassphrase()
-    },
+    headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ profile, events })
   });
   // Any 2xx means the server took (or knowingly dropped) the batch - either way
@@ -164,6 +156,10 @@ export async function flush({ keepalive = false } = {}) {
     if (delivered.size) {
       queue = queue.filter((e) => !delivered.has(e));
       saveQueue();
+      // New attempts just landed server-side, so the cached progress snapshot
+      // is stale - drop it rather than let a later mount read a stale copy.
+      const profiles = new Set(Array.from(delivered).map((e) => e.profile).filter(Boolean));
+      profiles.forEach((p) => invalidateServerProgress(p));
     }
     flushing = false;
   }

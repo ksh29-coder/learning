@@ -1,13 +1,18 @@
 // POST /api/track - ingest a batch of telemetry events from a kid's browser.
 //
-// This fronts a DATABASE write, not a paid LLM, but the abuse shape is the same
-// (a stranger who finds the URL spamming it), so it reuses the family-passphrase
-// guard. It is deliberately best-effort from the client's side: the browser
-// queues events locally and retries, so a transient failure here just means the
-// client holds onto the batch. The one thing it must never do is let telemetry
-// affect a child's lesson - nothing on the quiz path awaits this endpoint.
+// This fronts a DATABASE write, not a paid LLM, so it uses publicGuard
+// (origin + rate limit, no passphrase). Requiring the family passphrase here
+// was actively harmful: a device that had never opened the AI teacher had no
+// passphrase stored, so every event it sent was rejected and that kid's work
+// silently never reached the server. Recording progress must not depend on a
+// secret a given browser may never have been given.
+//
+// Still best-effort from the client's side: the browser queues events locally
+// and retries, so a transient failure here just means the client holds onto the
+// batch. The one thing it must never do is let telemetry affect a child's
+// lesson - nothing on the quiz path awaits this endpoint.
 
-const { guard } = require('./_lib/guard');
+const { publicGuard } = require('./_lib/guard');
 const { isConfigured, insertEvents } = require('./_lib/supabase');
 
 // Bounds so one client can never write unbounded rows or oversized blobs.
@@ -63,15 +68,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'method_not_allowed' });
   }
 
-  // Fail closed. An open write endpoint in front of a database is only tolerable
-  // if nobody can reach it. If the DB is wired up but no passphrase is set, a
-  // stranger who finds this URL could fill the table - so refuse to serve.
-  if (isConfigured() && !process.env.AI_FAMILY_PASSPHRASE) {
-    console.error('refusing to serve /api/track: SUPABASE configured but AI_FAMILY_PASSPHRASE is not');
-    return res.status(503).json({ error: 'not_configured' });
-  }
-
-  if (guard(req, res)) return;
+  if (publicGuard(req, res)) return;
 
   if (!isConfigured()) {
     // Telemetry is optional. Tell the client to stop trying rather than have it

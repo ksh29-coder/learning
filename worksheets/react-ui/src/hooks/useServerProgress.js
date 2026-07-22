@@ -1,47 +1,25 @@
 import { useState, useEffect } from 'react';
-import { isTelemetryEnabled } from '../lib/telemetry';
+import { fetchServerProgress } from '../lib/serverProgress';
 
-const PASSPHRASE_KEY = 'ai_family_key'; // same shared secret telemetry.js uses
-
-// Fetches this profile's cross-device day progress from /api/progress, so the
-// day-picker badges can reflect work done on another browser/device instead of
-// only this one's localStorage. Best-effort by design (same spirit as
-// telemetry.js): with the feature off, unconfigured, or the request failing,
-// this resolves to {} and callers just fall back to local-only progress -
-// nothing here is allowed to block or break the day picker.
+// This profile's server-side progress, as { [day]: { checkedQuestions, answers } }.
+// Starts {} and fills in when the shared fetch resolves, so the day picker
+// paints immediately from localStorage and only then reveals work done on
+// other devices. Never rejects - a failure just leaves badges local-only.
 export function useServerProgress(profile) {
-  const [dayQuestions, setDayQuestions] = useState({});
+  const [days, setDays] = useState({});
 
   useEffect(() => {
     let cancelled = false;
-    setDayQuestions({});
+    setDays({});
 
-    if (!isTelemetryEnabled() || !profile) return undefined;
-
-    let passphrase = '';
-    try {
-      passphrase = localStorage.getItem(PASSPHRASE_KEY) || '';
-    } catch (e) {
-      /* no-op - proceed without it, server will 401 and we fall back */
-    }
-
-    fetch('/api/progress', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-family-key': passphrase },
-      body: JSON.stringify({ profile })
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (!cancelled && data && data.dayQuestions) setDayQuestions(data.dayQuestions);
-      })
-      .catch(() => {
-        /* non-fatal - badges just stay local-only for this session */
-      });
+    fetchServerProgress(profile).then((data) => {
+      if (!cancelled) setDays(data || {});
+    });
 
     return () => {
       cancelled = true;
     };
   }, [profile]);
 
-  return dayQuestions;
+  return days;
 }

@@ -63,7 +63,19 @@ An optional AI tutor. **The whole feature is gated on `REACT_APP_AI_ENABLED=1`; 
 
 The app deploys to **Vercel** from the GitHub repo (`ksh29-coder/learning`) with **Root Directory = `worksheets/react-ui`** (the CRA app is not at repo root). Framework auto-detects as Create React App. `vercel.json` sets the API functions' timeout; the `api/` directory must sit **inside** the root directory or Vercel will never see it (a misplaced `api/` 404s into the SPA rewrite and returns HTML with a 200 — check `curl -i /api/grade` returns **405**, not HTML).
 
-Worksheet progress is written to browser-`localStorage` only (per-device, per-profile, no login) — that never changes. But the day-picker badges in `DaySelector.js` additionally **read** `/api/progress`, which reconstructs each profile's per-question verdicts from the same Supabase telemetry `/api/track` writes, and OR-merges it with local `checkedQuestions` (`getMergedDayProgress` in `useWorksheetStorage.js`). That's what lets a kid's badges reflect work already done on another browser/device. This is best-effort and read-only: with `REACT_APP_TELEMETRY_ENABLED` off, Supabase unconfigured, or the request failing, it silently degrades to the old local-only badge — never a hard dependency.
+### Progress is server-backed, local-first
+
+Worksheet progress **follows the child, not the browser**. `localStorage` is still the write path and the thing that renders first (instant, works offline), but Supabase is the durable record:
+
+- `/api/track` writes every `answer_attempt` (already the one verdict chokepoint in `useCheckAnswer.js`).
+- `/api/progress` reads them back, reducing to the latest verdict per `(day, questionId)` plus the child's own answer text.
+- `src/lib/serverProgress.js` fetches that **once per profile** (module-level promise cache, shared by every caller) and `mergeDayState` OR-merges it over local state. `useWorksheetStorage` hydrates each day's `answers`/`checkedQuestions` after first paint, so the Score bar and ticks are right on any device — not just the day badge.
+
+Two invariants worth keeping:
+- **The merge only ever reveals work.** Correctness is OR-ed, so a stale server row can never un-tick something just answered correctly on this device.
+- **It is never a hard dependency.** Telemetry off, Supabase unconfigured, or a failed request all resolve to `{}` and the app behaves exactly as the old local-only version. Nothing on the quiz path awaits the network.
+
+`/api/track` and `/api/progress` use **`publicGuard`** (origin + rate limit, *no* passphrase), unlike `/api/chat` and `/api/grade` which keep the full `guard`. This is deliberate: they front a bounded DB read/write rather than a paid LLM, and requiring the family passphrase silently broke recording on any device that had never opened the AI teacher — the child's own history must not be gated behind a secret that browser was never given.
 
 ## Conventions
 

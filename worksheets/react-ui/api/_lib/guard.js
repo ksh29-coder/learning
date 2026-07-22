@@ -25,14 +25,35 @@ const sha = (s) => crypto.createHash('sha256').update(String(s)).digest();
 // timingSafeEqual requires (it throws on a length mismatch).
 const safeEqual = (a, b) => crypto.timingSafeEqual(sha(a), sha(b));
 
-function guard(req, res) {
+function originAllowed(req) {
   const allowed = (process.env.AI_ALLOWED_ORIGINS || '')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
-
   const origin = req.headers.origin || '';
-  if (allowed.length && origin && !allowed.includes(origin)) {
+  return !(allowed.length && origin && !allowed.includes(origin));
+}
+
+function rateLimited(req) {
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  const now = Date.now();
+  const rec = hits.get(ip);
+
+  if (!rec || now - rec.start > WINDOW_MS) {
+    hits.set(ip, { start: now, n: 1 });
+  } else {
+    rec.n += 1;
+    if (rec.n > MAX_PER_WINDOW) return WINDOW_MS - (now - rec.start);
+  }
+
+  // Crude bound; this is a two-kid app, not a service.
+  if (hits.size > 500) hits.clear();
+
+  return 0;
+}
+
+function guard(req, res) {
+  if (!originAllowed(req)) {
     res.status(403).json({ error: 'forbidden_origin' });
     return true;
   }
@@ -59,25 +80,32 @@ function guard(req, res) {
     }
   }
 
-  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
-  const now = Date.now();
-  const rec = hits.get(ip);
-
-  if (!rec || now - rec.start > WINDOW_MS) {
-    hits.set(ip, { start: now, n: 1 });
-  } else {
-    rec.n += 1;
-    if (rec.n > MAX_PER_WINDOW) {
-      res.status(429).json({
-        error: 'rate_limited',
-        retryAfterMs: WINDOW_MS - (now - rec.start)
-      });
-      return true;
-    }
+  const retryAfterMs = rateLimited(req);
+  if (retryAfterMs) {
+    res.status(429).json({ error: 'rate_limited', retryAfterMs });
+    return true;
   }
 
-  // Crude bound; this is a two-kid app, not a service.
-  if (hits.size > 500) hits.clear();
+  return false;
+}
+
+// Lighter gate for the telemetry endpoints (/api/track, /api/progress).
+// These front a bounded DB write/read, not a paid LLM call, so a stranger
+// finding the URL can waste at most a rate-limited trickle of rows - not a
+// bill. No passphrase, so a kid's own practice history is never gated behind
+// a secret that a given device may never have entered (that gap was exactly
+// why progress silently failed to show up cross-device).
+function publicGuard(req, res) {
+  if (!originAllowed(req)) {
+    res.status(403).json({ error: 'forbidden_origin' });
+    return true;
+  }
+
+  const retryAfterMs = rateLimited(req);
+  if (retryAfterMs) {
+    res.status(429).json({ error: 'rate_limited', retryAfterMs });
+    return true;
+  }
 
   return false;
 }
@@ -92,4 +120,4 @@ function sanitizeMessages(raw, { maxTurns = 12, maxChars = 800 } = {}) {
     .map((m) => ({ role: m.role, content: m.content.slice(0, maxChars) }));
 }
 
-module.exports = { guard, sanitizeMessages };
+module.exports = { guard, publicGuard, sanitizeMessages };

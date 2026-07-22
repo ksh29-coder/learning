@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { fetchServerProgress, mergeDayState } from '../lib/serverProgress';
 
 export const DEFAULT_PROFILE = 'michael';
 
@@ -52,6 +53,36 @@ export function useWorksheetStorage(profile, day, initialAnswers, initialChecked
     localStorage.setItem(storageKey, JSON.stringify(saveData));
   }, [answers, checkedQuestions, storageKey]);
 
+  // Catch this device up to what the child has done elsewhere. Runs after the
+  // first paint on purpose: local state is already on screen, so a slow or
+  // failed request costs nothing. Merges are OR-ed on correctness, so this can
+  // only ever reveal work, never un-tick something answered here.
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchServerProgress(profile).then((days) => {
+      const remote = days && days[day];
+      if (cancelled || !remote) return;
+
+      setAnswers((prev) => mergeDayState({ answers: prev }, { answers: remote.answers }).answers);
+      setCheckedQuestions((prev) => {
+        const merged = mergeDayState(
+          { checkedQuestions: prev },
+          { checkedQuestions: remote.checkedQuestions }
+        ).checkedQuestions;
+        // Don't churn state (and the save effect above) when nothing changed.
+        const same =
+          Object.keys(merged).length === Object.keys(prev).length &&
+          Object.keys(merged).every((k) => merged[k] === prev[k]);
+        return same ? prev : merged;
+      });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [profile, day]);
+
   const updateAnswer = (key, value) => {
     setAnswers(prev => ({ ...prev, [key]: value }));
   };
@@ -104,14 +135,14 @@ export function getDayProgress(profile, day) {
   return Object.keys(checked).length === 0 ? 'not-started' : classify(checked);
 }
 
-// Same as getDayProgress, but ORs in a server-side { questionId: isCorrect }
-// map (from /api/progress) so a question answered correctly on ANY device
-// counts - lets the badge reflect cross-device history instead of only what
-// this browser's localStorage has seen.
-export function getMergedDayProgress(profile, day, serverQuestions) {
-  const merged = { ...readLocalChecked(profile, day) };
-  Object.keys(serverQuestions || {}).forEach((qid) => {
-    merged[qid] = Boolean(merged[qid]) || Boolean(serverQuestions[qid]);
-  });
+// Same as getDayProgress, but ORs in that day's server snapshot (from
+// /api/progress via lib/serverProgress) so a question answered correctly on
+// ANY device counts - lets the badge reflect the child's real history instead
+// of only what this browser's localStorage has seen.
+export function getMergedDayProgress(profile, day, remoteDay) {
+  const merged = mergeDayState(
+    { checkedQuestions: readLocalChecked(profile, day) },
+    remoteDay
+  ).checkedQuestions;
   return classify(merged);
 }

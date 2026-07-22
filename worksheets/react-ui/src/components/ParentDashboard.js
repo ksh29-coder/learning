@@ -42,6 +42,27 @@ function fmtTime(iso) {
 
 const evTime = (e) => e.client_ts || e.created_at || '';
 
+// Gap since the previous attempt, which is how long they sat on this question
+// (thinking, reading the Learn tab, asking the teacher) before checking it.
+// Only meaningful within one sitting, so a gap longer than this is treated as
+// "they walked away and came back" and shown as a break instead of think time.
+const SITTING_BREAK_MS = 10 * 60 * 1000;
+
+function gapMs(curr, prev) {
+  if (!prev) return null;
+  const a = new Date(evTime(prev)).getTime();
+  const b = new Date(evTime(curr)).getTime();
+  if (Number.isNaN(a) || Number.isNaN(b)) return null;
+  const d = b - a;
+  return d >= 0 ? d : null;
+}
+
+function fmtGap(ms) {
+  if (ms == null) return '—';
+  if (ms > SITTING_BREAK_MS) return `⏸ ${fmtDuration(ms / 1000)}`;
+  return fmtDuration(ms / 1000);
+}
+
 // Turn a flat event list into everything the dashboard renders.
 function aggregate(events) {
   const attempts = events.filter((e) => e.type === 'answer_attempt');
@@ -90,8 +111,23 @@ function aggregate(events) {
     .sort()
     .slice(-1)[0];
 
+  // Chronological, each attempt carrying the gap since the previous one.
+  const ordered = attempts.slice().sort((a, b) => String(evTime(a)).localeCompare(String(evTime(b))));
+  const timed = ordered.map((e, i) => ({ ...e, gap: gapMs(e, ordered[i - 1]) }));
+
+  // Typical time on a question, ignoring breaks so one interrupted session
+  // doesn't swamp the number. Median, not mean, for the same reason.
+  const thinkTimes = timed
+    .map((e) => e.gap)
+    .filter((g) => g != null && g <= SITTING_BREAK_MS)
+    .sort((a, b) => a - b);
+  const medianThink = thinkTimes.length
+    ? thinkTimes[Math.floor(thinkTimes.length / 2)]
+    : null;
+
   return {
-    attempts: attempts.slice().sort((a, b) => String(evTime(a)).localeCompare(String(evTime(b)))),
+    attempts: timed,
+    medianThink,
     chats: chats.slice().sort((a, b) => String(evTime(a)).localeCompare(String(evTime(b)))),
     timeByDay,
     dayStats,
@@ -131,6 +167,10 @@ function ProfilePanel({ events }) {
         <StatCard label="Questions tried" value={a.totals.totalQuestions} />
         <StatCard label="Accuracy" value={`${a.totals.accuracy}%`} />
         <StatCard label="Total attempts" value={a.attempts.length} />
+        <StatCard
+          label="Typical time per question"
+          value={a.medianThink == null ? '—' : fmtDuration(a.medianThink / 1000)}
+        />
         <StatCard label="Chat messages" value={a.totals.chatCount} />
         <StatCard label="Last active" value={fmtTime(a.totals.lastActive)} />
       </div>
@@ -175,6 +215,7 @@ function ProfilePanel({ events }) {
             <thead>
               <tr>
                 <th>When</th>
+                <th>Time taken</th>
                 <th>Day</th>
                 <th>Question</th>
                 <th>Their answer</th>
@@ -188,6 +229,9 @@ function ProfilePanel({ events }) {
                 return (
                   <tr key={e.id} className={p.isCorrect ? 'pd-correct' : 'pd-wrong'}>
                     <td className="pd-nowrap">{fmtTime(evTime(e))}</td>
+                    <td className="pd-nowrap" title={e.gap > SITTING_BREAK_MS ? 'Came back after a break' : 'Time since their previous answer'}>
+                      {fmtGap(e.gap)}
+                    </td>
                     <td>{e.day}</td>
                     <td>{p.questionText || p.questionId || '—'}</td>
                     <td className="pd-answer">{p.answer == null ? '—' : String(p.answer)}</td>
