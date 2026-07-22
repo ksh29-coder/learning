@@ -124,7 +124,67 @@ Create a program that:
 
 ---
 
-## Part 4: Challenge Problems
+## Part 4: f-strings & String Superpowers ✨
+
+### Question 5
+What will this code print?
+```python
+name = "Isabella"
+print(f"Hi {name}!")
+```
+**Answer:** _________________________________
+
+### Question 6
+What will `"python".upper()` give you?
+- [ ] `PYTHON`
+- [ ] `python`
+- [ ] `Python`
+- [ ] `nohtyp`
+
+### Question 7
+What will this code print? (Remember: Python counts from 0!)
+```python
+word = "coding"
+print(word[0])
+```
+**Answer:** _________________________________
+
+### Question 8
+What will this code print?
+```python
+word = "python"
+print(word[0:3])
+```
+**Answer:** _________________________________
+
+---
+
+### Exercise 4: Shout Your Name! 📢
+Write a program that:
+1. Stores your name in a variable
+2. Prints it in ALL CAPS using `.upper()` inside an f-string, like: `MICHAEL!!!`
+
+**Your code:**
+```python
+# Write your shouting code here
+```
+
+---
+
+### Exercise 5: Initials Maker 🏷️
+Write a program that:
+1. Stores your first name and last name in two variables
+2. Makes your initials with `first[0] + last[0]`
+3. Prints them with an f-string, like: `Your initials are: MK`
+
+**Your code:**
+```python
+# Write your initials maker here
+```
+
+---
+
+## Part 5: Challenge Problems
 
 ### Challenge 1: Story Starter
 Create a program that asks for:
@@ -173,7 +233,7 @@ Then calculate and print:
 
 ---
 
-## Part 5: Reflection
+## Part 6: Reflection
 
 ### What I Learned Today:
 1. A variable is: _________________________________

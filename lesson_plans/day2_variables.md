@@ -13,6 +13,9 @@ By the end of this lesson, students will be able to:
 - Recognize different data types (strings, numbers)
 - Use `input()` to get information from users
 - Combine variables with print statements
+- Use f-strings to neatly glue text and variables together
+- Use string superpowers: `.upper()`, `.lower()`, `.title()`, `.strip()`, `len()`
+- Grab letters and pieces of strings with indexing and slicing
 - Create interactive programs
 
 ---
@@ -28,7 +31,7 @@ By the end of this lesson, students will be able to:
 
 ## Lesson Structure
 
-### Part 1: Introduction to Variables (25 minutes)
+### Part 1: Introduction to Variables (20 minutes)
 
 #### What are Variables? (15 minutes)
 **Teaching Approach:** Use analogies and hands-on examples
@@ -83,7 +86,7 @@ print(my_name)
 
 ---
 
-### Part 2: Different Types of Variables (30 minutes)
+### Part 2: Different Types of Variables (25 minutes)
 
 #### Activity 1: String Variables (10 minutes)
 **Goal:** Understand text variables
@@ -160,9 +163,9 @@ print("=" * 30)
 
 ---
 
-### Part 3: Getting Input from Users (35 minutes)
+### Part 3: Getting Input from Users (25 minutes)
 
-#### Introduction to `input()` (15 minutes)
+#### Introduction to `input()` (10 minutes)
 **Goal:** Make programs interactive
 
 **Code to write together:**
@@ -189,7 +192,7 @@ print("Hello,", name, "!")
 - Use the input in multiple places
 - Combine with print statements
 
-#### Activity: Interactive Greeting (10 minutes)
+#### Activity: Interactive Greeting (8 minutes)
 **Goal:** Create an interactive program
 
 **Code example:**
@@ -217,7 +220,7 @@ print("You're", age, "years old and love", color, "!")
 - Change the output format
 - Make it more fun with emojis
 
-#### Activity: Simple Calculator (10 minutes)
+#### Activity: Simple Calculator (7 minutes)
 **Goal:** Use input with numbers
 
 **Code example:**
@@ -250,7 +253,98 @@ print("The sum is:", result)
 
 ---
 
-### Part 4: Guided Practice - Personal Info Card (30 minutes)
+### Part 4: f-strings - The Neat Way to Glue Text (15 minutes)
+
+#### From Commas to f-strings (10 minutes)
+**Goal:** Learn the modern, tidy way to mix variables into text
+
+**Code to write together:**
+```python
+name = "Isabella"
+age = 12
+
+# The comma way (you know this!):
+print("Hello,", name, "! You are", age, "!")
+
+# The NEW f-string way:
+print(f"Hello {name}, you are {age}!")
+```
+
+**Teaching Points:**
+- Put an `f` right before the opening quote
+- Drop variables into `{curly braces}` — Python fills in the blanks!
+- No more juggling commas and quotes — you just write the sentence
+- You can even do math inside the braces: `print(f"Next year you'll be {age + 1}!")`
+- **From today on, f-strings are our favorite way to print with variables!**
+
+**Experiment Together:**
+- Rewrite an earlier comma-print as an f-string
+- Try math inside the braces: `f"Your age in dog years is {age * 7}"`
+- What happens if you forget the `f`? (The braces print literally — fun to see!)
+
+#### Quick Practice (5 minutes)
+- Ask for their name with `input()`, then greet them with an f-string
+- Reference example: `code_examples/day2/05_fstrings.py`
+
+---
+
+### Part 5: String Superpowers (20 minutes)
+
+#### String Methods (8 minutes)
+**Goal:** Discover the built-in powers every string has
+
+**Code to write together:**
+```python
+name = "michael kim"
+
+print(name.upper())    # MICHAEL KIM  (shout it!)
+print(name.lower())    # michael kim  (whisper it)
+print(name.title())    # Michael Kim  (name-tag neat)
+
+messy = "   pizza   "
+print(messy.strip())   # "pizza" - spaces trimmed off the ends!
+
+print(len(name))       # 11 - len() counts the characters (space included!)
+```
+
+**Teaching Points:**
+- A method is a power you activate with a dot: `variable.power()`
+- `.upper()`, `.lower()`, `.title()` change how text looks; `.strip()` cleans up extra spaces
+- `len()` is different — it wraps around the string: `len(name)`
+
+#### Indexing & Slicing - Grab Letters and Pieces (12 minutes)
+**Goal:** Gently introduce substring operations (reinforced on Day 6 with lists!)
+
+**Code to write together:**
+```python
+word = "python"
+
+print(word[0])     # p - Python counts from 0!
+print(word[1])     # y
+print(word[-1])    # n - negative counts from the end
+
+print(word[0:3])   # pyt - from 0 UP TO (not including) 3
+```
+
+**Teaching Points:**
+- Every letter has a number position, starting at **0**
+- `word[-1]` is a neat trick for the last letter
+- `word[start:stop]` grabs a piece — it stops *before* `stop`
+- Keep it playful — this comes back on Day 6 with lists, so a taste is enough!
+
+**Mini-Activity: Initials Maker**
+```python
+first = "Isabella"
+last = "Kim"
+initials = first[0] + last[0]
+print(f"Your initials are {initials}!")
+```
+
+- Reference example: `code_examples/day2/06_string_powers.py` (also shows `float()` for decimal numbers!)
+
+---
+
+### Part 6: Guided Practice - Personal Info Card (20 minutes)
 
 #### Step-by-Step Project
 **Goal:** Create an interactive program that asks for information and displays it
@@ -273,18 +367,19 @@ print()
 print("=" * 40)
 print("   YOUR INFO CARD")
 print("=" * 40)
-print("  Name:", name)
-print("  Age:", age)
-print("  Favorite Color:", favorite_color)
-print("  Favorite Food:", favorite_food)
-print("  Hobby:", hobby)
+print(f"  Name: {name.title()}")
+print(f"  Age: {age}")
+print(f"  Favorite Color: {favorite_color}")
+print(f"  Favorite Food: {favorite_food}")
+print(f"  Hobby: {hobby}")
 print("=" * 40)
 ```
 
 **Teaching Points:**
 - Structure: ask questions, then display answers
 - Use variables to store all the information
-- Format the output nicely
+- Use the new f-strings for the output — see how tidy it looks!
+- `name.title()` makes the name look neat even if they typed lowercase
 - Save the file with a good name like `info_card.py`
 
 **Let them customize:**
@@ -295,7 +390,7 @@ print("=" * 40)
 
 ---
 
-### Part 5: Independent Practice (30 minutes)
+### Part 7: Independent Practice (20 minutes)
 
 #### Practice Exercises
 1. **Create a "Get to Know Me" program**
@@ -338,7 +433,7 @@ print("=" * 40)
 
 ---
 
-### Part 6: Main Project - Mad Libs Game (40 minutes)
+### Part 8: Main Project - Mad Libs Game (35 minutes)
 
 #### Project Introduction
 **Goal:** Create an interactive Mad Libs game
@@ -373,11 +468,12 @@ verb1 = input("Enter a verb: ")
 
 print()
 print("Here's your story:")
-print("Once upon a time, there was a", adjective1, noun1)
-print("that loved to", verb1, "every day!")
+print(f"Once upon a time, there was a {adjective1} {noun1}")
+print(f"that loved to {verb1} every day!")
 ```
 
 **Encourage:**
+- Using f-strings for the story lines (today's new superpower!)
 - Creative questions
 - Funny stories
 - Multiple sentences
@@ -392,7 +488,7 @@ print("that loved to", verb1, "every day!")
 
 ---
 
-### Part 7: Show and Tell (15 minutes)
+### Part 9: Show and Tell (10 minutes)
 
 #### Sharing Time
 - Each student shares their Mad Libs game
@@ -433,6 +529,19 @@ print("that loved to", verb1, "every day!")
 - `float()` converts string to decimal: `float("3.14")` → `3.14`
 - Needed when doing math with input
 
+### f-strings (our new favorite!)
+- Put `f` before the quotes, variables in `{braces}`: `f"Hello {name}, you are {age}!"`
+- Python fills in the blanks — no comma juggling
+- Math works inside braces too: `f"Next year: {age + 1}"`
+- From Day 2 on, this is the course's preferred way to print with variables
+
+### String Superpowers
+- Methods use a dot: `.upper()`, `.lower()`, `.title()`, `.strip()`
+- `len("python")` → `6` (counts the characters)
+- Indexing starts at 0: `word[0]` is the first letter, `word[-1]` the last
+- Slicing grabs a piece: `word[0:3]` is the first three letters
+- Initials trick: `first[0] + last[0]`
+
 ### Using Cursor
 - Write code in the editor
 - Run program to see output in terminal
@@ -451,6 +560,9 @@ print("that loved to", verb1, "every day!")
 - [ ] Understand the difference between strings and numbers?
 - [ ] Use `input()` to get information from users?
 - [ ] Convert string input to numbers when needed?
+- [ ] Write an f-string with a variable in `{braces}`?
+- [ ] Use `.upper()`, `.lower()`, or `.title()` on a string?
+- [ ] Grab the first letter of a word with `word[0]`?
 - [ ] Create an interactive program?
 - [ ] Debug a simple variable error?
 
@@ -470,7 +582,7 @@ print("that loved to", verb1, "every day!")
 3. **Create a password generator** (ask for favorite word and number, combine them)
 4. **Build a "Would You Rather" game** (store choices in variables, display questions)
 5. **Create a character creator** (ask for name, age, superpower, etc., display character card)
-6. **Experiment with string methods** (`.upper()`, `.lower()`, `.title()`)
+6. **Make a secret-code machine** (slice pieces of words and glue them together into a "code name")
 
 ---
 

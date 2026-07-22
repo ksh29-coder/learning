@@ -57,6 +57,28 @@ print("I love Python!")`}
           <CodeRunner code={answers.exercise2} title="Test Exercise 2" />
         </div>
       </div>
+
+      <div className="exercise-card">
+        <h3 className="exercise-title">Exercise 3: Machine Math 🧮</h3>
+        <p className="exercise-description">
+          Use Python as a calculator! Write a program that prints:
+        </p>
+        <ul className="exercise-list">
+          <li>10 + 5 with a label, like <code>print("10 + 5 =", 10 + 5)</code></li>
+          <li>How many seconds are in one hour (60 * 60)</li>
+          <li>How many days old you are (about your age * 365)</li>
+        </ul>
+        <div className="exercise-section">
+          <h4 className="section-title">Your code:</h4>
+          <CodeEditor
+            value={answers.exercise3}
+            onChange={(value) => updateAnswer('exercise3', value)}
+            placeholder="# Write your calculator code here..."
+            height={150}
+          />
+          <CodeRunner code={answers.exercise3} title="Test Exercise 3" />
+        </div>
+      </div>
     </div>
   );
 }

@@ -69,6 +69,13 @@ print("=" * 40)
 # 4. Create a second story with different questions
 # 5. Ask for different types of words (food, place, emotion, etc.)
 # 6. Make the story format look cool with borders and spacing
+#
+# ⭐ F-STRING BONUS (today's new superpower!):
+# Rewrite your story lines as f-strings - it reads just like a sentence:
+#     print(f"Once upon a time, there was a {adjective1} {noun1}")
+#     print(f"that loved to {verb1} every day.")
+# Can you rewrite the WHOLE story with f-strings? Extra points for
+# sneaking in a string power like {noun1.upper()} for a DRAMATIC moment!
 
 # ============================================
 # TIPS:

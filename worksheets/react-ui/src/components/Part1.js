@@ -24,6 +24,19 @@ const QUESTIONS = {
     arrayMatch: 'exact',
     prompt: 'How many lines will this code print? Three separate print() statements.',
     hint: 'Hint: Count how many print() statements there are!'
+  },
+  q4: {
+    mode: 'text',
+    correct: ['5', 'five'],
+    arrayMatch: 'exact',
+    prompt: 'What will print(2 + 3) show on the screen?',
+    hint: 'Hint: No quotes means Python does the math!'
+  },
+  q5: {
+    mode: 'choice',
+    correct: '*',
+    prompt: 'Which symbol tells Python to multiply?',
+    hint: 'Hint: There is no × key, so Python uses a star!'
   }
 };
 
@@ -135,6 +148,64 @@ print("Line 3")`}
             {feedback.q3}
           </span>
         )}
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 4: Python is a calculator! What will this show?</h3>
+        <pre className="code-block">
+{`print(2 + 3)`}
+        </pre>
+        <div className="answer-input-group">
+          <input
+            type="text"
+            value={answers.q4}
+            onChange={(e) => updateAnswer('q4', e.target.value)}
+            placeholder="Enter your answer..."
+            className="answer-input"
+          />
+          <button
+            className="check-button"
+            onClick={() => checkAnswer('q4', answers.q4)}
+          >
+            ✓ Check Answer
+          </button>
+        </div>
+        {feedback.q4 && (
+          <span className={`feedback ${feedback.q4.includes('✓') ? 'correct' : 'incorrect'}`}>
+            {feedback.q4}
+          </span>
+        )}
+      </div>
+
+      <div className="question-card">
+        <h3 className="question-title">Question 5: Which symbol tells Python to multiply?</h3>
+        <div className="options">
+          {['+', '-', '*', '/'].map((option, index) => (
+            <label key={index} className="radio-option">
+              <input
+                type="radio"
+                name="q5"
+                value={option}
+                checked={answers.q5 === option}
+                onChange={(e) => updateAnswer('q5', e.target.value)}
+              />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+        <div className="check-section">
+          <button
+            className="check-button"
+            onClick={() => checkAnswer('q5', answers.q5)}
+          >
+            ✓ Check Answer
+          </button>
+          {feedback.q5 && (
+            <span className={`feedback ${feedback.q5.includes('✓') ? 'correct' : 'incorrect'}`}>
+              {feedback.q5}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="part-footer">
