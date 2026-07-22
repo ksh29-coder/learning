@@ -1,4 +1,4 @@
-# Day 6 Worksheet: Lists - Storing Lots of Things Together
+# Day 6 Worksheet: Collections - Lists & Dictionaries
 
 ## Name: _________________  Date: _________________
 
@@ -80,7 +80,76 @@ Start with a list called `chores = ["dishes", "laundry"]`. Use `.append()` to ad
 
 ---
 
-## Part 3: Challenge Problems
+## Part 3: Dictionaries, enumerate() & the Safety Net
+
+### Question 6
+Which one of these creates a DICTIONARY (labeled cubbies)?
+- [ ] `["Isabella", 12]`
+- [ ] `("Isabella", 12)`
+- [ ] `{"name": "Isabella", "age": 12}`
+- [ ] `"Isabella: 12"`
+
+### Question 7
+What will this code print?
+```python
+player = {"name": "Michael", "age": 14}
+print(player["name"])
+```
+**Answer:** _________________________________
+
+### Question 8
+How do you add a brand-new key `"hobby"` with the value `"coding"` to the `player` dictionary?
+- [ ] `player.append("coding")`
+- [ ] `player["hobby"] = "coding"`
+- [ ] `player.add("hobby", "coding")`
+- [ ] `hobby in player`
+
+### Question 9
+What number gets printed next to `apple`?
+```python
+fruits = ["apple", "banana"]
+for number, fruit in enumerate(fruits, 1):
+    print(f"{number}. {fruit}")
+```
+**Answer:** _________________________________
+
+### Question 10
+Our program uses `int(input("Score: "))`. What does `try:` / `except ValueError:` do for us when the player types `banana` instead of a number?
+**Answer:** _________________________________
+
+---
+
+### Exercise 5: The "Me Dictionary"
+Create a dictionary called `me` with at least 4 pairs about yourself (like `"name"`, `"age"`, `"favorite_food"`, `"hobby"`). Print one value using its key, change one value, add one NEW pair, then print the whole thing as a profile card using `for key, value in me.items():` and an f-string.
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
+### Exercise 6: Numbered Top 4
+Take your `favorites` list from Exercise 1 and print it as a numbered "Top 4" countdown using `enumerate(favorites, 1)` - no `range(len(...))` allowed!
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
+### Exercise 7: The Safety Net
+Ask the user how old they are with `int(input(...))`. Wrap the conversion in `try:` / `except ValueError:` so typing "banana" prints a friendly message instead of crashing. Bonus: put it in a `while True:` loop that keeps asking until it gets a real number!
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
+## Part 4: Challenge Problems
 
 ### Challenge 1: Class Roster
 Build a program that starts with an empty list, uses a loop with `input()` to collect student names until the user types `"done"`, then prints the whole roster numbered 1, 2, 3, and so on.
@@ -102,14 +171,26 @@ Write a program with a list of at least 5 items. Ask the user to type something 
 
 ---
 
-## Part 4: Reflection
+### Challenge 3: Name → Score Dictionary
+Build a mini scoreboard! Ask the user for player names and scores until they type `"done"`, storing them in a dictionary as `scoreboard[name] = score`. Use `try`/`except ValueError` so a bad score doesn't crash the program. At the end, print every player and their score using `.items()`.
+
+**Your code:**
+```python
+# Write your code here
+```
+
+---
+
+## Part 5: Reflection
 
 ### What I Learned Today:
 1. A list is used when: _________________________________
 2. The first item in a list has index number: _________________________________
 3. `.append()` is different from `.remove()` because: _________________________________
-4. One thing I found easy: _________________________________
-5. One thing I found challenging: _________________________________
+4. A dictionary is better than a list when: _________________________________
+5. `try` / `except ValueError` saves my program from: _________________________________
+6. One thing I found easy: _________________________________
+7. One thing I found challenging: _________________________________
 
 ### What I Want to Learn Next:
 _________________________________

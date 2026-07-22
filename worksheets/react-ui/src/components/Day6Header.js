@@ -7,7 +7,7 @@ function Day6Header({ name, date, updateName, updateDate }) {
     <div className="header-container">
       <div className="header">
         <div className="header-content">
-          <h1>🧺 Day 6: Lists - Storing Lots of Things!</h1>
+          <h1>🧺 Day 6: Lists & Dictionaries - Storing Lots of Things!</h1>
           <p className="subtitle">Learn how to store, access, and change collections of information in VS Code!</p>
           <div className="header-info">
             <div className="info-item">
@@ -50,6 +50,11 @@ function Day6Header({ name, date, updateName, updateDate }) {
             <span className="overview-icon">🛠️</span>
             <h3>Changing Lists</h3>
             <p>Loop over lists, add items with append(), remove items, and check what's inside</p>
+          </div>
+          <div className="overview-item">
+            <span className="overview-icon">🗂️</span>
+            <h3>Dictionaries & the Safety Net</h3>
+            <p>Labeled cubbies with {'{key: value}'}, plus try/except to catch bad input</p>
           </div>
         </div>
       </div>
